@@ -1,11 +1,10 @@
-module com.example.demo {
+module com.example.cnpm {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
-    requires com.microsoft.sqlserver.jdbc;
-    requires java.naming;
 
+    requires org.controlsfx.controls;
+    requires org.kordamp.bootstrapfx.core;
 
-    opens com.example.demo to javafx.fxml;
-    exports com.example.demo;
+    opens com.example.cnpm to javafx.fxml;
+    exports com.example.cnpm;
 }
