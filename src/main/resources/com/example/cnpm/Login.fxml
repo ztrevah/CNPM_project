@@ -17,9 +17,9 @@
                   <Font name="Microsoft Sans Serif" size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="username" layoutX="136.0" layoutY="169.0" prefHeight="31.0" prefWidth="239.0" promptText="Username" />
-            <PasswordField fx:id="password" layoutX="136.0" layoutY="216.0" prefHeight="31.0" prefWidth="239.0" promptText="Password" />
-            <Button fx:id="login_btn" layoutX="211.0" layoutY="280.0" mnemonicParsing="false" onAction="#clicklLogin" prefHeight="49.0" prefWidth="90.0" styleClass="login-btn" text="Login">
+            <TextField fx:id="username" layoutX="136.0" layoutY="169.0" onAction="#loginAdmin" prefHeight="31.0" prefWidth="239.0" promptText="Username" />
+            <PasswordField fx:id="password" layoutX="136.0" layoutY="216.0" onAction="#loginAdmin" prefHeight="31.0" prefWidth="239.0" promptText="Password" />
+            <Button fx:id="login_btn" layoutX="211.0" layoutY="280.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="49.0" prefWidth="90.0" styleClass="login-btn" text="Login">
                <font>
                   <Font size="17.0" />
                </font>

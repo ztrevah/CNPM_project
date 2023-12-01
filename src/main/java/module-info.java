@@ -4,6 +4,7 @@ module com.example.cnpm {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens com.example.cnpm to javafx.fxml;
     exports com.example.cnpm;

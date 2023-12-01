@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane layoutX="79.0" layoutY="100.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutX="368.0" layoutY="-77.0" prefHeight="40.0" prefWidth="1100.0" style="-fx-border-color: #000;" styleClass="top-form" stylesheets="@menuDesign.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="USERS" layoutX="14.0" layoutY="22.0" size="1.2em" />
+                              <Label layoutX="36.0" layoutY="8.0" text="Phần mềm quản lý tổ dân phố">
+                                 <font>
+                                    <Font name="Tahoma" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="1053.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="1006.0" layoutY="4.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="43.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <left>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane layoutY="84.0" prefHeight="555.0" prefWidth="200.0" styleClass="nav-form" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="70.0" layoutY="86.0" size="7em" />
+                              <Label layoutX="66.0" layoutY="98.0" text="Welcome" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="4.0" layoutY="119.0" prefHeight="17.0" prefWidth="193.0" text="Admin" textFill="#1683ab">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="67.5" layoutX="116.0" layoutY="148.0" startX="-100.0" stroke="WHITE" />
+                              <Button layoutX="16.0" layoutY="192.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="168.0" styleClass="nav-btn" text="Quản lý nhân khẩu">
+                                 <font>
+                                    <Font name="Tahoma" size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="16.0" layoutY="238.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="168.0" styleClass="nav-btn" text="Quản lý hộ khẩu">
+                                 <font>
+                                    <Font name="Tahoma" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="1.8em" />
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="16.0" layoutY="284.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="168.0" styleClass="nav-btn" text=" Quản lý thu chi">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button layoutX="16.0" layoutY="506.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="32.0" stylesheets="@menuDesign.css">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="1.6em" wrappingWidth="12.057144165039062" />
+                                 </graphic>
+                                 <styleClass>
+                                    <String fx:value="logout" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                              </Button>
+                              <Label layoutX="61.0" layoutY="515.0" text="Logout" textFill="WHITE">
+                                 <font>
+                                    <Font name="Tahoma" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutY="1.0" prefHeight="319.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <TableView layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
+                                      <columns>
+                                        <TableColumn prefWidth="96.0" text="CCCD" />
+                                        <TableColumn prefWidth="147.0" text="Họ và tên" />
+                                          <TableColumn prefWidth="104.0" text="Ngày sinh" />
+                                          <TableColumn prefWidth="96.0" text="Giới tính" />
+                                          <TableColumn prefWidth="303.0" text="Nơi thường trú" />
+                                          <TableColumn prefWidth="121.0" text="Tình trạng" />
+                                      </columns>
+                                    </TableView>
+                                    <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="47.0" size="1.5em" />
+                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
+                                       <font>
+                                          <Font name="Tahoma" size="16.0" />
+                                       </font>
+                                    </Button>
+                                    <AnchorPane fx:id="filterPane" layoutX="347.0" layoutY="8.0" prefHeight="64.0" prefWidth="523.0">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Label alignment="CENTER_RIGHT" layoutX="12.0" layoutY="9.0" prefHeight="16.0" prefWidth="68.0" text="Giới tính:">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" layoutX="11.0" layoutY="38.0" prefHeight="16.0" prefWidth="68.0" text="Độ tuổi:">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="92.0" layoutY="39.0" text="Từ:">
+                                             <font>
+                                                <Font name="Arial" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="117.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                          <Label layoutX="166.0" layoutY="39.0" text="Đến:">
+                                             <font>
+                                                <Font name="Arial" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="199.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                          <ComboBox layoutX="101.0" layoutY="5.0" prefHeight="25.0" prefWidth="101.0" promptText="Tất cả" visibleRowCount="3" />
+                                          <Label alignment="CENTER_RIGHT" layoutX="268.0" layoutY="9.0" prefHeight="17.0" prefWidth="85.0" text="Tình trạng:">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox layoutX="376.0" layoutY="5.0" prefHeight="25.0" prefWidth="112.0" promptText="Tất cả" visibleRowCount="3" />
+                                          <Label alignment="CENTER_RIGHT" layoutX="239.0" layoutY="38.0" prefHeight="17.0" prefWidth="114.0" text="Trong khoảng:">
+                                             <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="361.0" layoutY="39.0" text="Từ:">
+                                             <font>
+                                                <Font name="Arial" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="386.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                          <Label layoutX="435.0" layoutY="39.0" text="Đến:">
+                                             <font>
+                                                <Font name="Arial" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="468.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <Button layoutX="579.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="68.0" styleClass="detail-btn" text="Chi tiết">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="661.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="70.0" styleClass="add-btn" text="Thêm">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <AnchorPane layoutY="1.0" prefHeight="319.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
+                                 <children>
+                                    <TableView layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
+                                       <columns>
+                                          <TableColumn prefWidth="179.0" text="Mã hộ khẩu" />
+                                          <TableColumn prefWidth="302.0" text="Tên chủ hộ" />
+                                          <TableColumn prefWidth="385.0" text="Nơi thường trú" />
+                                       </columns>
+                                    </TableView>
+                                    <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                    <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="47.0" size="1.5em" />
+                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
+                                       <font>
+                                          <Font name="Tahoma" size="16.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <Button layoutX="579.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="68.0" styleClass="detail-btn" text="Chi tiết">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="661.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="70.0" styleClass="add-btn" text="Thêm">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
