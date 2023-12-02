@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -38,6 +39,10 @@ public class Login {
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
+
+    private double x = 0;
+    private double y = 0;
+
     public void loginAdmin(){
         String sql = "SELECT * FROM admin WHERE username = ? and password = ?";
 
@@ -70,6 +75,16 @@ public class Login {
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
 
+                    root.setOnMousePressed((MouseEvent event) -> {
+                        x = event.getScreenX() - stage.getX();
+                        y = event.getScreenY() - stage.getY();
+                    });
+
+                    root.setOnMouseDragged((MouseEvent event) -> {
+                        stage.setX(event.getScreenX() - x);
+                        stage.setY(event.getScreenY() - y);
+                    });
+
                     stage.initStyle(StageStyle.TRANSPARENT);
                     stage.setScene(scene);
                     stage.show();
@@ -95,11 +110,6 @@ public class Login {
     void clickMinimize(ActionEvent event) {
         Stage stage = (Stage) minimize.getScene().getWindow();
         stage.setIconified(true);
-    }
-
-    @FXML
-    void clicklLogin(ActionEvent event) {
-
     }
 
 }

@@ -30,7 +30,7 @@ public class Main extends Application {
             stage.setY(event.getScreenY() - y);
         });
 
-        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);    //Không hiển thị thanh tác vụ
 
         stage.setScene(scene);
         stage.show();

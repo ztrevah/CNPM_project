@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
+   <top>
+      <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutY="1.0" prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
+               <children>
+                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thông tin hộ khẩu">
+                     <font>
+                        <Font name="Tahoma" size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <FontAwesomeIconView glyphName="HOME" layoutX="15.0" layoutY="22.0" size="1.5em" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="329.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top left, #ddd , #327252);" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="134.0" prefWidth="502.0">
+               <children>
+                  <Label layoutX="23.0" layoutY="20.0" text="Mã khu vực:">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="191.0" layoutY="18.0" prefHeight="25.0" prefWidth="282.0" />
+                  <Label layoutX="23.0" layoutY="56.0" text="CMND của chủ hộ:">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="191.0" layoutY="54.0" prefHeight="25.0" prefWidth="282.0" />
+                  <Label layoutX="23.0" layoutY="90.0" text="Địa chỉ:">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="191.0" layoutY="88.0" prefHeight="25.0" prefWidth="282.0" />
+               </children>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </AnchorPane>
+            <Label layoutX="20.0" layoutY="8.0" text="Thông tin hộ khẩu:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="186.0" text="Thêm thành viên:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="newMemberBtn" layoutX="204.0" layoutY="183.0" mnemonicParsing="false" onAction="#addNewMember" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <AnchorPane fx:id="newMemberPane" layoutX="18.0" layoutY="223.0" prefHeight="210.0" prefWidth="500.0">
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <children>
+                  <ScrollPane fx:id="scrollMember" layoutX="4.0" layoutY="5.0" prefHeight="200.0" prefWidth="489.0">
+                     <content>
+                        <VBox fx:id="container" spacing="10" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+            <Button layoutX="639.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="add-btn" text="Done" />
+            <TableView layoutX="537.0" layoutY="38.0" prefHeight="285.0" prefWidth="346.0" style="-fx-background-color: #ddd;">
+              <columns>
+                <TableColumn prefWidth="88.0" text="CMND" />
+                <TableColumn prefWidth="123.0" text="Họ và tên" />
+                  <TableColumn prefWidth="133.0" text="Quan hệ với chủ hộ" />
+              </columns>
+            </TableView>
+            <Label layoutX="545.0" layoutY="8.0" text="Thành viên hiện có:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="733.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="delete-btn" text="Cancel" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
