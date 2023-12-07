@@ -58,7 +58,7 @@
                                     <Font name="Tahoma" size="17.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="4.0" layoutY="119.0" prefHeight="17.0" prefWidth="193.0" text="Admin" textFill="#1683ab">
+                              <Label alignment="CENTER" layoutX="4.0" layoutY="119.0" prefHeight="17.0" prefWidth="193.0" text="Admin" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="20.0" />
                                  </font>
@@ -264,6 +264,11 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
+                              <Button layoutX="54.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="L/S thay đổi">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
@@ -272,20 +277,20 @@
                               <String fx:value="shadow" />
                            </styleClass>
                            <children>
-                              <AnchorPane prefHeight="319.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                              <AnchorPane layoutX="-1.0" layoutY="1.0" prefHeight="319.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                                  <styleClass>
                                     <String fx:value="white-bg" />
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
+                                    <TableView fx:id="moneyTable" layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                        <columns>
                                           <TableColumn prefWidth="107.0" text="CMND chủ hộ" />
-                                          <TableColumn prefWidth="204.0" text="Tên chủ hộ" />
-                                          <TableColumn prefWidth="162.0" text="Nơi thường trú" />
-                                          <TableColumn prefWidth="125.0" text="Đã đóng" />
-                                          <TableColumn prefWidth="124.0" text="Còn thiếu" />
-                                          <TableColumn prefWidth="142.0" text="Ngày đóng" />
+                                          <TableColumn prefWidth="166.0" text="Tên chủ hộ" />
+                                          <TableColumn prefWidth="237.0" text="Nơi thường trú" />
+                                          <TableColumn prefWidth="105.0" text="Đã đóng" />
+                                          <TableColumn prefWidth="124.0" text="Ngày đóng" />
+                                          <TableColumn fx:id="missingCol" prefWidth="125.0" text="Còn thiếu" />
                                        </columns>
                                     </TableView>
                                     <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
@@ -299,21 +304,37 @@
                                           <Font name="Tahoma" size="16.0" />
                                        </font>
                                     </Button>
-                                    <RadioButton layoutX="370.0" layoutY="12.0" mnemonicParsing="false" text="Thu phí">
+                                    <RadioButton fx:id="feeRButton" layoutX="370.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickFeeRButton" selected="true" text="Thu phí">
                                        <font>
                                           <Font name="Arial Bold" size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton layoutX="370.0" layoutY="44.0" mnemonicParsing="false" text="Đóng góp">
+                                    <RadioButton fx:id="donateRButton" layoutX="370.0" layoutY="44.0" mnemonicParsing="false" onAction="#clickDonateRButton" text="Đóng góp">
                                        <font>
                                           <Font name="Arial Bold" size="16.0" />
                                        </font>
                                     </RadioButton>
+                                    <ComboBox layoutX="502.0" layoutY="23.0" prefHeight="32.0" prefWidth="180.0" promptText="Phí vệ sinh" />
+                                    <Label layoutX="691.0" layoutY="29.0" text="6.000đ/tháng/người">
+                                       <font>
+                                          <Font name="Arial Bold" size="16.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                                  <padding>
                                     <Insets bottom="7.0" />
                                  </padding>
                               </AnchorPane>
+                              <Button layoutX="617.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="77.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="721.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="77.0" styleClass="add-btn" text="Đóng phí">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </children>

@@ -10,10 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -27,6 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu{
+    @FXML
+    private TableView<people> moneyTable;
+
+    @FXML
+    private TableColumn<people, ?> missingCol;
+
+    @FXML
+    private RadioButton feeRButton;
+
+    @FXML
+    private RadioButton donateRButton;
+
     @FXML
     private AnchorPane newMemberPane;
 
@@ -253,6 +262,13 @@ public class Menu{
         homePane.setVisible(false);
         moneyPane.setVisible(true);
     }
+
+    public void clickFeeRButton(ActionEvent actionEvent) {
+    }
+
+    public void clickDonateRButton(ActionEvent actionEvent) {
+    }
+
 
     /*
         Hết Quản lý thu chi

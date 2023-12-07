@@ -10,6 +10,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -17,7 +20,7 @@
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutY="1.0" prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
+            <AnchorPane prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
                <children>
                   <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thông tin hộ khẩu">
                      <font>
@@ -42,56 +45,30 @@
       </AnchorPane>
    </top>
    <center>
-      <AnchorPane prefHeight="329.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top left, #ddd , #327252);" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="476.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top left, #ddd , #327252);" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="134.0" prefWidth="502.0">
-               <children>
-                  <Label layoutX="23.0" layoutY="20.0" text="Mã khu vực:">
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="191.0" layoutY="18.0" prefHeight="25.0" prefWidth="282.0" />
-                  <Label layoutX="23.0" layoutY="56.0" text="CMND của chủ hộ:">
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="191.0" layoutY="54.0" prefHeight="25.0" prefWidth="282.0" />
-                  <Label layoutX="23.0" layoutY="90.0" text="Địa chỉ:">
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="191.0" layoutY="88.0" prefHeight="25.0" prefWidth="282.0" />
-               </children>
-               <styleClass>
-                  <String fx:value="white-bg" />
-                  <String fx:value="shadow" />
-               </styleClass>
-            </AnchorPane>
             <Label layoutX="20.0" layoutY="8.0" text="Thông tin hộ khẩu:">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="20.0" layoutY="186.0" text="Thêm thành viên:">
+            <Label layoutX="20.0" layoutY="194.0" text="Thay đổi thành viên:">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="newMemberBtn" layoutX="204.0" layoutY="183.0" mnemonicParsing="false" onAction="#addNewMember" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
+            <Button fx:id="newMemberBtn" layoutX="223.0" layoutY="191.0" mnemonicParsing="false" onAction="#addNewMember" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <AnchorPane fx:id="newMemberPane" layoutX="18.0" layoutY="223.0" prefHeight="210.0" prefWidth="500.0">
+            <AnchorPane fx:id="newMemberPane" layoutX="16.0" layoutY="228.0" prefHeight="217.0" prefWidth="502.0">
                <styleClass>
                   <String fx:value="white-bg" />
                   <String fx:value="shadow" />
                </styleClass>
                <children>
-                  <ScrollPane fx:id="scrollMember" layoutX="4.0" layoutY="5.0" prefHeight="200.0" prefWidth="489.0">
+                  <ScrollPane fx:id="scrollMember" layoutX="6.0" layoutY="8.0" prefHeight="201.0" prefWidth="489.0">
                      <content>
                         <VBox fx:id="container" spacing="10" />
                      </content>
@@ -112,6 +89,52 @@
                </font>
             </Label>
             <Button layoutX="733.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="delete-btn" text="Cancel" />
+            <AnchorPane layoutX="16.0" layoutY="36.0" prefHeight="151.0" prefWidth="503.0">
+               <children>
+                  <GridPane layoutX="13.0" layoutY="3.0" prefHeight="142.0" prefWidth="476.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Mã khu vực:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="CMND của chủ hộ:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Địa chỉ:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Mã hộ khẩu">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </center>

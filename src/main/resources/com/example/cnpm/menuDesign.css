@@ -155,3 +155,8 @@
 .detail-btn:hover{
     -fx-background-color:#9d3485;
 }
+.combo-box{
+    -fx-text-fill: #fff;
+    -fx-font-size: 15px;
+    -fx-font-family: Tahoma;
+}
