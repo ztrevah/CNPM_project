@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top right, #ddd , #E5A429)linear-gradient(to top right, #ddd , #E5A429);" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
+   <top>
+      <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
+               <children>
+                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thống kê thu chi">
+                     <font>
+                        <Font name="Tahoma" size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <FontAwesomeIconView glyphName="HOME" layoutX="15.0" layoutY="22.0" size="1.5em" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="14.0" layoutY="3.0" text="Thống kê thu chi:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="15.0" layoutY="32.0" prefHeight="296.0" prefWidth="373.0">
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <children>
+                  <GridPane layoutX="11.0" layoutY="12.0" prefHeight="233.0" prefWidth="348.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Loại phí:">
+                           <font>
+                              <Font name="Tahoma" size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox prefWidth="150.0" promptText="Tất cả" GridPane.columnIndex="1" />
+                        <Label prefHeight="48.0" prefWidth="112.0" text="Khoản phí thu, đóng góp:" wrapText="true" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Tahoma" size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox prefWidth="150.0" promptText="Tất cả" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Hộ:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Tahoma" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField promptText="Tất cả." GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Tahoma" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Từ:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Tahoma" size="16.0" />
+                           </font>
+                        </Label>
+                        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Đến:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Tahoma" size="16.0" />
+                           </font>
+                        </Label>
+                        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
+                  <Button layoutX="276.0" layoutY="246.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="73.0" styleClass="update-btn" text="Filter" />
+               </children>
+            </AnchorPane>
+            <TableView layoutX="415.0" layoutY="32.0" prefHeight="409.0" prefWidth="463.0" style="-fx-background-color: #ddd;">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Mã hộ khẩu" />
+                <TableColumn prefWidth="75.0" text="Tên chủ hộ" />
+                  <TableColumn prefWidth="105.0" text="Địa chỉ hộ khẩu" />
+                  <TableColumn prefWidth="100.0" text="Đã đóng" />
+                  <TableColumn prefWidth="106.0" text="Ngày đóng" />
+              </columns>
+            </TableView>
+            <Button layoutX="286.0" layoutY="377.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="73.0" styleClass="add-btn" text="Done" />
+            <Button layoutX="187.0" layoutY="377.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="73.0" styleClass="detail-btn" text="Xuất file" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

@@ -20,9 +20,9 @@
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutY="1.0" prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
+            <AnchorPane prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
                <children>
-                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thêm hộ khẩu">
+                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thông tin hộ khẩu">
                      <font>
                         <Font name="Tahoma" size="15.0" />
                      </font>
@@ -45,9 +45,51 @@
       </AnchorPane>
    </top>
    <center>
-      <AnchorPane prefHeight="329.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top right, #ddd , #327252);" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="476.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top left, #ddd , #327252);" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="151.0" prefWidth="503.0">
+            <Label layoutX="20.0" layoutY="8.0" text="Thông tin hộ khẩu:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="194.0" text="Thay đổi thành viên:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="newMemberBtn" layoutX="223.0" layoutY="191.0" mnemonicParsing="false" onAction="#addNewMember" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <AnchorPane fx:id="newMemberPane" layoutX="16.0" layoutY="228.0" prefHeight="217.0" prefWidth="502.0">
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <children>
+                  <ScrollPane fx:id="scrollMember" layoutX="6.0" layoutY="8.0" prefHeight="201.0" prefWidth="489.0">
+                     <content>
+                        <VBox fx:id="container" spacing="10" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+            <Button layoutX="639.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="add-btn" text="Done" />
+            <TableView layoutX="537.0" layoutY="38.0" prefHeight="285.0" prefWidth="346.0" style="-fx-background-color: #ddd;">
+              <columns>
+                <TableColumn prefWidth="88.0" text="CMND" />
+                <TableColumn prefWidth="123.0" text="Họ và tên" />
+                  <TableColumn prefWidth="133.0" text="Quan hệ với chủ hộ" />
+              </columns>
+            </TableView>
+            <Label layoutX="545.0" layoutY="8.0" text="Thành viên hiện có:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="733.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="delete-btn" text="Cancel" />
+            <AnchorPane layoutX="16.0" layoutY="36.0" prefHeight="151.0" prefWidth="503.0">
                <children>
                   <GridPane layoutX="13.0" layoutY="3.0" prefHeight="142.0" prefWidth="476.0">
                      <columnConstraints>
@@ -93,47 +135,6 @@
                   <String fx:value="shadow" />
                </styleClass>
             </AnchorPane>
-            <Label layoutX="20.0" layoutY="8.0" text="Thêm hộ khẩu mới:">
-               <font>
-                  <Font name="Arial Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="20.0" layoutY="199.0" text="Thêm thành viên:">
-               <font>
-                  <Font name="Arial Bold" size="20.0" />
-               </font>
-            </Label>
-            <Button fx:id="newMemberBtn" layoutX="204.0" layoutY="197.0" mnemonicParsing="false" onAction="#addNewMember" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <AnchorPane fx:id="newMemberPane" layoutX="17.0" layoutY="232.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="211.0" prefWidth="502.0">
-               <styleClass>
-                  <String fx:value="white-bg" />
-                  <String fx:value="shadow" />
-               </styleClass>
-               <children>
-                  <ScrollPane fx:id="scrollMember" layoutX="6.0" layoutY="7.0" prefHeight="197.0" prefWidth="490.0">
-                     <content>
-                        <VBox fx:id="container" spacing="10" />
-                     </content></ScrollPane>
-               </children>
-            </AnchorPane>
-            <Button layoutX="629.0" layoutY="355.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="add-btn" text="Done" />
-            <Button layoutX="734.0" layoutY="355.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="delete-btn" text="Cancel" />
-            <TableView layoutX="536.0" layoutY="38.0" prefHeight="285.0" prefWidth="346.0" style="-fx-background-color: #ddd;">
-               <columns>
-                  <TableColumn prefWidth="88.0" text="CMND" />
-                  <TableColumn prefWidth="123.0" text="Họ và tên" />
-                  <TableColumn prefWidth="133.0" text="Quan hệ với chủ hộ" />
-               </columns>
-            </TableView>
-            <Label layoutX="535.0" layoutY="7.0" text="Thành viên hiện có:">
-               <font>
-                  <Font name="Arial Bold" size="20.0" />
-               </font>
-            </Label>
          </children>
       </AnchorPane>
    </center>
