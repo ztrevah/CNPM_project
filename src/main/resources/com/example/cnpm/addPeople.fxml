@@ -70,7 +70,7 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" text="Họ và tên:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label alignment="CENTER" text="Họ và tên*:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
@@ -78,7 +78,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <TextField GridPane.columnIndex="1" />
+                        <TextField fx:id="newPeopleName" GridPane.columnIndex="1" />
                         <Label alignment="CENTER_RIGHT" text="Bí danh:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="14.0" />

@@ -285,12 +285,13 @@
                                  <children>
                                     <TableView fx:id="moneyTable" layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                        <columns>
-                                          <TableColumn prefWidth="107.0" text="CMND chủ hộ" />
-                                          <TableColumn prefWidth="166.0" text="Tên chủ hộ" />
-                                          <TableColumn prefWidth="237.0" text="Nơi thường trú" />
-                                          <TableColumn prefWidth="105.0" text="Đã đóng" />
-                                          <TableColumn prefWidth="124.0" text="Ngày đóng" />
-                                          <TableColumn fx:id="missingCol" prefWidth="125.0" text="Còn thiếu" />
+                                          <TableColumn prefWidth="129.0" text="CMND chủ hộ" />
+                                          <TableColumn prefWidth="120.0" text="Tên chủ hộ" />
+                                          <TableColumn prefWidth="197.0" text="Nơi thường trú" />
+                                          <TableColumn prefWidth="107.0" text="Đã đóng" />
+                                          <TableColumn minWidth="0.0" prefWidth="118.0" text="Ngày đóng" />
+                                          <TableColumn fx:id="missingCol" minWidth="0.0" prefWidth="77.0" text="Còn thiếu" />
+                                          <TableColumn maxWidth="1000.0" prefWidth="116.0" text="Tên khoản phí" />
                                        </columns>
                                     </TableView>
                                     <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
