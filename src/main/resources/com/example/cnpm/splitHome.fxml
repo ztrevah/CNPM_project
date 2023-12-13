@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to right, #336f48 , #ddd 50%, #ddd 50%, #29bf60);" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
+   <top>
+      <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="35.0" prefWidth="900.0" styleClass="top-form" stylesheets="@menuDesign.css">
+               <children>
+                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Tách hộ khẩu">
+                     <font>
+                        <Font name="Tahoma" size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <FontAwesomeIconView glyphName="HOME" layoutX="15.0" layoutY="22.0" size="1.5em" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="39.0" layoutY="6.0" text="Hộ khẩu cũ:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="487.0" layoutY="35.0" prefHeight="157.0" prefWidth="375.0">
+               <children>
+                  <GridPane layoutX="13.0" layoutY="3.0" prefHeight="147.0" prefWidth="343.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="203.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="221.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Mã khu vực:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="CMND của chủ hộ:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Địa chỉ:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Mã hộ khẩu">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </AnchorPane>
+            <Label layoutX="503.0" layoutY="6.0" text="Hộ khẩu mới:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <TableView editable="true" layoutX="488.0" layoutY="238.0" prefHeight="200.0" prefWidth="373.0" style="-fx-background-color: #ddd;">
+               <columns>
+                  <TableColumn prefWidth="95.0" text="CMND" />
+                  <TableColumn prefWidth="140.0" text="Họ và Tên" />
+                  <TableColumn prefWidth="136.0" text="Quan hệ với chủ hộ" />
+               </columns>
+            </TableView>
+            <Button layoutX="418.0" layoutY="77.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="48.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <FontAwesomeIconView fill="#604bd7" glyphName="ANGLE_DOUBLE_RIGHT" size="5EM" wrappingWidth="32.28571319580078" />
+               </graphic>
+            </Button>
+            <Line endX="159.0" endY="-3.0517578125E-5" layoutX="198.0" layoutY="216.0" startX="50.0" startY="-3.0517578125E-5" />
+            <Line endX="159.0" endY="-3.0517578125E-5" layoutX="665.0" layoutY="216.0" startX="-137.0" startY="-3.0517578125E-5" />
+            <Button layoutX="418.0" layoutY="255.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="52.0" style="-fx-background-color: transparent;" />
+            <Button layoutX="412.0" layoutY="384.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="64.0" styleClass="delete-btn" text="Cancel" />
+            <AnchorPane layoutX="25.0" layoutY="35.0" prefHeight="157.0" prefWidth="375.0">
+               <children>
+                  <GridPane layoutX="13.0" layoutY="3.0" prefHeight="147.0" prefWidth="343.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="203.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="221.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Mã khu vực:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="CMND của chủ hộ:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Địa chỉ:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Mã hộ khẩu">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </AnchorPane>
+            <Label layoutX="26.0" layoutY="204.0" text="Thành viên:">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="154.0" layoutY="198.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="77.0" styleClass="update-btn" text="Add new" />
+            <AnchorPane fx:id="newMemberPane" layoutX="23.0" layoutY="238.0" prefHeight="201.0" prefWidth="379.0">
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <children>
+                  <ScrollPane fx:id="scrollMember" layoutX="5.0" layoutY="4.0" prefHeight="193.0" prefWidth="369.0">
+                     <content>
+                        <VBox fx:id="container" spacing="10" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+            <Button layoutX="412.0" layoutY="328.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="64.0" styleClass="update-btn" text="Done" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

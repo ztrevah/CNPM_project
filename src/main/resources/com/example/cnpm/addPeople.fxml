@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,13 +27,13 @@
                      </font>
                   </Label>
                   <FontAwesomeIconView glyphName="USER_PLUS" layoutX="14.0" layoutY="22.0" size="1.2em" />
-                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" onAction="#closePeople" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
                      </graphic>
                   </Button>
                   <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
-                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" onAction="#minimizePeople" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
                      </graphic>
@@ -44,7 +44,7 @@
       </AnchorPane>
    </top>
    <center>
-      <AnchorPane prefHeight="460.0" prefWidth="792.0" style="-fx-background-color: linear-gradient(to top left, #ddd, #324f6b);" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="460.0" prefWidth="792.0" style="-fx-background-color: linear-gradient(to top right, #ddd, #324f6b);" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane layoutX="32.0" layoutY="14.0" prefHeight="390.0" prefWidth="837.0">
                <styleClass>
@@ -70,7 +70,7 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Họ và tên:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label alignment="CENTER" text="Họ và tên*:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
@@ -78,8 +78,8 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Bí danh:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <TextField fx:id="newPeopleName" GridPane.columnIndex="1" />
+                        <Label alignment="CENTER_RIGHT" text="Bí danh:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
@@ -90,96 +90,96 @@
                               <Insets left="7.0" />
                            </padding>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Ngày sinh:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER_RIGHT" text="Ngày sinh:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker prefHeight="25.0" prefWidth="154.0" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Quê quán:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <DatePicker prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label alignment="CENTER_RIGHT" text="Quê quán:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Giới tính:" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label alignment="CENTER_RIGHT" text="Giới tính:" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox prefWidth="150.0" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Dân tộc:" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label alignment="CENTER_RIGHT" text="Dân tộc:" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Quốc tịch:" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label alignment="CENTER_RIGHT" text="Quốc tịch:" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="CMND:" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label alignment="CENTER_RIGHT" text="CMND:" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Hộ cước:" GridPane.columnIndex="2">
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label alignment="CENTER_RIGHT" text="Hộ cước:" GridPane.columnIndex="2">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Nghề nghiệp" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField GridPane.columnIndex="3" />
+                        <Label alignment="CENTER_RIGHT" text="Nghề nghiệp" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Nơi làm việc:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER_RIGHT" text="Nơi làm việc:" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Label style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Nơi thường trú trước khi đến:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label text="Nơi thường trú trước khi đến:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <Label style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Lý do thêm đăng ký thường chú:" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label text="Lý do thêm đăng ký thường chú:" GridPane.columnIndex="2" GridPane.rowIndex="4">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox prefWidth="150.0" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Ghi chú:" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                        <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Label alignment="CENTER_RIGHT" text="Ghi chú:" GridPane.columnIndex="2" GridPane.rowIndex="5">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Ngày chuyển đến:" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <Label alignment="CENTER_RIGHT" text="Ngày chuyển đến:" GridPane.columnIndex="2" GridPane.rowIndex="6">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker prefHeight="25.0" prefWidth="154.0" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <Label alignment="CENTER_RIGHT" style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" text="Nơi chuyển đến:" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                        <DatePicker prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                        <Label alignment="CENTER_RIGHT" text="Nơi chuyển đến:" GridPane.columnIndex="2" GridPane.rowIndex="7">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField style="-fx-background-color: linear-gradient(to top right, #ddd #324f6b);" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
-            <Button layoutX="742.0" layoutY="415.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" styleClass="add-btn" text="Add" />
+            <Button layoutX="742.0" layoutY="415.0" mnemonicParsing="false" onAction="#addAddPeople" prefHeight="37.0" prefWidth="81.0" styleClass="add-btn" text="Add" />
          </children>
       </AnchorPane>
    </center>
