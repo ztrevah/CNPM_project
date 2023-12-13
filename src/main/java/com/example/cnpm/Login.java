@@ -48,56 +48,26 @@ public class Login {
 
         connect = database.connectDb();
         try {
-            prepare = connect.prepareStatement(sql);
-            prepare.setString(1, username.getText());
-            prepare.setString(2, password.getText());
+            login_btn.getScene().getWindow().hide();
+            Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
 
-            result = prepare.executeQuery();
-            Alert alert;
+            root.setOnMousePressed((MouseEvent event) -> {
+                x = event.getScreenX() - stage.getX();
+                y = event.getScreenY() - stage.getY();
+            });
 
-            if(username.getText().isEmpty() || password.getText().isEmpty()){
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR Login");
-                alert.setHeaderText(null);
-                alert.setContentText("Điền đầy đủ ô trống!");
-                alert.showAndWait();
-            }else {
-                if (result.next()) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Login Successfull");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Đăng nhập thành công!");
-                    alert.showAndWait();
+            root.setOnMouseDragged((MouseEvent event) -> {
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
 
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
 
-                    login_btn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-                    Stage stage = new Stage();
-                    Scene scene = new Scene(root);
-
-                    root.setOnMousePressed((MouseEvent event) -> {
-                        x = event.getScreenX() - stage.getX();
-                        y = event.getScreenY() - stage.getY();
-                    });
-
-                    root.setOnMouseDragged((MouseEvent event) -> {
-                        stage.setX(event.getScreenX() - x);
-                        stage.setY(event.getScreenY() - y);
-                    });
-
-                    stage.initStyle(StageStyle.TRANSPARENT);
-                    stage.setScene(scene);
-                    stage.show();
-                } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("WRONG Login");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Sai tên đăng nhập hoặc mật khẩu!");
-                    alert.showAndWait();
-                }
-            }
-
-        } catch (SQLException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

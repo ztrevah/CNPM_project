@@ -71,7 +71,7 @@ public class Menu{
     private double x = 0;
     private double y = 0;
 
-    private List<Stage> newStages = new ArrayList<>(); //Lưu trữ tham chiếu các stage mới được mở thêm để sau logout đóng hết đi
+    private List<Stage> newStages = new ArrayList(); //Lưu trữ tham chiếu các stage mới được mở thêm để sau logout đóng hết đi
     @FXML
     void clickClose(ActionEvent event) {//nút close trên màn hình chính, nhấn để tắt TOÀN BỘ
         System.exit(0);
@@ -248,6 +248,177 @@ public class Menu{
         hbox.setPadding(insets);
         container.getChildren().add(hbox);
     }
+
+    @FXML
+    void clickDetailHouseHold(ActionEvent event) {//Nhấn detail trong scene quản lý hộ khẩu để mở stage mới là updateHome.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateHome.fxml"));
+            Parent updateHomeRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage updateHomeStage = new Stage();
+            updateHomeStage.setScene(new Scene(updateHomeRoot));
+            newStages.add(updateHomeStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            updateHomeRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - updateHomeStage.getX();
+                y = e.getScreenY() - updateHomeStage.getY();
+            });
+
+            updateHomeRoot.setOnMouseDragged((MouseEvent e) -> {
+                updateHomeStage.setX(e.getScreenX() - x);
+                updateHomeStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            updateHomeStage.initModality(Modality.NONE);
+            updateHomeStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            updateHomeStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+
+
+    @FXML
+    void clickAddHouseHold(ActionEvent event) {//Nhấn add trong scene quản lý hộ khẩu để mở stage mới là addHome.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("addHome.fxml"));
+            Parent addHomeRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage addHomeStage = new Stage();
+            addHomeStage.setScene(new Scene(addHomeRoot));
+            newStages.add(addHomeStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            addHomeRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - addHomeStage.getX();
+                y = e.getScreenY() - addHomeStage.getY();
+            });
+
+            addHomeRoot.setOnMouseDragged((MouseEvent e) -> {
+                addHomeStage.setX(e.getScreenX() - x);
+                addHomeStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            addHomeStage.initModality(Modality.NONE);
+            addHomeStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            addHomeStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void clickSplitHouseHold(ActionEvent event) {//Nhấn split trong scene quản lý hộ khẩu để mở stage mới là splitHome.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("splitHome.fxml"));
+            Parent splitHomeRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage splitHomeStage = new Stage();
+            splitHomeStage.setScene(new Scene(splitHomeRoot));
+            newStages.add(splitHomeStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            splitHomeRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - splitHomeStage.getX();
+                y = e.getScreenY() - splitHomeStage.getY();
+            });
+
+            splitHomeRoot.setOnMouseDragged((MouseEvent e) -> {
+                splitHomeStage.setX(e.getScreenX() - x);
+                splitHomeStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            splitHomeStage.initModality(Modality.NONE);
+            splitHomeStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            splitHomeStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void clickAddMoney(ActionEvent event) {//Nhấn add trong scene quản lý thu chi để mở stage mới là addMoney.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("addMoney.fxml"));
+            Parent addMoneyRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage addMoneyStage = new Stage();
+            addMoneyStage.setScene(new Scene(addMoneyRoot));
+            newStages.add(addMoneyStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            addMoneyRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - addMoneyStage.getX();
+                y = e.getScreenY() - addMoneyStage.getY();
+            });
+
+            addMoneyRoot.setOnMouseDragged((MouseEvent e) -> {
+                addMoneyStage.setX(e.getScreenX() - x);
+                addMoneyStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            addMoneyStage.initModality(Modality.NONE);
+            addMoneyStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            addMoneyStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @FXML
+    void clickAnalyzeMoney(ActionEvent event) {//Nhấn analyze trong scene quản lý thu chi để mở stage mới là analyzeMoney.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("analyzeMoney.fxml"));
+            Parent analyzeMoneyRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage analyzeMoneyStage = new Stage();
+            analyzeMoneyStage.setScene(new Scene(analyzeMoneyRoot));
+            newStages.add(analyzeMoneyStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            analyzeMoneyRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - analyzeMoneyStage.getX();
+                y = e.getScreenY() - analyzeMoneyStage.getY();
+            });
+
+            analyzeMoneyRoot.setOnMouseDragged((MouseEvent e) -> {
+                analyzeMoneyStage.setX(e.getScreenX() - x);
+                analyzeMoneyStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            analyzeMoneyStage.initModality(Modality.NONE);
+            analyzeMoneyStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            analyzeMoneyStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+
 
     /*
         Hết quản lý hộ khẩu
