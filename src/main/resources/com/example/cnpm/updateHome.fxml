@@ -27,13 +27,13 @@
                         <Font name="Tahoma" size="15.0" />
                      </font>
                   </Label>
-                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                  <Button layoutX="850.0" layoutY="3.0" mnemonicParsing="false" onAction="#closePeople" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
                      </graphic>
                   </Button>
                   <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
-                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                  <Button layoutX="805.0" layoutY="4.0" mnemonicParsing="false" onAction="#minimizePeople" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
                      </graphic>
