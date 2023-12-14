@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addHome.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addMoney.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addMoney.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/analyzeMoney.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/analyzeMoney.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/splitHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/splitHome.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/updateHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/updateHome.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
