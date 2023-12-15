@@ -57,7 +57,7 @@
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="newMemberBtn" layoutX="223.0" layoutY="191.0" mnemonicParsing="false" onAction="#addNewMember" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
+            <Button fx:id="newMemberBtn" layoutX="223.0" layoutY="191.0" mnemonicParsing="false" onMouseClicked="#addNewMemberUpdateHome" prefHeight="30.0" prefWidth="76.0" styleClass="addNew-btn" text="Add new">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -75,12 +75,12 @@
                   </ScrollPane>
                </children>
             </AnchorPane>
-            <Button layoutX="639.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="add-btn" text="Done" />
-            <TableView layoutX="537.0" layoutY="38.0" prefHeight="285.0" prefWidth="346.0" style="-fx-background-color: #ddd;">
+            <Button layoutX="639.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#finishUpdateHome" prefHeight="43.0" prefWidth="78.0" styleClass="add-btn" text="Done" />
+            <TableView fx:id="tempHoKhauTableUpdateHome" layoutX="537.0" layoutY="38.0" prefHeight="285.0" prefWidth="346.0" style="-fx-background-color: #ddd;">
               <columns>
-                <TableColumn prefWidth="88.0" text="CMND" />
-                <TableColumn prefWidth="123.0" text="Họ và tên" />
-                  <TableColumn prefWidth="133.0" text="Quan hệ với chủ hộ" />
+                <TableColumn fx:id="idUpdateHomeColumn" prefWidth="88.0" text="CMND" />
+                <TableColumn fx:id="nameUpdateHomeColumn" prefWidth="123.0" text="Họ và tên" />
+                  <TableColumn fx:id="relationUpdateHomeColumn" prefWidth="133.0" text="Quan hệ với chủ hộ" />
               </columns>
             </TableView>
             <Label layoutX="545.0" layoutY="8.0" text="Thành viên hiện có:">
@@ -88,7 +88,7 @@
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Button layoutX="733.0" layoutY="363.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="78.0" styleClass="delete-btn" text="Cancel" />
+            <Button layoutX="733.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#cancelUpdateHome" prefHeight="43.0" prefWidth="78.0" styleClass="delete-btn" text="Cancel" />
             <AnchorPane layoutX="16.0" layoutY="36.0" prefHeight="151.0" prefWidth="503.0">
                <children>
                   <GridPane layoutX="13.0" layoutY="3.0" prefHeight="142.0" prefWidth="476.0">
@@ -114,19 +114,19 @@
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="idChuHoFieldUpdateHome" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Địa chỉ:" GridPane.rowIndex="3">
                            <font>
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="addressHomeFieldUpdateHome" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Mã hộ khẩu">
                            <font>
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="idHKFieldUpdateHome" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

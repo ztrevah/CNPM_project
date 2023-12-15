@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="" />
+    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="nhánh mới thay nhánh chien vì merge main bị conflict @@">
+      <change afterPath="$PROJECT_DIR$/cnpm_db.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/updateHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/updateHome.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,10 +28,17 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="chien" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -47,30 +62,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Ngoc&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/admin/Desktop/Test/CNPM_project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Ngoc",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/New folder/CNPM_project",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\New folder\CNPM_project" />
+      <recent name="D:\New folder\CNPM_project\src\main\java\com\example\cnpm" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\CNPM_project\demo\src\main\resources\com\example\demo" />
     </key>
@@ -91,6 +110,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -117,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701515310682</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="nhánh mới thay nhánh chien vì merge main bị conflict @@">
+      <option name="closed" value="true" />
+      <created>1702604087732</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702604087732</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,7 +176,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="thêm tính năng các nút cơ bản như minimize, close, logout, thêm comment code trong Menu.java. Tất cả hàm điều khiển đều và nên nhét chung trong Menu.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="thêm tính năng các nút cơ bản như minimize, close, logout, thêm comment code trong Menu.java. Tất cả hàm điều khiển đều và nên nhét chung trong Menu.java" />
+    <MESSAGE value="nhánh mới thay nhánh chien vì merge main bị conflict @@" />
+    <option name="LAST_COMMIT_MESSAGE" value="nhánh mới thay nhánh chien vì merge main bị conflict @@" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CNPM_project$Main.ic" NAME="Main Coverage Results" MODIFIED="1701963651360" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

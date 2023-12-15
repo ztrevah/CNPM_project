@@ -78,7 +78,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <TextField GridPane.columnIndex="1" />
+                        <TextField fx:id="addPeopleHoTenField" GridPane.columnIndex="1" />
                         <Label alignment="CENTER_RIGHT" text="Bí danh:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="14.0" />
@@ -90,61 +90,61 @@
                               <Insets left="7.0" />
                            </padding>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="addPeopleBiDanhField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label alignment="CENTER_RIGHT" text="Ngày sinh:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <DatePicker fx:id="addPeopleNgaySinhField" prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label alignment="CENTER_RIGHT" text="Quê quán:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="addPeopleQueQuanField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label alignment="CENTER_RIGHT" text="Giới tính:" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="addPeopleGioiTinhField" onMouseClicked="#actionOnClickGioiTinhField" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label alignment="CENTER_RIGHT" text="Dân tộc:" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="addPeopleDanTocField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label alignment="CENTER_RIGHT" text="Quốc tịch:" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="addPeopleQuocTichField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Label alignment="CENTER_RIGHT" text="CMND:" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label alignment="CENTER_RIGHT" text="Hộ cước:" GridPane.columnIndex="2">
+                        <TextField fx:id="addPeopleCMNDField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label alignment="CENTER_RIGHT" text="Nơi sinh:" GridPane.columnIndex="2">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="3" />
+                        <TextField fx:id="addPeopleNoiSinhField" GridPane.columnIndex="3" />
                         <Label alignment="CENTER_RIGHT" text="Nghề nghiệp" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="addPeopleNgheNghiepField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label alignment="CENTER_RIGHT" text="Nơi làm việc:" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="addPeopleNoiLamViecField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <Label text="Nơi thường trú trước khi đến:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <font>
                               <Font name="Arial" size="14.0" />
