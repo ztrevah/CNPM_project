@@ -17,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed((MouseEvent event) -> {

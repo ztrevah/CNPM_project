@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
@@ -122,17 +123,17 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
+                                    <TableView fx:id="peopleTable" layoutX="6.0" layoutY="77.0" onMouseClicked="#selectPerson" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                       <columns>
-                                        <TableColumn prefWidth="96.0" text="CCCD" />
-                                        <TableColumn prefWidth="147.0" text="Họ và tên" />
-                                          <TableColumn prefWidth="104.0" text="Ngày sinh" />
-                                          <TableColumn prefWidth="96.0" text="Giới tính" />
-                                          <TableColumn prefWidth="303.0" text="Nơi thường trú" />
-                                          <TableColumn prefWidth="121.0" text="Tình trạng" />
+                                        <TableColumn fx:id="idColumn" prefWidth="96.0" text="CCCD" />
+                                        <TableColumn fx:id="nameColumn" prefWidth="147.0" text="Họ và tên" />
+                                          <TableColumn fx:id="dobColumn" prefWidth="89.60003662109375" text="Ngày sinh" />
+                                          <TableColumn fx:id="sexColumn" prefWidth="95.199951171875" text="Giới tính" />
+                                          <TableColumn fx:id="addressColumn" prefWidth="228.79998779296875" text="Nơi thường trú" />
+                                          <TableColumn fx:id="stateColumn" prefWidth="213.60009765625" text="Tình trạng" />
                                       </columns>
                                     </TableView>
-                                    <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                    <TextField fx:id="searchIDNameField" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -164,20 +165,20 @@
                                                 <Font name="Arial" size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="117.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                          <TextField fx:id="ageFrom" layoutX="117.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
                                           <Label layoutX="166.0" layoutY="39.0" text="Đến:">
                                              <font>
                                                 <Font name="Arial" size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="199.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
-                                          <ComboBox layoutX="101.0" layoutY="5.0" prefHeight="25.0" prefWidth="101.0" promptText="Tất cả" visibleRowCount="3" />
+                                          <TextField fx:id="ageTo" layoutX="199.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                          <ComboBox fx:id="seachGioiTinh" layoutX="101.0" layoutY="5.0" onMouseClicked="#actionOnClickSearchSex" prefHeight="25.0" prefWidth="101.0" promptText="Tất cả" visibleRowCount="3" />
                                           <Label alignment="CENTER_RIGHT" layoutX="268.0" layoutY="9.0" prefHeight="17.0" prefWidth="85.0" text="Tình trạng:">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox layoutX="376.0" layoutY="5.0" prefHeight="25.0" prefWidth="112.0" promptText="Tất cả" visibleRowCount="3" />
+                                          <ComboBox fx:id="loaiLuuTru" layoutX="376.0" layoutY="5.0" onMouseClicked="#actionOnClickTinhTrang" prefHeight="25.0" prefWidth="112.0" promptText="Tất cả" visibleRowCount="3" />
                                           <Label alignment="CENTER_RIGHT" layoutX="239.0" layoutY="38.0" prefHeight="17.0" prefWidth="114.0" text="Trong khoảng:">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
@@ -188,13 +189,13 @@
                                                 <Font name="Arial" size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="386.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
                                           <Label layoutX="435.0" layoutY="39.0" text="Đến:">
                                              <font>
                                                 <Font name="Arial" size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="468.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
+                                          <DatePicker fx:id="startDate" layoutX="383.0" layoutY="35.0" prefHeight="21.0" prefWidth="20.0" />
+                                          <DatePicker fx:id="endDate" layoutX="465.0" layoutY="35.0" prefHeight="21.0" prefWidth="20.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -214,7 +215,7 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                        <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -226,20 +227,20 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
+                                    <TableView fx:id="homeTable" layoutX="6.0" layoutY="77.0" onMouseClicked="#selectHome" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                        <columns>
-                                          <TableColumn prefWidth="179.0" text="Mã hộ khẩu" />
-                                          <TableColumn prefWidth="302.0" text="Tên chủ hộ" />
-                                          <TableColumn prefWidth="385.0" text="Nơi thường trú" />
+                                          <TableColumn fx:id="idHoKhauColumn" prefWidth="179.0" text="Mã hộ khẩu" />
+                                          <TableColumn fx:id="tenChuHoColumn" prefWidth="302.0" text="Tên chủ hộ" />
+                                          <TableColumn fx:id="diaChiHoKhauColumn" prefWidth="385.0" text="Nơi thường trú" />
                                        </columns>
                                     </TableView>
-                                    <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                    <TextField fx:id="searchIDNameHome" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="47.0" size="1.5em" />
-                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
+                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#clickSearchHome" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
                                        <font>
                                           <Font name="Tahoma" size="16.0" />
                                        </font>
@@ -271,7 +272,7 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
