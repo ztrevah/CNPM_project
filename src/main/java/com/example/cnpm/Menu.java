@@ -163,11 +163,13 @@ public class Menu{
             ioe.printStackTrace();
         }
     }
-    String selectedId;
+    String selectedId; // CCCD của nhân khẩu được chọn trong bảng Quản lý nhân khẩu
+    // Lưu CCCD của nhân khẩu được chọn trong bảng Quản lý nhân khẩu khi bấm vào 1 bản ghi
     @FXML
     void selectPerson(MouseEvent event) {
         selectedId = peopleTable.getSelectionModel().getSelectedItem().getSoCCCD();
     }
+    // Mở cửa sổ sửa thông tin nhân khẩu chỉ khi đã chọn 1 người
     @FXML
     void clickDetailPeople(ActionEvent e) { //Nhấn detail trong scene quản lý nhân khẩu để mở stage mới là updatePeople.fxml
         if(!selectedId.isEmpty()) {
@@ -261,6 +263,7 @@ public class Menu{
     private TableColumn<Person,String> sexColumn;
     @FXML
     private TableColumn<Person,String> stateColumn;
+    // Tìm kiếm nhân khẩu theo các tiêu chí đã chọn
     @FXML
     private void clickSearchPeople(ActionEvent event){ //nút search trên peoplePane
         //Cần kiểm tra mỗi trường được nhập rồi select trong csdl, sau đó hiển thị vào table bên dưới
@@ -312,7 +315,7 @@ public class Menu{
                     TinhTrangLuuTru = TinhTrangLuuTru.concat(tmp_LoaiLuuTru + " từ " + tmp_NgayBatDau + " đến " + tmp_NgayKetThuc + '\n');
                 }
 
-                if(!NoiLuuTru.isEmpty()) {
+                if(!NoiLuuTru.isEmpty() || (NoiLuuTru.isEmpty() && queriedFromDate.equals("1900/1/1") && queriedToDate.equals("2100/1/1"))) {
                     Person person = new Person(SoCCCD, HoTen, NgaySinh.toString(), GioiTinh, NoiLuuTru, TinhTrangLuuTru);
                     dataList.add(person);
                 }
@@ -331,18 +334,19 @@ public class Menu{
         peopleTable.setItems(dataList);
         databaseConnector.disconnect();
     }
+
     @FXML
     private void minimizePeople(ActionEvent event) { //nút minimize của mỗi stage addPeople và updatePeople
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
-
     @FXML
     private void closePeople(ActionEvent event) { //nút close của mỗi stage addPeople và updatePeople
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         newStages.remove(stage);
         stage.close();
     }
+
     @FXML
     private TextField addPeopleBiDanhField;
     @FXML
@@ -369,6 +373,7 @@ public class Menu{
     void actionOnClickGioiTinhField(MouseEvent event) {
         addPeopleGioiTinhField.setItems(FXCollections.observableArrayList("Nam","Nữ"));
     }
+    // Nhấn thêm nhân khẩu khi hoàn thành nhập thông tin
     @FXML
     private void addAddPeople(ActionEvent event) { ////nút add của mỗi stage addPeople
         //Thực hiện khi nhấn add: cần kiểm tra các trường đã nhập, thêm vào cơ sở dữ liệu sau đó đóng stage(đóng stage gọi luôn closeAddPeople cho nhanh);
@@ -439,6 +444,7 @@ public class Menu{
     void actionOnClickGioiTinhField_updatePeople(MouseEvent event) {
         updatePeopleGioiTinhField.setItems(FXCollections.observableArrayList("Nam","Nữ"));
     }
+    // Nhấn cập nhật thông tin nhân khẩu
     @FXML
     void actionOnClickUpdate(MouseEvent event) {
         String SoCCCD = updatePeopleCCCDField.getText();
@@ -507,6 +513,7 @@ public class Menu{
     private TableColumn<Home,String> diaChiHoKhauColumn;
     @FXML
     private TableColumn<Home,String> idHoKhauColumn;
+    // Tìm kiếm hộ khẩu theo tiêu chí đã chọn
     @FXML
     void clickSearchHome(MouseEvent event) {
         if(homeTable != null) homeTable.getItems().clear();
@@ -538,46 +545,10 @@ public class Menu{
         homeTable.setItems(dataList);
         databaseConnector.disconnect();
     }
-    public String selectedIDHome;
+    public String selectedIDHome; // Hộ khẩu được chọn
     @FXML
     void selectHome(MouseEvent event) {
         selectedIDHome = homeTable.getSelectionModel().getSelectedItem().getSoHK();
-    }
-    @FXML
-    void clickAddHome(ActionEvent e) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("addHome.fxml"));
-            Parent addPeopleRoot = loader.load();
-
-            // Tạo một Stage mới
-            Stage addPeopleStage = new Stage();
-            addPeopleStage.setScene(new Scene(addPeopleRoot));
-            newStages.add(addPeopleStage);
-
-            //Cài đặt để có thể di chuyển stage bằng kéo thả
-            addPeopleRoot.setOnMousePressed((MouseEvent event) -> {
-                x = event.getScreenX() - addPeopleStage.getX();
-                y = event.getScreenY() - addPeopleStage.getY();
-            });
-
-            addPeopleRoot.setOnMouseDragged((MouseEvent event) -> {
-                addPeopleStage.setX(event.getScreenX() - x);
-                addPeopleStage.setY(event.getScreenY() - y);
-            });
-
-            // Đặt kiểu modality của Stage mới là NONE
-            addPeopleStage.initModality(Modality.NONE);
-            addPeopleStage.initStyle(StageStyle.TRANSPARENT);
-
-            // Hiển thị Stage mới
-            addPeopleStage.show();
-            DatabaseConnector databaseConnector = new DatabaseConnector();
-            databaseConnector.connect();
-            databaseConnector.deleteTempHoKhauTable();
-            databaseConnector.disconnect();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
     @FXML
     private TextField idHKFieldAddHome;
@@ -593,6 +564,7 @@ public class Menu{
     private TableColumn<PeopleInfoOfHome, String> relationAddHomeColumn;
     @FXML
     private TableView<PeopleInfoOfHome> tempHoKhauTableAddHome;
+    // Làm mới bảng hiển thị danh sách tạm nhân khẩu của một hộ
     void refreshTempHoKhauTable(){
         DatabaseConnector databaseConnector = new DatabaseConnector();
         databaseConnector.connect();
@@ -616,6 +588,7 @@ public class Menu{
         tempHoKhauTableAddHome.setItems(dataList);
         databaseConnector.disconnect();
     }
+    // Hàm xử lý khi ấn Add new và xử lý khi ấn add và delete
     @FXML
     void addNewMemberNewHome(ActionEvent event) {
         Insets insets = new Insets(10, 20, 0, 20);
@@ -630,14 +603,23 @@ public class Menu{
         addButton.getStyleClass().add("detail-btn");
         Button delButton = new Button("delete");
         delButton.getStyleClass().add("delete-btn");
+        // Hàm xử lý khi ấn add: Thêm người vào bảng tạm
         addButton.setOnMouseClicked((MouseEvent e) -> {
             if(!cmndText.getText().isEmpty() && !qhText.getText().isEmpty()) {
                 String id = cmndText.getText();
                 String QuanHeChuHo = qhText.getText();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
                 databaseConnector.connect();
+                // Nếu người định thêm chưa có trong danh sách nhân khẩu thì mở giao diện addPeople để tạo mới
                 if(!databaseConnector.checkExistNhanKhauInNhanKhauList(id)){
                     try {
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Warning");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Người này chưa có trong danh sách nhân khẩu. Yêu cầu thêm mới");
+                        alert.showAndWait();
+
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("addPeople.fxml"));
                         Parent addPeopleRoot = loader.load();
 
@@ -672,8 +654,12 @@ public class Menu{
                     }
                 }
                 else {
+                    // Nếu người được thêm đang là chủ hộ của hộ khác thì phải thêm cả hộ hoặc thay đổi chủ hộ
                     if(!databaseConnector.checkExistChuHoInHoKhauList(id)) {
                         String HoTen = databaseConnector.getHoTen(id);
+                        // Nếu ấn add đối với người đã thêm vào bảng tạm thì chỉ cập nhật quan hệ chủ hộ
+                        if(databaseConnector.checkExistNhanKhauTempHoKhauTable(id))
+                            databaseConnector.updateRelationTempHoKhauTable(id,QuanHeChuHo);
                         databaseConnector.insertNewMemberTempHoKhauTable(id,HoTen,QuanHeChuHo);
                     }
                     else {
@@ -699,7 +685,7 @@ public class Menu{
 
         });
         delButton.setOnMouseClicked((MouseEvent e) -> {
-            if(!cmndText.getText().isEmpty() && !qhText.getText().isEmpty()) {
+            if(!cmndText.getText().isEmpty()) {
                 String id = cmndText.getText();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
                 databaseConnector.connect();
@@ -717,20 +703,22 @@ public class Menu{
             }
         });
 
-
         hbox.getChildren().addAll(cmnd, cmndText, qh, qhText, addButton, delButton);
         hbox.setPadding(insets);
         container.getChildren().add(hbox);
     }
+    // Bấm done để hoàn thành thêm hộ khẩu mới
     @FXML
     void finishAddNewHome(MouseEvent event) {
         String HoKhauID = idHKFieldAddHome.getText();
         String ChuHoID = idChuHoFieldAddHome.getText();
         String DiaChi = addressHomeFieldAddHome.getText();
+        // Các trường mã hộ khẩu, số cccd của chủ hộ, địa chỉ không được để trống
         if(!HoKhauID.isEmpty() && !ChuHoID.isEmpty() && !DiaChi.isEmpty()) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
             databaseConnector.connect();
-
+            // Nếu chủ hộ đã có trong danh sách nhân khẩu của hộ và không là chủ hộ của hộ khác và mã hộ khẩu chưa tồn tại
+            // thì tạo hộ khẩu mới với những người trong danh sách tạm
             if(!databaseConnector.checkExistChuHoInHoKhauList(ChuHoID) && !databaseConnector.checkExistHoKhauInHoKhauList(HoKhauID)
                     && databaseConnector.checkExistChuHoInTempHoKhauTable(ChuHoID))
             {
@@ -781,7 +769,7 @@ public class Menu{
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Chủ hộ không có trong hộ khẩu");
+                    alert.setContentText("Chủ hộ chưa được thêm vào hộ khẩu này");
                     alert.showAndWait();
                 }
 
@@ -806,37 +794,312 @@ public class Menu{
         stage.close();
     }
 
+    // Cập nhật thông tin của hộ khẩu đã có
     @FXML
     void clickDetailHouseHold(ActionEvent event) {//Nhấn detail trong scene quản lý hộ khẩu để mở stage mới là updateHome.fxml
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateHome.fxml"));
-            Parent updateHomeRoot = loader.load();
+        if(selectedIDHome != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("updateHome.fxml"));
+                Parent updateHomeRoot = loader.load();
 
-            // Tạo một Stage mới
-            Stage updateHomeStage = new Stage();
-            updateHomeStage.setScene(new Scene(updateHomeRoot));
-            newStages.add(updateHomeStage);
+                // Tạo một Stage mới
+                Stage updateHomeStage = new Stage();
+                updateHomeStage.setScene(new Scene(updateHomeRoot));
+                newStages.add(updateHomeStage);
 
-            //Cài đặt để có thể di chuyển stage bằng kéo thả
-            updateHomeRoot.setOnMousePressed((MouseEvent e) -> {
-                x = e.getScreenX() - updateHomeStage.getX();
-                y = e.getScreenY() - updateHomeStage.getY();
-            });
+                Menu updateHomeController = loader.getController();
+                updateHomeController.idHKFieldUpdateHome.setText(selectedIDHome);
+                updateHomeController.idHKFieldUpdateHome.setEditable(false);
 
-            updateHomeRoot.setOnMouseDragged((MouseEvent e) -> {
-                updateHomeStage.setX(e.getScreenX() - x);
-                updateHomeStage.setY(e.getScreenY() - y);
-            });
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connect();
+                databaseConnector.deleteTempHoKhauTable();
 
-            // Đặt kiểu modality của Stage mới là NONE
-            updateHomeStage.initModality(Modality.NONE);
-            updateHomeStage.initStyle(StageStyle.TRANSPARENT);
+                ResultSet homeInfo = databaseConnector.getHomeInfo(selectedIDHome);
+                while(homeInfo.next()) {
+                    updateHomeController.idChuHoFieldUpdateHome.setText(homeInfo.getString(2));
+                    updateHomeController.addressHomeFieldUpdateHome.setText(homeInfo.getString(3));
+                }
 
-            // Hiển thị Stage mới
-            updateHomeStage.show();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+                ResultSet memberList = databaseConnector.getCurrentMember(selectedIDHome);
+                while(memberList.next()) {
+                    String tmp_CCCD = memberList.getString(1);
+                    String tmp_relation = memberList.getString(2);
+                    String tmp_hoten = databaseConnector.getHoTen(tmp_CCCD);
+                    databaseConnector.insertNewMemberTempHoKhauTable(tmp_CCCD,tmp_hoten,tmp_relation);
+                }
+                ResultSet resultSet = databaseConnector.getTempHoKhauTable();
+                if(updateHomeController.tempHoKhauTableUpdateHome != null)
+                    updateHomeController.tempHoKhauTableUpdateHome.getItems().clear();
+                ObservableList<PeopleInfoOfHome> dataList = FXCollections.observableArrayList();
+                try {
+                    while(resultSet.next()) {
+                        String SoCCCD = resultSet.getString(1);
+                        String HoTen = resultSet.getString(2);
+                        String QuanHeChuHo = resultSet.getString(3);
+                        PeopleInfoOfHome peopleInfoOfHome = new PeopleInfoOfHome(SoCCCD,HoTen,QuanHeChuHo);
+                        dataList.add(peopleInfoOfHome);
+                    }
+                } catch(SQLException e) {
+                    e.printStackTrace();
+                }
+                updateHomeController.idUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("SoCCCD"));
+                updateHomeController.nameUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
+                updateHomeController.relationUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
+                updateHomeController.tempHoKhauTableUpdateHome.setItems(dataList);
+                databaseConnector.disconnect();
+
+                //Cài đặt để có thể di chuyển stage bằng kéo thả
+                updateHomeRoot.setOnMousePressed((MouseEvent e) -> {
+                    x = e.getScreenX() - updateHomeStage.getX();
+                    y = e.getScreenY() - updateHomeStage.getY();
+                });
+
+                updateHomeRoot.setOnMouseDragged((MouseEvent e) -> {
+                    updateHomeStage.setX(e.getScreenX() - x);
+                    updateHomeStage.setY(e.getScreenY() - y);
+                });
+
+                // Đặt kiểu modality của Stage mới là NONE
+                updateHomeStage.initModality(Modality.NONE);
+                updateHomeStage.initStyle(StageStyle.TRANSPARENT);
+
+                // Hiển thị Stage mới
+                updateHomeStage.show();
+            } catch (SQLException| IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
+
+    }
+    @FXML
+    private TextField idHKFieldUpdateHome;
+    @FXML
+    private TextField idChuHoFieldUpdateHome;
+    @FXML
+    private TextField addressHomeFieldUpdateHome;
+    @FXML
+    private TableColumn<PeopleInfoOfHome, String> idUpdateHomeColumn;
+    @FXML
+    private TableColumn<PeopleInfoOfHome, String> nameUpdateHomeColumn;
+    @FXML
+    private TableColumn<PeopleInfoOfHome, String> relationUpdateHomeColumn;
+    @FXML
+    private TableView<PeopleInfoOfHome> tempHoKhauTableUpdateHome;
+    void refreshTempHoKhauUpdateHomeTable(){
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        ResultSet resultSet = databaseConnector.getTempHoKhauTable();
+        if(tempHoKhauTableUpdateHome != null) tempHoKhauTableUpdateHome.getItems().clear();
+        ObservableList<PeopleInfoOfHome> dataList = FXCollections.observableArrayList();
+        try {
+            while(resultSet.next()) {
+                String SoCCCD = resultSet.getString(1);
+                String HoTen = resultSet.getString(2);
+                String QuanHeChuHo = resultSet.getString(3);
+                PeopleInfoOfHome peopleInfoOfHome = new PeopleInfoOfHome(SoCCCD,HoTen,QuanHeChuHo);
+                dataList.add(peopleInfoOfHome);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        idUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("SoCCCD"));
+        nameUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
+        relationUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
+        tempHoKhauTableUpdateHome.setItems(dataList);
+        databaseConnector.disconnect();
+    }
+    @FXML
+    void addNewMemberUpdateHome(MouseEvent event) {
+        Insets insets = new Insets(10, 20, 0, 20);
+        HBox hbox = new HBox(10); // Khoảng cách giữa các phần tử trong HBox là 10
+        Label cmnd = new Label("CMND:");
+        TextField cmndText = new TextField();
+        cmndText.setPromptText("CMND");
+        Label qh = new Label("Quan hệ với chủ hộ:");
+        TextField qhText = new TextField();
+        qhText.setPromptText("Quan hệ với chủ hộ");
+        Button addButton = new Button("add");
+        addButton.getStyleClass().add("detail-btn");
+        Button delButton = new Button("delete");
+        delButton.getStyleClass().add("delete-btn");
+        addButton.setOnMouseClicked((MouseEvent e) -> {
+            // Nếu điền đủ CCCD và quan hệ chủ hộ thì add vào bảng tạm danh sách nhân khẩu
+            if(!cmndText.getText().isEmpty() && !qhText.getText().isEmpty()) {
+                String id = cmndText.getText();
+                String QuanHeChuHo = qhText.getText();
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connect();
+                // Nếu người được thêm chưa có trong danh sách nhân khẩu thì phải thêm vào trước
+                if(!databaseConnector.checkExistNhanKhauInNhanKhauList(id)){
+                    try {
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Warning");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Người này chưa có trong danh sách nhân khẩu. Yêu cầu thêm mới");
+                        alert.showAndWait();
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("addPeople.fxml"));
+                        Parent addPeopleRoot = loader.load();
+
+                        // Tạo một Stage mới
+                        Stage addPeopleStage = new Stage();
+                        addPeopleStage.setScene(new Scene(addPeopleRoot));
+                        newStages.add(addPeopleStage);
+
+                        Menu addPeopleController = loader.getController();
+                        addPeopleController.addPeopleCMNDField.setText(id);
+                        addPeopleController.addPeopleCMNDField.setEditable(false);
+
+                        //Cài đặt để có thể di chuyển stage bằng kéo thả
+                        addPeopleRoot.setOnMousePressed((MouseEvent event1) -> {
+                            x = event1.getScreenX() - addPeopleStage.getX();
+                            y = event1.getScreenY() - addPeopleStage.getY();
+                        });
+
+                        addPeopleRoot.setOnMouseDragged((MouseEvent event1) -> {
+                            addPeopleStage.setX(event1.getScreenX() - x);
+                            addPeopleStage.setY(event1.getScreenY() - y);
+                        });
+
+                        // Đặt kiểu modality của Stage mới là NONE
+                        addPeopleStage.initModality(Modality.NONE);
+                        addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+                        // Hiển thị Stage mới
+                        addPeopleStage.show();
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                }
+                else {
+                    // Nếu thêm chủ hộ của 1 hộ khác thì phải thêm cả hộ đó hoặc thay đổi chủ hộ của hộ đó
+                    if(databaseConnector.checkExistChuHoInHoKhauList(id)) {
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Không được thêm chủ hộ của hộ khác");
+                        alert.showAndWait();
+
+                    }
+                    else {
+                        String HoTen = databaseConnector.getHoTen(id);
+                        // Nếu ấn add đối với người đã thêm vào bảng tạm thì chỉ cập nhật quan hệ chủ hộ
+                        if(databaseConnector.checkExistNhanKhauTempHoKhauTable(id))
+                            databaseConnector.updateRelationTempHoKhauTable(id,QuanHeChuHo);
+                        else databaseConnector.insertNewMemberTempHoKhauTable(id,HoTen,QuanHeChuHo);
+                    }
+                }
+                databaseConnector.disconnect();
+                refreshTempHoKhauUpdateHomeTable();
+            }
+            else {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Chưa đủ dữ liệu");
+                alert.showAndWait();
+            }
+
+        });
+        delButton.setOnMouseClicked((MouseEvent e) -> {
+            if(!cmndText.getText().isEmpty()) {
+                String id = cmndText.getText();
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connect();
+                databaseConnector.deleteMemberFromTempHoKhauTable(id);
+                databaseConnector.disconnect();
+                refreshTempHoKhauUpdateHomeTable();
+            }
+            else {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Chưa đủ dữ liệu");
+                alert.showAndWait();
+            }
+        });
+
+
+        hbox.getChildren().addAll(cmnd, cmndText, qh, qhText, addButton, delButton);
+        hbox.setPadding(insets);
+        container.getChildren().add(hbox);
+    }
+    @FXML
+    void finishUpdateHome(MouseEvent event) {
+        String HoKhauID = idHKFieldUpdateHome.getText();
+        String ChuHoID = idChuHoFieldUpdateHome.getText();
+        String DiaChi = addressHomeFieldUpdateHome.getText();
+        if(!ChuHoID.isEmpty() && !DiaChi.isEmpty()) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            // Nếu chủ hộ không nằm trong danh sách nhân khẩu mới
+            if(!databaseConnector.checkExistChuHoInTempHoKhauTable(ChuHoID)) {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Chưa có chủ hộ trong danh sách của hộ khẩu");
+                alert.showAndWait();
+            }
+            else {
+                databaseConnector.updateOwnerAddressHome(HoKhauID,ChuHoID,DiaChi); // Cập nhật chủ hộ
+                ResultSet newMemberList = databaseConnector.getTempHoKhauTable(); // danh sách nhân khẩu mới của hộ khẩu
+                try {
+                    while(newMemberList.next()) {
+                        String idNewMember = newMemberList.getString("CCCD");
+                        String relationNewMember = newMemberList.getString("QuanHeChuHo");
+                        // Nếu người được thêm đã có trong hộ khẩu từ trước thì chỉ update quan hệ chủ hộ
+                        if(databaseConnector.checkExistNhanKhauHoKhau(idNewMember,HoKhauID))
+                            databaseConnector.updateRelation(idNewMember,HoKhauID,relationNewMember);
+                        else {
+                            // Nếu người được thêm đang thường trú ở nơi khác thì kết thúc thường trú ở đó
+                            if(databaseConnector.checkExistNhanKhauThuongTru(idNewMember))
+                                databaseConnector.updateNgayKetThucThuongTru(idNewMember);
+                            // Thêm bản ghi về thường trú của người được thêm ở hộ đang sửa vào bảng nhankhau_hokhau
+                            databaseConnector.insertNewNhanKhauHoKhau(idNewMember,HoKhauID,(new Date(System.currentTimeMillis())).toString(),
+                                    "2100-01-01","Thường trú",relationNewMember);
+                        }
+
+                    }
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cập nhật hộ khẩu " + HoKhauID + " thành công!");
+                    alert.showAndWait();
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    newStages.remove(stage);
+                    stage.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            databaseConnector.disconnect();
+
+        }
+        else {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập thiếu dữ liệu");
+            alert.showAndWait();
+        }
+
+    }
+    @FXML
+    void cancelUpdateHome(MouseEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        newStages.remove(stage);
+        stage.close();
     }
 
 
@@ -869,6 +1132,10 @@ public class Menu{
 
             // Hiển thị Stage mới
             addHomeStage.show();
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            databaseConnector.deleteTempHoKhauTable();
+            databaseConnector.disconnect();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

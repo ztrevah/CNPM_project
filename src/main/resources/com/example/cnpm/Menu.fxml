@@ -111,7 +111,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -125,12 +125,12 @@
                                  <children>
                                     <TableView fx:id="peopleTable" layoutX="6.0" layoutY="77.0" onMouseClicked="#selectPerson" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                       <columns>
-                                        <TableColumn fx:id="idColumn" prefWidth="96.0" text="CCCD" />
-                                        <TableColumn fx:id="nameColumn" prefWidth="147.0" text="Họ và tên" />
+                                        <TableColumn fx:id="idColumn" prefWidth="88.80000305175781" text="CCCD" />
+                                        <TableColumn fx:id="nameColumn" prefWidth="154.39996337890625" text="Họ và tên" />
                                           <TableColumn fx:id="dobColumn" prefWidth="89.60003662109375" text="Ngày sinh" />
                                           <TableColumn fx:id="sexColumn" prefWidth="95.199951171875" text="Giới tính" />
-                                          <TableColumn fx:id="addressColumn" prefWidth="228.79998779296875" text="Nơi thường trú" />
-                                          <TableColumn fx:id="stateColumn" prefWidth="213.60009765625" text="Tình trạng" />
+                                          <TableColumn fx:id="addressColumn" prefWidth="206.39996337890625" text="Nơi thường trú" />
+                                          <TableColumn fx:id="stateColumn" prefWidth="236.800048828125" text="Tình trạng" />
                                       </columns>
                                     </TableView>
                                     <TextField fx:id="searchIDNameField" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
@@ -215,7 +215,7 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                        <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />

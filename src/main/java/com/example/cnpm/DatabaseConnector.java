@@ -89,13 +89,21 @@ public class DatabaseConnector {
         String sql = "select DiaChi,LoaiLuuTru,NgayBatDau,NgayKetThuc\n" +
                 "from nhankhau_hokhau,HoKhau\n" +
                 "where nhankhau_hokhau.NhanKhauID like ? and nhankhau_hokhau.HoKhauID = HoKhau.SoHK " +
-                "and nhankhau_hokhau.LoaiLuuTru like ? and NgayBatDau >= ? and NgayKetThuc <= ?";
+                "and nhankhau_hokhau.LoaiLuuTru like ? and " +
+                "((NgayBatDau <= ? and NgayKetThuc >= ?) or (NgayBatDau >= ? and NgayKetThuc <= ?)" +
+                " or (NgayBatDau <= ? and NgayKetThuc >= ?) or (NgayBatDau >= ? and NgayKetThuc <= ?))";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,"%"+id+"%");
             preparedStatement.setString(2,"%"+state+"%");
             preparedStatement.setString(3,fromDate);
             preparedStatement.setString(4,toDate);
+            preparedStatement.setString(5,fromDate);
+            preparedStatement.setString(6,toDate);
+            preparedStatement.setString(7,toDate);
+            preparedStatement.setString(8,toDate);
+            preparedStatement.setString(9,fromDate);
+            preparedStatement.setString(10,fromDate);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
@@ -256,7 +264,7 @@ public class DatabaseConnector {
         }
     }
     public boolean checkExistNhanKhauThuongTru(String id) {
-        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc >= curdate() and LoaiLuuTru = N'Thường trú'";
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru = N'Thường trú'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
@@ -290,6 +298,93 @@ public class DatabaseConnector {
             preparedStatement.setString(6,QHChuHo);
 
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet getHomeInfo(String id){
+        String sql = "select * from hokhau where SoHK = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet getCurrentMember(String id) {
+        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru = N'Thường trú'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateOwnerAddressHome (String idHome,String idOwner,String address) {
+        String sql = "update hokhau set ChuHoID = ?, DiaChi = ? where SoHK = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,idOwner);
+            preparedStatement.setString(2,address);
+            preparedStatement.setString(3,idHome);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean checkExistNhanKhauHoKhau (String NhanKhauID,String HoKhauID) {
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and HoKhauID = ? and LoaiLuuTru = N'Thường trù' and NgayKetThuc = '2100-01-01'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,NhanKhauID);
+            preparedStatement.setString(2,HoKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateRelation(String NhanKhauID,String HoKhauID,String QHChuHo) {
+        String sql = "update nhankhau_hokhau set QHChuHo = ? where NhanKhauID = ? and HoKhauID = ? and LoaiLuuTru = N'Thường trù' and NgayKetThuc = '2100-01-01'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,QHChuHo);
+            preparedStatement.setString(2,NhanKhauID);
+            preparedStatement.setString(3,HoKhauID);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean checkExistNhanKhauTempHoKhauTable (String id) {
+        String sql = "select * from temp_hokhautable where CCCD = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateRelationTempHoKhauTable(String id,String relation) {
+        String sql = "update temp_hokhautable set QuanHeChuHo = ? where CCCD = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,relation);
+            preparedStatement.setString(2,id);
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
