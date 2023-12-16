@@ -172,7 +172,7 @@ public class Menu{
     // Mở cửa sổ sửa thông tin nhân khẩu chỉ khi đã chọn 1 người
     @FXML
     void clickDetailPeople(ActionEvent e) { //Nhấn detail trong scene quản lý nhân khẩu để mở stage mới là updatePeople.fxml
-        if(!selectedId.isEmpty()) {
+        if(selectedId != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("updatePeople.fxml"));
                 Parent updatePeopleRoot = loader.load();
@@ -380,9 +380,9 @@ public class Menu{
         String SoCCCD = addPeopleCMNDField.getText();
         String HoTen = addPeopleHoTenField.getText();
         String BiDanh = addPeopleBiDanhField.getText();
-        String NgaySinh = addPeopleNgaySinhField.getValue().toString();
+        LocalDate NgaySinh = addPeopleNgaySinhField.getValue();
         String NoiSinh = addPeopleNoiSinhField.getText();
-        String GioiTinh = addPeopleGioiTinhField.getValue().toString();
+        String GioiTinh = addPeopleGioiTinhField.getValue();
         String NgheNghiep = addPeopleNgheNghiepField.getText();
         String QueQuan = addPeopleQueQuanField.getText();
         String DanToc = addPeopleDanTocField.getText();
@@ -392,22 +392,46 @@ public class Menu{
         if(SoCCCD.length() == 0) SoCCCD = null;
         if(HoTen.length() == 0) HoTen = null;
         if(BiDanh.length() == 0) BiDanh = null;
-        if(NgaySinh.length() == 0) NgaySinh = null;
         if(NoiSinh.length() == 0) NoiSinh = null;
-        if(GioiTinh.length() == 0) GioiTinh = null;
         if(NgheNghiep.length() == 0) NgheNghiep = null;
         if(QueQuan.length() == 0) QueQuan = null;
         if(DanToc.length() == 0) DanToc = null;
         if(QuocTich.length() == 0) QuocTich = null;
         if(NoiLamViec.length() == 0) NoiLamViec = null;
 
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        databaseConnector.connect();
-        databaseConnector.addPerson(SoCCCD,HoTen,BiDanh,NgaySinh,NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
-
-        databaseConnector.disconnect();
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        stage.close();
+        if(!checkEmpty(SoCCCD) && !checkEmpty(HoTen) && NgaySinh != null && !checkEmpty(GioiTinh) && !checkEmpty(NoiSinh)
+                && !checkEmpty(QuocTich) && !checkEmpty(QueQuan) && !checkEmpty(GioiTinh)) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            if(databaseConnector.checkExistNhanKhau(SoCCCD)) {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Đã tồn tại nhân khẩu " + SoCCCD);
+                alert.showAndWait();
+            }
+            else {
+                databaseConnector.addPerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Thêm thành công nhân khẩu " + SoCCCD);
+                alert.showAndWait();
+                stage.close();
+            }
+            databaseConnector.disconnect();
+        }
+        else {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập thiếu dữ liệu");
+            alert.showAndWait();
+        }
     }
     @FXML
     private TextField updatePeopleBiDanhField;
@@ -450,7 +474,7 @@ public class Menu{
         String SoCCCD = updatePeopleCCCDField.getText();
         String HoTen = updatePeopleHoTenField.getText();
         String BiDanh = updatePeopleBiDanhField.getText();
-        String NgaySinh = updatePeopleNgaySinhField.getValue().toString();
+        LocalDate NgaySinh = updatePeopleNgaySinhField.getValue();
         String NoiSinh = updatePeopleNoiSinhField.getText();
         String GioiTinh = updatePeopleGioiTinhField.getValue().toString();
         String NgheNghiep = updatePeopleNgheNghiepField.getText();
@@ -459,16 +483,35 @@ public class Menu{
         String QuocTich = updatePeopleQuocTichField.getText();
         String NoiLamViec = updatePeopleNoiLamViecField.getText();
 
+        if(checkEmpty(HoTen) && NgaySinh == null && checkEmpty(GioiTinh) && checkEmpty(NoiSinh)
+                && checkEmpty(QuocTich) && checkEmpty(QueQuan) && checkEmpty(GioiTinh)) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            databaseConnector.updatePerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
+            databaseConnector.disconnect();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful");
+            alert.setHeaderText(null);
+            alert.setContentText("Cập nhật thành công thông tin nhân khẩu " + SoCCCD);
+            alert.showAndWait();
+            stage.close();
+        }
+        else {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập thiếu dữ liệu");
+            alert.showAndWait();
+        }
 
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        databaseConnector.connect();
-        databaseConnector.updatePerson(SoCCCD,HoTen,BiDanh,NgaySinh,NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
-
-        databaseConnector.disconnect();
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        stage.close();
     }
-
+    public boolean checkEmpty(String s) {
+        if(s == null || s.isEmpty()) return true;
+        else return false;
+    }
 
     /*
         Hết quản lý nhân khẩu
@@ -545,7 +588,7 @@ public class Menu{
         homeTable.setItems(dataList);
         databaseConnector.disconnect();
     }
-    public String selectedIDHome; // Hộ khẩu được chọn
+    public static String selectedIDHome; // Hộ khẩu được chọn
     @FXML
     void selectHome(MouseEvent event) {
         selectedIDHome = homeTable.getSelectionModel().getSelectedItem().getSoHK();
@@ -660,7 +703,7 @@ public class Menu{
                         // Nếu ấn add đối với người đã thêm vào bảng tạm thì chỉ cập nhật quan hệ chủ hộ
                         if(databaseConnector.checkExistNhanKhauTempHoKhauTable(id))
                             databaseConnector.updateRelationTempHoKhauTable(id,QuanHeChuHo);
-                        databaseConnector.insertNewMemberTempHoKhauTable(id,HoTen,QuanHeChuHo);
+                        else databaseConnector.insertNewMemberTempHoKhauTable(id,HoTen,QuanHeChuHo);
                     }
                     else {
                         Alert alert;
@@ -975,7 +1018,7 @@ public class Menu{
                 }
                 else {
                     // Nếu thêm chủ hộ của 1 hộ khác thì phải thêm cả hộ đó hoặc thay đổi chủ hộ của hộ đó
-                    if(databaseConnector.checkExistChuHoInHoKhauList(id)) {
+                    if(databaseConnector.checkExistChuHoInHoKhauList(id) && !databaseConnector.checkChuHoHoKhau(id,selectedIDHome)) {
                         Alert alert;
                         alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Error");
@@ -1049,7 +1092,13 @@ public class Menu{
             else {
                 databaseConnector.updateOwnerAddressHome(HoKhauID,ChuHoID,DiaChi); // Cập nhật chủ hộ
                 ResultSet newMemberList = databaseConnector.getTempHoKhauTable(); // danh sách nhân khẩu mới của hộ khẩu
+                ResultSet currentMemberList = databaseConnector.getCurrentMember(HoKhauID);
                 try {
+                    while(currentMemberList.next()) {
+                        String NhanKhauID = currentMemberList.getString(1);
+                        if(!databaseConnector.checkExistNhanKhauTempHoKhauTable(NhanKhauID))
+                            databaseConnector.updateNgayKetThucThuongTru(NhanKhauID);
+                    }
                     while(newMemberList.next()) {
                         String idNewMember = newMemberList.getString("CCCD");
                         String relationNewMember = newMemberList.getString("QuanHeChuHo");
@@ -1142,38 +1191,270 @@ public class Menu{
     }
 
 
+
+    @FXML
+    private TextField addressFieldSplitHome;
+    @FXML
+    private TextField addressNewHomeSplitHome;
+
+    @FXML
+    private TextField idChuHoFieldSplitHome;
+
+    @FXML
+    private TextField idHKFieldSplitHome;
+
+    @FXML
+    private TextField idNewChuHoFieldSplitHome;
+
+    @FXML
+    private TextField idNewHKFieldSplitHome;
+
+    @FXML
+    private TableColumn<PeopleInfoOfHome, String> idSplitMember;
+
+    @FXML
+    private TableColumn<PeopleInfoOfHome, String> nameSplitMember;
+
+    @FXML
+    private TableColumn<PeopleInfoOfHome, String> relationSplitMember;
+
+    void refreshTempSplitHomeTable(Menu controller){
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        ResultSet resultSet = databaseConnector.getTempHoKhauTable();
+        if(controller.tempSplitHomeTable != null) controller.tempSplitHomeTable.getItems().clear();
+        ObservableList<PeopleInfoOfHome> dataList = FXCollections.observableArrayList();
+        try {
+            while(resultSet.next()) {
+                String SoCCCD = resultSet.getString(1);
+                String HoTen = resultSet.getString(2);
+                String QuanHeChuHo = resultSet.getString(3);
+                PeopleInfoOfHome peopleInfoOfHome = new PeopleInfoOfHome(SoCCCD,HoTen,QuanHeChuHo);
+                dataList.add(peopleInfoOfHome);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        controller.idSplitMember.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("SoCCCD"));
+        controller.nameSplitMember.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
+        controller.relationSplitMember.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
+        controller.tempSplitHomeTable.setItems(dataList);
+        databaseConnector.disconnect();
+    }
+
+    @FXML
+    private TableView<PeopleInfoOfHome> tempSplitHomeTable;
+    // Mở cửa sổ tách hộ khẩu, thêm danh sách các thành viên hiện tại vào phần thành viên
     @FXML
     void clickSplitHouseHold(ActionEvent event) {//Nhấn split trong scene quản lý hộ khẩu để mở stage mới là splitHome.fxml
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("splitHome.fxml"));
-            Parent splitHomeRoot = loader.load();
+        if(selectedIDHome != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("splitHome.fxml"));
+                Parent splitHomeRoot = loader.load();
 
-            // Tạo một Stage mới
-            Stage splitHomeStage = new Stage();
-            splitHomeStage.setScene(new Scene(splitHomeRoot));
-            newStages.add(splitHomeStage);
+                // Tạo một Stage mới
+                Stage splitHomeStage = new Stage();
+                splitHomeStage.setScene(new Scene(splitHomeRoot));
+                newStages.add(splitHomeStage);
 
-            //Cài đặt để có thể di chuyển stage bằng kéo thả
-            splitHomeRoot.setOnMousePressed((MouseEvent e) -> {
-                x = e.getScreenX() - splitHomeStage.getX();
-                y = e.getScreenY() - splitHomeStage.getY();
-            });
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connect();
+                databaseConnector.deleteTempHoKhauTable();
 
-            splitHomeRoot.setOnMouseDragged((MouseEvent e) -> {
-                splitHomeStage.setX(e.getScreenX() - x);
-                splitHomeStage.setY(e.getScreenY() - y);
-            });
+                Menu splitHomeController = loader.getController();
+                ResultSet homeInfo = databaseConnector.getHomeInfo(selectedIDHome);
+                // setText cho các trường mã hộ khẩu, cccd chủ hộ và địa chỉ của hộ cha và setText cho địa chỉ hộ tách ra là địa chỉ của hộ cha
+                // các trường này đều không được sửa
+                try {
+                    splitHomeController.idHKFieldSplitHome.setText(selectedIDHome);
+                    splitHomeController.idHKFieldSplitHome.setEditable(false);
+                    while(homeInfo.next()) {
+                        splitHomeController.idChuHoFieldSplitHome.setText(homeInfo.getString(2));
+                        splitHomeController.idChuHoFieldSplitHome.setEditable(false);
+                        splitHomeController.addressFieldSplitHome.setText(homeInfo.getString(3));
+                        splitHomeController.addressFieldSplitHome.setEditable(false);
+                        splitHomeController.addressNewHomeSplitHome.setText(homeInfo.getString(3));
+                        splitHomeController.addressNewHomeSplitHome.setEditable(false);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                databaseConnector.disconnect();
 
-            // Đặt kiểu modality của Stage mới là NONE
-            splitHomeStage.initModality(Modality.NONE);
-            splitHomeStage.initStyle(StageStyle.TRANSPARENT);
+                DatabaseConnector databaseConnector1 = new DatabaseConnector();
+                databaseConnector1.connect();
+                ResultSet currentMemberList = databaseConnector1.getCurrentMember(selectedIDHome);
 
-            // Hiển thị Stage mới
-            splitHomeStage.show();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+                try {
+                    // Thêm những thành viên của hộ vào phần thành viên
+                    while(currentMemberList.next()) {
+                        String idMember = currentMemberList.getString(1);
+                        String relationMember = currentMemberList.getString(2);
+
+                        Insets insets = new Insets(10, 20, 0, 20);
+                        HBox hbox = new HBox(10); // Khoảng cách giữa các phần tử trong HBox là 10
+                        Label cmnd = new Label("CMND:");
+                        TextField cmndText = new TextField();
+                        cmndText.setText(idMember);
+                        cmndText.setEditable(false);
+                        Label qh = new Label("Quan hệ với chủ hộ:");
+                        TextField qhText = new TextField();
+                        qhText.setText(relationMember);
+                        // Không cho phép sửa quan hệ chủ hộ của hộ cha
+                        if(databaseConnector1.checkChuHoHoKhau(idMember,selectedIDHome)) qhText.setEditable(false);
+                        Button addButton = new Button("add");
+                        addButton.getStyleClass().add("detail-btn");
+                        Button delButton = new Button("delete");
+                        delButton.getStyleClass().add("delete-btn");
+                        addButton.setOnMouseClicked((MouseEvent e) -> {
+                            if(!qhText.getText().isEmpty()) {
+                                String id = cmndText.getText();
+                                String relation = qhText.getText();
+                                DatabaseConnector databaseConnector2 = new DatabaseConnector();
+                                databaseConnector2.connect();
+                                if(databaseConnector2.checkChuHoHoKhau(idMember,selectedIDHome)) {
+                                    Alert alert;
+                                    alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Error");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("Không được tách chủ hộ");
+                                    alert.showAndWait();
+                                }
+                                else {
+                                    if(databaseConnector2.checkExistNhanKhauTempHoKhauTable(id))
+                                        databaseConnector2.updateRelationTempHoKhauTable(id,relation);
+                                    else {
+                                        String name = databaseConnector2.getHoTen(id);
+                                        databaseConnector2.insertNewMemberTempHoKhauTable(id,name,relation);
+                                    }
+                                    databaseConnector2.disconnect();
+                                    refreshTempSplitHomeTable(splitHomeController);
+                                }
+                            }
+                            else {
+                                Alert alert;
+                                alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Error");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Chưa đủ dữ liệu");
+                                alert.showAndWait();
+                            }
+                        });
+                        delButton.setOnMouseClicked((MouseEvent e) -> {
+                            String id = cmndText.getText();
+                            DatabaseConnector databaseConnector2 = new DatabaseConnector();
+                            databaseConnector2.connect();
+                            databaseConnector2.deleteMemberFromTempHoKhauTable(id);
+                            databaseConnector2.disconnect();
+                            refreshTempSplitHomeTable(splitHomeController);
+                        });
+
+                        hbox.getChildren().addAll(cmnd, cmndText, qh, qhText, addButton, delButton);
+                        hbox.setPadding(insets);
+                        splitHomeController.container.getChildren().add(hbox);
+                    }
+                } catch(SQLException e) {
+                    e.printStackTrace();
+                }
+                databaseConnector1.disconnect();
+                //Cài đặt để có thể di chuyển stage bằng kéo thả
+                splitHomeRoot.setOnMousePressed((MouseEvent e) -> {
+                    x = e.getScreenX() - splitHomeStage.getX();
+                    y = e.getScreenY() - splitHomeStage.getY();
+                });
+
+                splitHomeRoot.setOnMouseDragged((MouseEvent e) -> {
+                    splitHomeStage.setX(e.getScreenX() - x);
+                    splitHomeStage.setY(e.getScreenY() - y);
+                });
+
+                // Đặt kiểu modality của Stage mới là NONE
+                splitHomeStage.initModality(Modality.NONE);
+                splitHomeStage.initStyle(StageStyle.TRANSPARENT);
+
+                // Hiển thị Stage mới
+                splitHomeStage.show();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
+    }
+    @FXML
+    void cancelSplitHome(MouseEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        newStages.remove(stage);
+        stage.close();
+    }
+    // Ấn hoàn thành tách hộ khẩu
+    @FXML
+    void finishSplitHome(MouseEvent event) {
+        String HoKhauID = idNewHKFieldSplitHome.getText();
+        String ChuHoID = idNewChuHoFieldSplitHome.getText();
+        String DiaChi = addressNewHomeSplitHome.getText();
+        // Nếu đã nhập đủ dữ liệu của hộ đc tách ra
+        if(!HoKhauID.isEmpty() && !ChuHoID.isEmpty()) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            // Mã của hộ khẩu mới không được đã tồn tại và chủ hộ của hộ mới phải được có trong danh sách tạm
+            if(!databaseConnector.checkExistHoKhauInHoKhauList(HoKhauID) && databaseConnector.checkExistChuHoInTempHoKhauTable(ChuHoID))
+            {
+                databaseConnector.insertNewHoKhau(HoKhauID,ChuHoID,DiaChi);
+                ResultSet peopleListInsertIntoNewHoKhau = databaseConnector.getTempHoKhauTable();
+                try{
+                    while(peopleListInsertIntoNewHoKhau.next()) {
+                        String NhanKhauID = peopleListInsertIntoNewHoKhau.getString("CCCD");
+                        String QuanHeChuHo = peopleListInsertIntoNewHoKhau.getString("QuanHeChuHo");
+                        // Xoá đki thường trú của các nhân khẩu được tách ra
+                        if(databaseConnector.checkExistNhanKhauThuongTru(NhanKhauID))
+                            databaseConnector.updateNgayKetThucThuongTru(NhanKhauID);
 
+                        databaseConnector.insertNewNhanKhauHoKhau(NhanKhauID,HoKhauID,(new Date(System.currentTimeMillis())).toString(),
+                                "2100-1-1","Thường trú",QuanHeChuHo);
+                    }
+
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tách thành công hộ khẩu mới");
+                    alert.showAndWait();
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    newStages.remove(stage);
+                    stage.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                if(databaseConnector.checkExistHoKhauInHoKhauList(HoKhauID)) {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Đã tồn tại số hộ khẩu này ");
+                    alert.showAndWait();
+                }
+                if(!databaseConnector.checkExistChuHoInTempHoKhauTable(ChuHoID)) {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Chủ hộ của hộ được tách ra chưa có trong danh sách được tách ra");
+                    alert.showAndWait();
+                }
+
+            }
+            databaseConnector.disconnect();
+
+        }
+        else {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập thiếu dữ liệu của hộ mới tách ra");
+            alert.showAndWait();
+        }
     }
 
     @FXML

@@ -96,7 +96,7 @@
                               <Font name="Arial" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="updatePeopleNgaySinhField" prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <DatePicker fx:id="updatePeopleNgaySinhField" prefHeight="25.0" prefWidth="154.0" promptText="mm/dd/yyyy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label alignment="CENTER_RIGHT" text="Quê quán:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font name="Arial" size="14.0" />
