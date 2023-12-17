@@ -141,17 +141,12 @@
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="148.0" layoutY="23.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="Tahoma" size="14.0" />
-                           </font>
-                        </TextField>
                         <Label layoutX="10.0" layoutY="81.0" text="Số tiền nộp:" GridPane.rowIndex="3">
                            <font>
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <ComboBox prefHeight="29.0" prefWidth="169.0" promptText="Thu phí" GridPane.columnIndex="1" />
+                        <ComboBox prefHeight="29.0" prefWidth="219.0" promptText="Thu phí" GridPane.columnIndex="1" />
                         <Label text="100.000đ" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="Tahoma Bold" size="16.0" />
@@ -162,6 +157,7 @@
                               <Font name="Tahoma" size="14.0" />
                            </font>
                         </TextField>
+                        <ComboBox layoutX="139.0" layoutY="19.0" prefHeight="29.0" prefWidth="219.0" promptText="Loại phí" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -171,7 +167,8 @@
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Button layoutX="751.0" layoutY="252.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="76.0" styleClass="add-btn" text="Add" />
+            <Button layoutX="654.0" layoutY="252.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="76.0" styleClass="add-btn" text="Add" />
+            <Button layoutX="751.0" layoutY="252.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="76.0" styleClass="delete-btn" text="Close" />
          </children>
       </AnchorPane>
    </center>

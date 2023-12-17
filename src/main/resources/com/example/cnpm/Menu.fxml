@@ -111,7 +111,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -283,7 +283,7 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -297,12 +297,11 @@
                                  <children>
                                     <TableView fx:id="moneyTable" layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                        <columns>
-                                          <TableColumn prefWidth="107.0" text="CMND chủ hộ" />
-                                          <TableColumn prefWidth="166.0" text="Tên chủ hộ" />
-                                          <TableColumn prefWidth="237.0" text="Nơi thường trú" />
-                                          <TableColumn prefWidth="105.0" text="Đã đóng" />
-                                          <TableColumn prefWidth="124.0" text="Ngày đóng" />
-                                          <TableColumn fx:id="missingCol" prefWidth="125.0" text="Còn thiếu" />
+                                          <TableColumn fx:id="idMoneyCol" prefWidth="139.0" text="ID loại phí" />
+                                          <TableColumn fx:id="nameMoneyCol" prefWidth="297.0" text="Tên khoản phí" />
+                                          <TableColumn fx:id="MoneyCol" prefWidth="162.0" text="Chi phí (/tháng/nhân khẩu)" />
+                                          <TableColumn fx:id="totalMoneyCol" prefWidth="125.0" text="Tổng tiền đã thu" />
+                                          <TableColumn fx:id="dateMoneyCol" prefWidth="143.0" text="Ngày bắt đầu " />
                                        </columns>
                                     </TableView>
                                     <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
@@ -316,22 +315,16 @@
                                           <Font name="Tahoma" size="16.0" />
                                        </font>
                                     </Button>
-                                    <RadioButton fx:id="feeRButton" layoutX="370.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickFeeRButton" selected="true" text="Thu phí">
+                                    <RadioButton fx:id="feeRButton" layoutX="410.0" layoutY="31.0" mnemonicParsing="false" onAction="#clickFeeRButton" selected="true" text="Thu phí">
                                        <font>
                                           <Font name="Arial Bold" size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="donateRButton" layoutX="370.0" layoutY="44.0" mnemonicParsing="false" onAction="#clickDonateRButton" text="Đóng góp">
+                                    <RadioButton fx:id="donateRButton" layoutX="613.0" layoutY="31.0" mnemonicParsing="false" onAction="#clickDonateRButton" text="Đóng góp">
                                        <font>
                                           <Font name="Arial Bold" size="16.0" />
                                        </font>
                                     </RadioButton>
-                                    <ComboBox layoutX="502.0" layoutY="23.0" prefHeight="32.0" prefWidth="180.0" promptText="Phí vệ sinh" />
-                                    <Label layoutX="691.0" layoutY="29.0" text="6.000đ/tháng/người">
-                                       <font>
-                                          <Font name="Arial Bold" size="16.0" />
-                                       </font>
-                                    </Label>
                                  </children>
                                  <padding>
                                     <Insets bottom="7.0" />

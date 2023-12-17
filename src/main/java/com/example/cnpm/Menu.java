@@ -33,10 +33,22 @@ import java.util.Optional;
 
 public class Menu{
     @FXML
-    private TableView<people> moneyTable;
+    private TableView<Person> moneyTable;
 
     @FXML
-    private TableColumn<people, ?> missingCol;
+    private TableColumn<?, ?> dateMoneyCol;
+
+    @FXML
+    private TableColumn<?, ?> totalMoneyCol;
+
+    @FXML
+    private TableColumn<?, ?> idMoneyCol;
+
+    @FXML
+    private TableColumn<?, ?> nameMoneyCol;
+
+    @FXML
+    private TableColumn<Person, ?> MoneyCol;
 
     @FXML
     private RadioButton feeRButton;
@@ -1720,12 +1732,31 @@ public class Menu{
         moneyPane.setVisible(true);
     }
 
+    double originalWidth = 297.0;
+    double currentWidth = originalWidth + 162.0;
     public void clickFeeRButton(ActionEvent actionEvent) {
+        if(donateRButton.isSelected()) {
+            nameMoneyCol.setPrefWidth(originalWidth);
+            moneyTable.getColumns().add(2, MoneyCol);
+
+            donateRButton.setSelected(false);
+            feeRButton.setSelected(true);
+        }
+
     }
 
     public void clickDonateRButton(ActionEvent actionEvent) {
-    }
+        if(feeRButton.isSelected()) {
 
+            moneyTable.getColumns().remove(MoneyCol);
+
+            // Set the new width for nameMoneyCol
+            nameMoneyCol.setPrefWidth(currentWidth);
+            
+            feeRButton.setSelected(false);
+            donateRButton.setSelected(true);
+        }
+    }
 
     /*
         Hết Quản lý thu chi
