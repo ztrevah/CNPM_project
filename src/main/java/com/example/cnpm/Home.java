@@ -4,10 +4,12 @@ public class Home {
     String SoHK;
     String TenChuHo;
     String DiaChi;
-    Home(String id,String owner,String address) {
+    String LoaiSo;
+    Home(String id,String owner,String address,String type) {
         this.SoHK = id;
         this.TenChuHo = owner;
         this.DiaChi = address;
+        this.LoaiSo = type;
     }
 
     public String getSoHK() {
@@ -19,4 +21,5 @@ public class Home {
     public String getTenChuHo() {
         return TenChuHo;
     }
+    public String getLoaiSo() { return LoaiSo; }
 }

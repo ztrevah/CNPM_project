@@ -67,12 +67,12 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="Mã khu vực:" GridPane.rowIndex="1">
+                        <Label text="Loại sổ" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="loaiSoNewSplitHome" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="CMND của chủ hộ:" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial" size="16.0" />
@@ -134,12 +134,12 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="Mã khu vực:" GridPane.rowIndex="1">
+                        <Label text="Loại sổ" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="loaiSoSplitHome" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="CMND của chủ hộ:" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial" size="16.0" />

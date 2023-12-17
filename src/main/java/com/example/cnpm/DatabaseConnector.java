@@ -152,9 +152,9 @@ public class DatabaseConnector {
     }
     // Lấy danh sách nhân khẩu theo filter
     public ResultSet getHomeList (String id) {
-        String sql = "select SoHK,ChuHoID,HoTen,DiaChi\n" +
+        String sql = "select SoHK,ChuHoID,HoTen,DiaChi,LoaiSo\n" +
                 "from HoKhau,NhanKhau\n" +
-                "where HoKhau.ChuHoID = NhanKhau.CCCD and (ChuHoID like ? or DiaChi like ? or SoHK like ?)";
+                "where HoKhau.ChuHoID = NhanKhau.CCCD and (ChuHoID like ? or DiaChi like ? or SoHK like ?) and Deleted = 0";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,"%"+id+"%");
@@ -241,13 +241,15 @@ public class DatabaseConnector {
         }
     }
     // Thêm hộ khẩu mới
-    public void insertNewHoKhau(String idHoKhau,String idChuHo,String DiaChi) {
-        String sql = "insert into HoKhau(SoHK,ChuHoID,DiaChi) values (?,?,?)";
+    public void insertNewHoKhau(String idHoKhau,String idChuHo,String DiaChi,String LoaiSo) {
+        String sql = "insert into HoKhau(SoHK,ChuHoID,DiaChi,LoaiSo,Deleted) values (?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,idHoKhau);
             preparedStatement.setString(2,idChuHo);
             preparedStatement.setString(3,DiaChi);
+            preparedStatement.setString(4,LoaiSo);
+            preparedStatement.setInt(5,0);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -269,7 +271,7 @@ public class DatabaseConnector {
     }
     // Kiểm tra 1 người có là chủ hô của hộ nào ko
     public boolean checkExistChuHoInHoKhauList(String id) {
-        String sql = "select * from HoKhau where ChuHoID = ?";
+        String sql = "select * from HoKhau where ChuHoID = ? and LoaiSo = N'Thường trú'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
@@ -318,6 +320,30 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    public boolean checkExistNhanKhauTamTru(String id) {
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru = N'Tạm trú'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Xoá đki thường trú của một người: set NgayKetThuc = curdate()
+    public void updateNgayKetThucTamTru(String id) {
+        String sql = "update nhankhau_hokhau set NgayKetThuc = curdate() where NhanKhauID = ? and LoaiLuuTru = N'Tạm trú'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     // Thêm thông tin về nhân khẩu ở 1 hộ khẩu vào bảng nhankhau_hokhau
     public void insertNewNhanKhauHoKhau(String NhanKhauID,String HoKhauID,String NgayBatDau,String NgayKetThuc,String LoaiLuuTru,String QHChuHo) {
         String sql = "insert into nhankhau_hokhau(NhanKhauID,HoKhauID,NgayBatDau,NgayKetThuc,LoaiLuuTru,QHChuHo) values (?,?,?,?,?,?)";
@@ -335,7 +361,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
-    // Đưa ra thông tin của một hộ khẩu (SoHK,ChuHoID,DiaChi)
+    // Đưa ra thông tin của một hộ khẩu (SoHK,ChuHoID,DiaChi,LoaiSo)
     public ResultSet getHomeInfo(String id){
         String sql = "select * from hokhau where SoHK = ?";
         try {
@@ -350,7 +376,7 @@ public class DatabaseConnector {
     }
     // Đưa ra danh sách các nhân khẩu hiện tại của một hộ khẩu (NhanKhauID,QHChuHo)
     public ResultSet getCurrentMember(String id) {
-        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru = N'Thường trú'";
+        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru <> 'Tạm vắng'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
@@ -391,7 +417,7 @@ public class DatabaseConnector {
     }
     // Cập nhật quan hệ chủ hộ của 1 nhân khẩu
     public void updateRelation(String NhanKhauID,String HoKhauID,String QHChuHo) {
-        String sql = "update nhankhau_hokhau set QHChuHo = ? where NhanKhauID = ? and HoKhauID = ? and LoaiLuuTru = N'Thường trù' and NgayKetThuc = '2100-01-01'";
+        String sql = "update nhankhau_hokhau set QHChuHo = ? where NhanKhauID = ? and HoKhauID = ? and NgayKetThuc = '2100-01-01'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,QHChuHo);
@@ -438,6 +464,99 @@ public class DatabaseConnector {
             preparedStatement.setString(2,HoKhauID);
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Xoá 1 hộ, đặt ngày kết thúc cho những bản ghi của nhân khẩu ở hộ đó
+    public void deleteHome(String id) {
+        String sql = "update hokhau set Deleted = 1 where SoHK = ?";
+        String sql1 = "update nhankhau_hokhau set NgayKetThuc = curdate() where HoKhauID = ? and NgayKetThuc = '2100-01-01'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
+
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Xoá 1 nhân khẩu khỏi danh sách quản lý = Đặt ngày kết thúc cho đki lưu trú của người đó
+    public void deletePeople(String id) {
+        String sql = "update nhankhau_hokhau set NgayKetThuc = curdate() where NhanKhauID = ? and NgayKetThuc > curdate()";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public String getCurrentIDHomeThuongTru (String NhanKhauID) {
+        String sql = "select HoKhauID from nhankhau_hokhau where NhanKhauID = ? and LoaiLuuTru = N'Thường trú' and NgayKetThuc = '2100-01-01'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,NhanKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String currentIDHomeThuongTru = "";
+            while(resultSet.next()) {
+                currentIDHomeThuongTru = resultSet.getString(1);
+            }
+            return currentIDHomeThuongTru;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String getCurrentIDHomeTamTru (String NhanKhauID) {
+        String sql = "select HoKhauID from nhankhau_hokhau where NhanKhauID = ? and LoaiLuuTru = N'Tạm trú' and NgayKetThuc = '2100-01-01'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,NhanKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String currentIDHomeThuongTru = "";
+            while(resultSet.next()) {
+                currentIDHomeThuongTru = resultSet.getString(1);
+            }
+            return currentIDHomeThuongTru;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean checkNhanKhauTamVang(String NhanKhauID) {
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and LoaiLuuTru = 'Tạm vắng' and NgayKetThuc > curdate()";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,NhanKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void continueCurrentTamVangRecord (String NhanKhauID) {
+        String sql = "update nhankhau_hokhau set NgayKetThuc = '2100-01-01' where NhanKhauID = ? and LoaiLuuTru = N'Tạm vắng'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,NhanKhauID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateNgayKetThucTamVang(String id) {
+        String sql = "update nhankhau_hokhau set NgayKetThuc = curdate() where NhanKhauID = ? and LoaiLuuTru = N'Tạm vắng'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

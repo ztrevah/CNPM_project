@@ -213,6 +213,11 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
+                              <Button layoutX="740.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickDeletePeople" prefHeight="38.0" prefWidth="68.0" styleClass="delete-btn" text="Xoá">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
@@ -229,9 +234,10 @@
                                  <children>
                                     <TableView fx:id="homeTable" layoutX="6.0" layoutY="77.0" onMouseClicked="#selectHome" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                        <columns>
-                                          <TableColumn fx:id="idHoKhauColumn" prefWidth="179.0" text="Mã hộ khẩu" />
-                                          <TableColumn fx:id="tenChuHoColumn" prefWidth="302.0" text="Tên chủ hộ" />
-                                          <TableColumn fx:id="diaChiHoKhauColumn" prefWidth="385.0" text="Nơi thường trú" />
+                                          <TableColumn fx:id="idHoKhauColumn" prefWidth="111.19996643066406" text="Mã sổ" />
+                                          <TableColumn fx:id="loaiSoColumn" prefWidth="147.20001220703125" text="Thường trú/Tạm trú" />
+                                          <TableColumn fx:id="tenChuHoColumn" prefWidth="246.4000244140625" text="Tên chủ hộ" />
+                                          <TableColumn fx:id="diaChiHoKhauColumn" minWidth="0.0" prefWidth="358.39996337890625" text="Nơi thường trú" />
                                        </columns>
                                     </TableView>
                                     <TextField fx:id="searchIDNameHome" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
@@ -266,6 +272,11 @@
                                  </font>
                               </Button>
                               <Button layoutX="54.0" layoutY="492.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="L/S thay đổi">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="502.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickDeleteHome" prefHeight="38.0" prefWidth="68.0" styleClass="delete-btn" text="Xoá">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
