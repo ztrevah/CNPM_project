@@ -328,7 +328,7 @@ public class Menu{
                     TinhTrangLuuTru = TinhTrangLuuTru.concat(tmp_LoaiLuuTru + " từ " + tmp_NgayBatDau + " đến " + tmp_NgayKetThuc + '\n');
                 }
 
-                if(!NoiLuuTru.isEmpty() || (NoiLuuTru.isEmpty() && queriedFromDate.equals("1900/1/1") && queriedToDate.equals("2100/1/1"))) {
+                if(!NoiLuuTru.isEmpty() || (NoiLuuTru.isEmpty() && queriedFromDate.equals("1900/1/1") && queriedToDate.equals("2100/1/1") && queriedState.isEmpty())) {
                     Person person = new Person(SoCCCD, HoTen, NgaySinh.toString(), GioiTinh, NoiLuuTru, TinhTrangLuuTru);
                     dataList.add(person);
                 }
