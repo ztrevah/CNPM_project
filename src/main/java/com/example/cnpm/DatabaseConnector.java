@@ -150,7 +150,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
-    // Lấy danh sách nhân khẩu theo filter
+    // Lấy danh sách hộ khẩu theo filter
     public ResultSet getHomeList (String id) {
         String sql = "select SoHK,ChuHoID,HoTen,DiaChi,LoaiSo\n" +
                 "from HoKhau,NhanKhau\n" +
@@ -403,7 +403,7 @@ public class DatabaseConnector {
     }
     // Kiểm tra nhân khẩu x có trong hộ khẩu y không
     public boolean checkExistNhanKhauHoKhau (String NhanKhauID,String HoKhauID) {
-        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and HoKhauID = ? and LoaiLuuTru = N'Thường trù' and NgayKetThuc = '2100-01-01'";
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and HoKhauID = ? and NgayKetThuc = '2100-01-01'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,NhanKhauID);
