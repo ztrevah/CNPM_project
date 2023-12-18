@@ -533,6 +533,77 @@ public class Menu{
             }
         }
     }
+    @FXML
+    private AnchorPane absentPane;
+
+    @FXML
+    private AnchorPane residentPane;
+
+    @FXML
+    private AnchorPane stayingPane;
+
+    @FXML
+    private Button  openStayingPane;
+
+    @FXML
+    private Button  openResidentPane;
+
+    @FXML
+    private Button  openAbsentPane;
+
+    @FXML
+    void clickRegisterHome(ActionEvent event) {//Nhấn register trong scene quản lý nhân khẩu để mở stage mới là registerHome.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("registerHome.fxml"));
+            Parent addPeopleRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage addPeopleStage = new Stage();
+            addPeopleStage.setScene(new Scene(addPeopleRoot));
+            newStages.add(addPeopleStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            addPeopleRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - addPeopleStage.getX();
+                y = e.getScreenY() - addPeopleStage.getY();
+            });
+
+            addPeopleRoot.setOnMouseDragged((MouseEvent e) -> {
+                addPeopleStage.setX(e.getScreenX() - x);
+                addPeopleStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            addPeopleStage.initModality(Modality.NONE);
+            addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            addPeopleStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void openAbsentPane(ActionEvent event){//Nhấn tạm vắng để mở absentPane
+        absentPane.setVisible(true);
+        stayingPane.setVisible(false);
+        residentPane.setVisible(false);
+    }
+    @FXML
+    void openStayingPane(ActionEvent event){//Nhấn tạm trú để mở stayingPane
+        absentPane.setVisible(false);
+        stayingPane.setVisible(true);
+        residentPane.setVisible(false);
+    }
+    @FXML
+    void openResidentPane(ActionEvent event){//Nhấn thường trú để mở residentPane
+        absentPane.setVisible(false);
+        stayingPane.setVisible(false);
+        residentPane.setVisible(true);
+    }
+
 
     /*
         Hết quản lý nhân khẩu

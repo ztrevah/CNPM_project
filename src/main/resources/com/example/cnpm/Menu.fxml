@@ -111,7 +111,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -218,6 +218,11 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
+                              <Button layoutX="71.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickRegisterHome" prefHeight="38.0" prefWidth="295.0" styleClass="addNew-btn" text="Đăng ký thường trú/ tạm trú/ tạm vắng">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
@@ -283,7 +288,7 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
