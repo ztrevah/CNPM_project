@@ -18,27 +18,30 @@ USE `cnpm`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `temp_hokhautable`
+-- Table structure for table `thaydoi`
 --
 
-DROP TABLE IF EXISTS `temp_hokhautable`;
+DROP TABLE IF EXISTS `thaydoi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `temp_hokhautable` (
-  `CCCD` varchar(12) NOT NULL,
-  `HoTen` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `QuanHeChuHo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `thaydoi` (
+  `MaThayDoi` int NOT NULL AUTO_INCREMENT,
+  `HoKhauID` varchar(50) NOT NULL,
+  `NgayThayDoi` date NOT NULL,
+  `NoiDung` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`MaThayDoi`),
+  KEY `fk_thaydoi_HoKhauID` (`HoKhauID`),
+  CONSTRAINT `fk_thaydoi_HoKhauID` FOREIGN KEY (`HoKhauID`) REFERENCES `hokhau` (`SoHK`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lưu các thay đổi về nhân khẩu, hộ khẩu';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `temp_hokhautable`
+-- Dumping data for table `thaydoi`
 --
 
-LOCK TABLES `temp_hokhautable` WRITE;
-/*!40000 ALTER TABLE `temp_hokhautable` DISABLE KEYS */;
-INSERT INTO `temp_hokhautable` VALUES ('039748152989','Đinh Khôi','Chủ hộ'),('070854654250','Nguyễn Thị Nga Anh','Vợ'),('082096588171','Lê Thiện Bảo','Con'),('001056367209','Lê Bùi Trúc Phương','Con');
-/*!40000 ALTER TABLE `temp_hokhautable` ENABLE KEYS */;
+LOCK TABLES `thaydoi` WRITE;
+/*!40000 ALTER TABLE `thaydoi` DISABLE KEYS */;
+/*!40000 ALTER TABLE `thaydoi` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-18 12:12:47
+-- Dump completed on 2023-12-19  0:13:35

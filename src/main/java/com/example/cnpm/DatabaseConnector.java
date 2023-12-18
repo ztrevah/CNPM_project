@@ -578,6 +578,147 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    public ResultSet getTenKhoanPhiList (String type) {
+        String sql = "select TenPhi from loaiphi\n" +
+                "where Loai like ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,'%'+type+'%');
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet getLichSuDongPhi (String HoKhauID,String LoaiPhi,String TenKhoanPhi,String fromDate,String toDate) {
+        String sql = "select SoHK,DiaChi,TenPhi,NgayDong,SoTien\n" +
+                "from dongphi_log,loaiphi,hokhau\n" +
+                "where dongphi_log.IDPhi = loaiphi.ID and dongphi_log.HoKhauID = hokhau.SoHK\n" +
+                "and HoKhauID like ? and Loai like ? and TenPhi like ? and NgayDong >= ? and NgayDong <= ? ";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,'%'+HoKhauID+'%');
+            preparedStatement.setString(2,'%'+LoaiPhi+'%');
+            preparedStatement.setString(3,'%'+TenKhoanPhi+'%');
+            preparedStatement.setString(4,fromDate);
+            preparedStatement.setString(5,toDate);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getTongTienDaDong(String HoKhauID,String TenKhoanPhi,String NgayDong) {
+        String sql = "select HoKhauID,TenPhi,sum(SoTien)\n" +
+                "from dongphi_log,loaiphi\n" +
+                "where dongphi_log.IDPhi = loaiphi.ID and HoKhauID = ? and TenPhi = ? and NgayDong <= ?\n" +
+                "group by HoKhauID,TenPhi";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            preparedStatement.setString(2,TenKhoanPhi);
+            preparedStatement.setString(3,NgayDong);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int TongTienDaDong = 0;
+            while(resultSet.next()) TongTienDaDong = resultSet.getInt(3);
+            return TongTienDaDong;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public int getSoTienPhaiDong(String HoKhauID,String TenKhoanPhi) {
+        String sql = "select PhaiDong\n" +
+                "from dongphi,loaiphi\n" +
+                "where dongphi.IDPhi = loaiphi.ID and HoKhauID = ? and TenPhi = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            preparedStatement.setString(2,TenKhoanPhi);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int SoTienPhaiDong = 0;
+            while(resultSet.next()) SoTienPhaiDong = resultSet.getInt(1);
+            return SoTienPhaiDong;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public int getSoTienConThieu(String HoKhauID,String TenKhoanPhi) {
+        String sql = "select DaDong,PhaiDong\n" +
+                "from dongphi,loaiphi\n" +
+                "where dongphi.IDPhi = loaiphi.ID and HoKhauID = ? and TenPhi = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            preparedStatement.setString(2,TenKhoanPhi);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int DaDong = 0,PhaiDong = 0;
+            while(resultSet.next()) {
+                DaDong = resultSet.getInt(1);
+                PhaiDong = resultSet.getInt(2);
+            }
+            if(PhaiDong == 0) return 0;
+            else return PhaiDong - DaDong;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String getIDPhi(String TenKhoanPhi) {
+        String sql = "select * from loaiphi\n" +
+                "where TenPhi = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,TenKhoanPhi);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String IDPhi = "";
+            while(resultSet.next()) IDPhi = resultSet.getString("ID");
+            return IDPhi;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean checkExistLogDongPhi(String HoKhauID,String IDPhi,String NgayDong) {
+        String sql = "select * from dongphi_log\n" +
+                "where HoKhauID = ? and IDPhi = ? and NgayDong = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            preparedStatement.setString(2,IDPhi);
+            preparedStatement.setString(3,NgayDong);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateDongPhiLog(String HoKhauID,String IDPhi,String NgayDong,int SoTien) {
+        String sql = "update dongphi_log set SoTien = SoTien + ?\n" +
+                "where HoKhauID = ? and IDPhi = ? and NgayDong = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,SoTien);
+            preparedStatement.setString(2,HoKhauID);
+            preparedStatement.setString(3,IDPhi);
+            preparedStatement.setString(4,NgayDong);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void insertNewDongPhiLog(String HoKhauID,String IDPhi,String NgayDong,int SoTien) {
+        String sql = "insert into dongphi_log (HoKhauID,IDPhi,NgayDong,SoTien) values (?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            preparedStatement.setString(2,IDPhi);
+            preparedStatement.setString(3,NgayDong);
+            preparedStatement.setInt(4,SoTien);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     // Ngắt kết nối với server của db
     public void disconnect() {
         try {

@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -1645,6 +1647,12 @@ public class Menu{
                     databaseConnector.connect();
                     databaseConnector.deleteHome(selectedIDHome);
                     databaseConnector.disconnect();
+                    Alert alert1;
+                    alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("Successful");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("Xoá thành công hộ khẩu " + selectedIDHome + "!");
+                    alert1.showAndWait();
                 }
                 else {}
             }
@@ -1798,9 +1806,7 @@ public class Menu{
             donateRButton.setSelected(false);
             feeRButton.setSelected(true);
         }
-
     }
-
     public void clickDonateRButton(ActionEvent actionEvent) {
         if(feeRButton.isSelected()) {
             feeRButton.setSelected(false);
@@ -1808,6 +1814,231 @@ public class Menu{
         }
     }
 
+    @FXML
+    private TableColumn<DongPhiLog, String> addressColumnAnalyzeMoney;
+    @FXML
+    private TableView<DongPhiLog> analyzeMoneyTable;
+    @FXML
+    private TableColumn<DongPhiLog, Integer> conThieuColumnAnalyzeMoney;
+    @FXML
+    private TableColumn<DongPhiLog, Integer> daDongColumnAnalyzeMoney;
+    @FXML
+    private DatePicker fromDateDongPhi;
+    @FXML
+    private TextField idHoAnalyzeMoney;
+    @FXML
+    private TableColumn<DongPhiLog, String> idHoColumnAnalyzeMoney;
+    @FXML
+    private ComboBox<String> loaiPhiAnalyzeMoney;
+    @FXML
+    private TableColumn<DongPhiLog, String> ngayDongColumnAnalyzeMoney;
+    @FXML
+    private TableColumn<DongPhiLog, Integer> soTienDongColumnAnalyzeMoney;
+    @FXML
+    private ComboBox<String> tenKhoanPhiAnalyzeMoney;
+    @FXML
+    private TableColumn<DongPhiLog, String> tenKhoanPhiColumnAnalyzeMoney;
+    @FXML
+    private DatePicker toDateDongPhi;
+    // Ấn vào combox Loại phí thì hiện ra 3 option Tất cả, Phí thu, Đóng góp
+    @FXML
+    void actionOnClickLoaiPhiAnalyzeMoney(MouseEvent event) {
+        loaiPhiAnalyzeMoney.setItems(FXCollections.observableArrayList("Tất cả","Phí thu","Đóng góp"));
+        tenKhoanPhiAnalyzeMoney.getItems().clear();
+        tenKhoanPhiAnalyzeMoney.setValue("");
+    }
+    // Ấn vào khoản phí thì hiện ra các option là tên các khoản phí ứng với khoản phí đã chọn
+    @FXML
+    void actionOnClickKhoanPhiAnalyzeMoney(MouseEvent event) {
+        ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        String type = loaiPhiAnalyzeMoney.getValue();
+        // Nếu chọn tất cả các loại phí thì thêm option chọn tất cả các khoản phí
+        if(type == null || type.equals("Tất cả")) {
+            type = "";
+            tenKhoanPhiList.add("Tất cả");
+        }
+        ResultSet resultSet = databaseConnector.getTenKhoanPhiList(type);
+        try {
+            while(resultSet.next()) {
+                tenKhoanPhiList.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        databaseConnector.disconnect();
+        tenKhoanPhiAnalyzeMoney.setItems(tenKhoanPhiList);
+    }
+
+    @FXML
+    void clickSearchDongPhiLog(MouseEvent event) {
+        if(analyzeMoneyTable != null) analyzeMoneyTable.getItems().clear();
+        ObservableList<DongPhiLog> dataList = FXCollections.observableArrayList();
+
+        String queriedHoKhauID = idHoAnalyzeMoney.getText();
+        String queriedLoaiPhi;
+        if(loaiPhiAnalyzeMoney.getValue() == null) queriedLoaiPhi = "";
+        else if(loaiPhiAnalyzeMoney.getValue().equals("Tất cả")) queriedLoaiPhi = "";
+        else queriedLoaiPhi = loaiPhiAnalyzeMoney.getValue();
+
+        String queriedTenKhoanPhi;
+        if(tenKhoanPhiAnalyzeMoney.getValue() == null) queriedTenKhoanPhi = "";
+        else if(tenKhoanPhiAnalyzeMoney.getValue().equals("Tất cả")) queriedTenKhoanPhi = "";
+        else queriedTenKhoanPhi = tenKhoanPhiAnalyzeMoney.getValue();
+
+        String queriedFromDate;
+        if(fromDateDongPhi.getValue() == null) queriedFromDate = "1900-01-01";
+        else queriedFromDate = fromDateDongPhi.getValue().toString();
+
+        String queriedToDate;
+        if(toDateDongPhi.getValue() == null) queriedToDate = "2100-01-01";
+        else queriedToDate = toDateDongPhi.getValue().toString();
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        ResultSet dongPhiLogList = databaseConnector.getLichSuDongPhi(queriedHoKhauID,queriedLoaiPhi,queriedTenKhoanPhi,queriedFromDate,queriedToDate);
+
+        try {
+            while(dongPhiLogList.next()) {
+                String HoKhauID = dongPhiLogList.getString(1);
+                String DiaChi = dongPhiLogList.getString(2);
+                String TenKhoanPhi = dongPhiLogList.getString(3);
+                String NgayDong = dongPhiLogList.getDate(4).toString();
+                Integer SoTien = dongPhiLogList.getInt(5);
+
+                Integer DaDong = databaseConnector.getTongTienDaDong(HoKhauID,TenKhoanPhi,NgayDong);
+                Integer PhaiDong = databaseConnector.getSoTienPhaiDong(HoKhauID,TenKhoanPhi);
+                Integer ConThieu;
+                if(PhaiDong == 0) ConThieu = 0;
+                else ConThieu = PhaiDong - DaDong;
+                DongPhiLog dongPhiLog = new DongPhiLog(HoKhauID,DiaChi,TenKhoanPhi,NgayDong,SoTien,DaDong,ConThieu);
+                dataList.add(dongPhiLog);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        idHoColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,String>("HoKhauID"));
+        addressColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,String>("DiaChi"));
+        tenKhoanPhiColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,String>("KhoanPhi"));
+        ngayDongColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,String>("NgayDong"));
+        soTienDongColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,Integer>("SoTienDong"));
+        daDongColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,Integer>("DaDong"));
+        conThieuColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,Integer>("ConThieu"));
+
+        analyzeMoneyTable.setItems(dataList);
+        databaseConnector.disconnect();
+    }
+
+    @FXML
+    private TextField diaChiHoDongPhi;
+    @FXML
+    private TextField idHoDongPhi;
+    @FXML
+    private ComboBox<String> loaiPhiAddMoney;
+    @FXML
+    private DatePicker ngayDongPhi;
+    @FXML
+    private Label soTienConThieu;
+    @FXML
+    private TextField soTienNop;
+    @FXML
+    private TextField tenChuHoDongPhi;
+    @FXML
+    private ComboBox<String> tenKhoanPhiAddMoney;
+    @FXML
+    void actionOnClickLoaiPhiAddMoney(MouseEvent event) {
+        loaiPhiAddMoney.setItems(FXCollections.observableArrayList("Phí thu","Đóng góp"));
+        tenKhoanPhiAddMoney.getItems().clear();
+        tenKhoanPhiAddMoney.setValue("");
+    }
+    @FXML
+    void actionOnClickKhoanPhiAddMoney(MouseEvent event) {
+        ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        String type = loaiPhiAddMoney.getValue();
+        // Nếu chọn tất cả các loại phí thì thêm option chọn tất cả các khoản phí
+        if(type == null) type = "";
+        ResultSet resultSet = databaseConnector.getTenKhoanPhiList(type);
+        try {
+            while(resultSet.next()) {
+                tenKhoanPhiList.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tenKhoanPhiAddMoney.setItems(tenKhoanPhiList);
+        databaseConnector.disconnect();
+    }
+    @FXML
+    void chooseKhoanPhi(ActionEvent event) {
+        String TenKhoanPhi = tenKhoanPhiAddMoney.getValue();
+        if(TenKhoanPhi != null) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            soTienConThieu.setText(databaseConnector.getSoTienConThieu(idHoDongPhi.getText(),TenKhoanPhi) + " Đ");
+            databaseConnector.disconnect();
+        }
+    }
+    @FXML
+    void getTypedHoKhauIDAddMoney(KeyEvent event) {
+        String HoKhauID = idHoDongPhi.getText();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+
+        ResultSet resultSet = databaseConnector.getHomeInfo(HoKhauID);
+        try{
+            String TenChuHo = "",DiaChi = "";
+            while(resultSet.next()) {
+                String ChuHoID = resultSet.getString("ChuHoID");
+                TenChuHo = databaseConnector.getHoTen(ChuHoID);
+                DiaChi = resultSet.getString("DiaChi");
+            }
+            tenChuHoDongPhi.setText(TenChuHo);
+            diaChiHoDongPhi.setText(DiaChi);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(tenKhoanPhiAddMoney.getValue() != null) {
+            soTienConThieu.setText(databaseConnector.getSoTienConThieu(HoKhauID,tenKhoanPhiAddMoney.getValue()) + " Đ");
+        }
+        databaseConnector.disconnect();
+
+    }
+
+    @FXML
+    void cancelDongPhi(MouseEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        newStages.remove(stage);
+        stage.close();
+    }
+    @FXML
+    void finishDongPhi(MouseEvent event) {
+        if(idHoDongPhi.getText().isEmpty() || tenKhoanPhiAddMoney.getValue() == null || ngayDongPhi.getValue() == null || soTienNop.getText().isEmpty()) {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập thiếu dữ liệu");
+            alert.showAndWait();
+        }
+        else {
+            String HoKhauID = idHoDongPhi.getText();
+            String IDPhi;
+            String NgayDong = ngayDongPhi.getValue().toString();
+            int SoTienNop = Integer.parseInt(soTienNop.getText());
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            IDPhi = databaseConnector.getIDPhi(tenKhoanPhiAddMoney.getValue());
+            if(databaseConnector.checkExistLogDongPhi(HoKhauID,IDPhi,NgayDong)) databaseConnector.updateDongPhiLog(HoKhauID,IDPhi,NgayDong,SoTienNop);
+            else databaseConnector.insertNewDongPhiLog(HoKhauID,IDPhi,NgayDong,SoTienNop);
+
+            databaseConnector.disconnect();
+        }
+    }
     /*
         Hết Quản lý thu chi
      */
