@@ -481,8 +481,8 @@ public class Menu{
         String QuocTich = updatePeopleQuocTichField.getText();
         String NoiLamViec = updatePeopleNoiLamViecField.getText();
 
-        if(checkEmpty(HoTen) && NgaySinh == null && checkEmpty(GioiTinh) && checkEmpty(NoiSinh)
-                && checkEmpty(QuocTich) && checkEmpty(QueQuan) && checkEmpty(GioiTinh)) {
+        if(!checkEmpty(HoTen) && NgaySinh != null && !checkEmpty(GioiTinh) && !checkEmpty(NoiSinh)
+                && !checkEmpty(QuocTich) && !checkEmpty(QueQuan) && !checkEmpty(GioiTinh)) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
             databaseConnector.connect();
             databaseConnector.updatePerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
@@ -526,7 +526,23 @@ public class Menu{
                 {
                     DatabaseConnector databaseConnector = new DatabaseConnector();
                     databaseConnector.connect();
-                    databaseConnector.deletePeople(selectedIDHome);
+                    if(databaseConnector.checkExistChuHoInHoKhauList(selectedId)) {
+                        Alert alert1;
+                        alert1 = new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Error");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Người này đang là chủ hộ của 1 hộ. Yêu cầu thay đổi chủ hộ hoặc xoá hộ đó nếu muốn xoá người này khỏi danh sách nhân khẩu!");
+                        alert1.showAndWait();
+                    }
+                    else {
+                        databaseConnector.deletePeople(selectedId);
+                        Alert alert1;
+                        alert1 = new Alert(Alert.AlertType.INFORMATION);
+                        alert1.setTitle("Error");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Xoá thành công nhân khẩu!");
+                        alert1.showAndWait();
+                    }
                     databaseConnector.disconnect();
                 }
                 else {}
