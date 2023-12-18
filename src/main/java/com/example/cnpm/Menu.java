@@ -33,21 +33,6 @@ import java.util.Optional;
 
 public class Menu{
     @FXML
-    private TableView<Person> moneyTable;
-
-    @FXML
-    private TableColumn<?, ?> dateMoneyCol;
-
-    @FXML
-    private TableColumn<?, ?> totalMoneyCol;
-
-    @FXML
-    private TableColumn<?, ?> idMoneyCol;
-
-    @FXML
-    private TableColumn<?, ?> nameMoneyCol;
-
-    @FXML
     private TableColumn<Person, ?> MoneyCol;
 
     @FXML
@@ -1650,6 +1635,78 @@ public class Menu{
         }
     }
 
+
+
+
+
+    /*
+        Hết quản lý hộ
+     */
+
+    /*
+        Quản lý thu chi
+     */
+    @FXML
+    private TableView<KhoanPhiInfo> moneyTable;
+    @FXML
+    private TableColumn<KhoanPhiInfo, String> dateMoneyCol;
+    @FXML
+    private TableColumn<KhoanPhiInfo, String> totalMoneyCol;
+    @FXML
+    private TableColumn<KhoanPhiInfo, String> idMoneyCol;
+    @FXML
+    private TableColumn<KhoanPhiInfo, String> nameMoneyCol;
+    @FXML
+    private TableColumn<KhoanPhiInfo, String> typeMoneyCol;
+    @FXML
+    private TextField searchIDNameKhoanPhiField;
+
+    public static String selectedIDKhoanPhi;
+    @FXML
+    void selectKhoanPhi(MouseEvent event) {
+        selectedIDKhoanPhi = moneyTable.getSelectionModel().getSelectedItem().getID();
+    }
+    @FXML
+    void clickSearchKhoanPhi(MouseEvent event) {
+        if(moneyTable != null) moneyTable.getItems().clear();
+        ObservableList<KhoanPhiInfo> dataList = FXCollections.observableArrayList();
+
+        String queriedIDNameKhoanPhi = searchIDNameKhoanPhiField.getText();
+        String queriedTypeKhoanPhi = "";
+        if(donateRButton.isSelected()) {
+            queriedTypeKhoanPhi = "Đóng góp";
+        }
+        else if(feeRButton.isSelected()) {
+            queriedTypeKhoanPhi = "Phí thu";
+        }
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        ResultSet khoanPhiList = databaseConnector.getKhoanPhiList(queriedIDNameKhoanPhi,queriedTypeKhoanPhi);
+
+        try {
+            while(khoanPhiList.next()) {
+                String ID = khoanPhiList.getString(1);
+                String TenPhi = khoanPhiList.getString(2);
+                String TongTienDaThu = khoanPhiList.getString(5);
+                String NgayBatDauThu = khoanPhiList.getString(3);
+                String LoaiKhoanPhi = khoanPhiList.getString(4);
+
+                KhoanPhiInfo khoanPhiInfo = new KhoanPhiInfo(ID,TenPhi,TongTienDaThu,NgayBatDauThu,LoaiKhoanPhi);
+                dataList.add(khoanPhiInfo);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        idMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("ID"));
+        nameMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("TenKhoanPhi"));
+        totalMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("TongTienDaThu"));
+        dateMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("NgayBatDauThu"));
+        typeMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("LoaiKhoanPhi"));
+        moneyTable.setItems(dataList);
+        databaseConnector.disconnect();
+    }
     @FXML
     void clickAddMoney(ActionEvent event) {//Nhấn add trong scene quản lý thu chi để mở stage mới là addMoney.fxml
         try {
@@ -1682,7 +1739,6 @@ public class Menu{
             ioe.printStackTrace();
         }
     }
-
     @FXML
     void clickAnalyzeMoney(ActionEvent event) {//Nhấn analyze trong scene quản lý thu chi để mở stage mới là analyzeMoney.fxml
         try {
@@ -1715,30 +1771,14 @@ public class Menu{
             ioe.printStackTrace();
         }
     }
-
-
-
-    /*
-        Hết quản lý hộ
-     */
-
-    /*
-        Quản lý thu chi
-     */
     @FXML
     private void openMoneyPane(ActionEvent event) {
         peoplePane.setVisible(false);
         homePane.setVisible(false);
         moneyPane.setVisible(true);
     }
-
-    double originalWidth = 297.0;
-    double currentWidth = originalWidth + 162.0;
     public void clickFeeRButton(ActionEvent actionEvent) {
         if(donateRButton.isSelected()) {
-            nameMoneyCol.setPrefWidth(originalWidth);
-            moneyTable.getColumns().add(2, MoneyCol);
-
             donateRButton.setSelected(false);
             feeRButton.setSelected(true);
         }
@@ -1747,12 +1787,6 @@ public class Menu{
 
     public void clickDonateRButton(ActionEvent actionEvent) {
         if(feeRButton.isSelected()) {
-
-            moneyTable.getColumns().remove(MoneyCol);
-
-            // Set the new width for nameMoneyCol
-            nameMoneyCol.setPrefWidth(currentWidth);
-            
             feeRButton.setSelected(false);
             donateRButton.setSelected(true);
         }

@@ -295,22 +295,22 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView fx:id="moneyTable" layoutX="6.0" layoutY="77.0" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
+                                    <TableView fx:id="moneyTable" layoutX="6.0" layoutY="77.0" onMouseClicked="#selectKhoanPhi" prefHeight="400.0" prefWidth="868.0" stylesheets="@menuDesign.css">
                                        <columns>
-                                          <TableColumn fx:id="idMoneyCol" prefWidth="139.0" text="ID loại phí" />
-                                          <TableColumn fx:id="nameMoneyCol" prefWidth="297.0" text="Tên khoản phí" />
-                                          <TableColumn fx:id="MoneyCol" prefWidth="162.0" text="Chi phí (/tháng/nhân khẩu)" />
-                                          <TableColumn fx:id="totalMoneyCol" prefWidth="125.0" text="Tổng tiền đã thu" />
-                                          <TableColumn fx:id="dateMoneyCol" prefWidth="143.0" text="Ngày bắt đầu " />
+                                          <TableColumn fx:id="idMoneyCol" prefWidth="116.00001525878906" text="ID loại phí" />
+                                          <TableColumn fx:id="nameMoneyCol" prefWidth="320.0" text="Tên khoản phí" />
+                                          <TableColumn fx:id="typeMoneyCol" prefWidth="141.5999755859375" text="Loại khoản phí" />
+                                          <TableColumn fx:id="totalMoneyCol" prefWidth="155.2000732421875" text="Tổng tiền đã thu" />
+                                          <TableColumn fx:id="dateMoneyCol" prefWidth="132.79986572265625" text="Ngày bắt đầu thu" />
                                        </columns>
                                     </TableView>
-                                    <TextField layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                    <TextField fx:id="searchIDNameKhoanPhiField" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="47.0" size="1.5em" />
-                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
+                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#clickSearchKhoanPhi" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
                                        <font>
                                           <Font name="Tahoma" size="16.0" />
                                        </font>

@@ -562,6 +562,22 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    public ResultSet getKhoanPhiList (String idOrName,String type) {
+        String sql = "select ID,TenPhi,NgayBatDauThu,Loai,sum(DaDong)\n" +
+                "from loaiphi,dongphi\n" +
+                "where loaiphi.ID = dongphi.IDPhi and (ID like ? or TenPhi like ?) and Loai like ?\n" +
+                "group by loaiphi.ID,loaiphi.TenPhi,loaiphi.NgayBatDauThu";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,'%'+idOrName+'%');
+            preparedStatement.setString(2,'%'+idOrName+'%');
+            preparedStatement.setString(3,'%'+type+'%');
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     // Ngắt kết nối với server của db
     public void disconnect() {
         try {
