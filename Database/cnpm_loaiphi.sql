@@ -18,27 +18,30 @@ USE `cnpm`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `account`
+-- Table structure for table `loaiphi`
 --
 
-DROP TABLE IF EXISTS `account`;
+DROP TABLE IF EXISTS `loaiphi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `account` (
-  `Name` varchar(50) NOT NULL COMMENT 'Tên đăng nhập',
-  `Password` varchar(50) NOT NULL COMMENT 'Mật khẩu',
-  `VaiTro` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'Chức vụ của chủ tài khoản : Tổ trưởng, tổ phó, kế toán',
-  PRIMARY KEY (`Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tài khoản đăng nhập vào hệ thống';
+CREATE TABLE `loaiphi` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `TenPhi` varchar(255) NOT NULL,
+  `Loai` varchar(15) NOT NULL,
+  `NgayBatDauThu` date NOT NULL,
+  PRIMARY KEY (`ID`,`TenPhi`),
+  UNIQUE KEY `TenPhi_UNIQUE` (`TenPhi`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `account`
+-- Dumping data for table `loaiphi`
 --
 
-LOCK TABLES `account` WRITE;
-/*!40000 ALTER TABLE `account` DISABLE KEYS */;
-/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+LOCK TABLES `loaiphi` WRITE;
+/*!40000 ALTER TABLE `loaiphi` DISABLE KEYS */;
+INSERT INTO `loaiphi` VALUES (1,'Phí vệ sinh 2022','Phí thu','2023-01-01'),(2,'Chung tay đẩy lùi Covid-19','Đóng góp','2023-01-01'),(3,'Giúp đỡ học sinh nghèo vượt khó','Đóng góp','2023-01-01'),(4,'Giúp đỡ người cao tuổi','Đóng góp','2023-01-01'),(5,'Khen thưởng học sinh giỏi','Đóng góp','2023-01-01'),(6,'Trợ giúp đồng bào bị ảnh hưởng bão lụt','Đóng góp','2023-01-01'),(7,'Ủng hộ ngày tết thiếu nhi','Đóng góp','2023-01-01'),(8,'Ủng hộ ngày thương binh-liệt sỹ 27/07','Đóng góp','2023-01-01'),(9,'Ủng hộ vì người nghèo','Đóng góp','2023-01-01');
+/*!40000 ALTER TABLE `loaiphi` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-18 12:12:46
+-- Dump completed on 2023-12-19  0:13:35
