@@ -154,12 +154,10 @@ public class DatabaseConnector {
     public ResultSet getHomeList (String id) {
         String sql = "select SoHK,ChuHoID,HoTen,DiaChi,LoaiSo\n" +
                 "from HoKhau,NhanKhau\n" +
-                "where HoKhau.ChuHoID = NhanKhau.CCCD and (ChuHoID like ? or DiaChi like ? or SoHK like ?) and Deleted = 0";
+                "where HoKhau.ChuHoID = NhanKhau.CCCD and SoHK like ? and Deleted = 0";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,"%"+id+"%");
-            preparedStatement.setString(2,"%"+id+"%");
-            preparedStatement.setString(3,"%"+id+"%");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
@@ -499,6 +497,7 @@ public class DatabaseConnector {
         }
 
     }
+    // Lấy ID hộ khẩu của 1 người
     public String getCurrentIDHomeThuongTru (String NhanKhauID) {
         String sql = "select HoKhauID from nhankhau_hokhau where NhanKhauID = ? and LoaiLuuTru = N'Thường trú' and NgayKetThuc = '2100-01-01'";
         try {
@@ -514,6 +513,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Lấy ID sổ tạm trú của 1 người
     public String getCurrentIDHomeTamTru (String NhanKhauID) {
         String sql = "select HoKhauID from nhankhau_hokhau where NhanKhauID = ? and LoaiLuuTru = N'Tạm trú' and NgayKetThuc = '2100-01-01'";
         try {
@@ -529,6 +529,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Kiểm tra 1 người có đang tạm vắng ko
     public boolean checkNhanKhauTamVang(String NhanKhauID) {
         String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and LoaiLuuTru = 'Tạm vắng' and NgayKetThuc > curdate()";
         try {
@@ -541,6 +542,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Kéo dài thời gian tạm vắng
     public void continueCurrentTamVangRecord (String NhanKhauID) {
         String sql = "update nhankhau_hokhau set NgayKetThuc = '2100-01-01' where NhanKhauID = ? and LoaiLuuTru = N'Tạm vắng'";
         try {
@@ -551,6 +553,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Kết thúc thời gian tạm vắng
     public void updateNgayKetThucTamVang(String id) {
         String sql = "update nhankhau_hokhau set NgayKetThuc = curdate() where NhanKhauID = ? and LoaiLuuTru = N'Tạm vắng'";
         try {
@@ -562,6 +565,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Lấy danh sách thông tin các khoản thu phí đóng góp
     public ResultSet getKhoanPhiList (String idOrName,String type) {
         String sql = "select ID,TenPhi,NgayBatDauThu,Loai,sum(DaDong)\n" +
                 "from loaiphi,dongphi\n" +
@@ -578,6 +582,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Lấy danh sách tên khoản phí theo loại
     public ResultSet getTenKhoanPhiList (String type) {
         String sql = "select TenPhi from loaiphi\n" +
                 "where Loai like ?";
@@ -590,6 +595,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Lấy lịch sử đóng phí
     public ResultSet getLichSuDongPhi (String HoKhauID,String LoaiPhi,String TenKhoanPhi,String fromDate,String toDate) {
         String sql = "select SoHK,DiaChi,TenPhi,NgayDong,SoTien\n" +
                 "from dongphi_log,loaiphi,hokhau\n" +
@@ -608,7 +614,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
-
+    // Lấy tổng số tiền 1 hộ đã đóng cho 1 khoản phí cho đến ngày nào đó
     public int getTongTienDaDong(String HoKhauID,String TenKhoanPhi,String NgayDong) {
         String sql = "select HoKhauID,TenPhi,sum(SoTien)\n" +
                 "from dongphi_log,loaiphi\n" +
@@ -627,6 +633,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Lấy số tiền 1 hộ phải đóng cho 1 khoản phí
     public int getSoTienPhaiDong(String HoKhauID,String TenKhoanPhi) {
         String sql = "select PhaiDong\n" +
                 "from dongphi,loaiphi\n" +
@@ -643,6 +650,7 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Số tiền phí mà 1 hộ còn thiếu
     public int getSoTienConThieu(String HoKhauID,String TenKhoanPhi) {
         String sql = "select DaDong,PhaiDong\n" +
                 "from dongphi,loaiphi\n" +
@@ -663,27 +671,29 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
-    public String getIDPhi(String TenKhoanPhi) {
+    // Lấy ID của 1 khoản phí
+    public int getIDPhi(String TenKhoanPhi) {
         String sql = "select * from loaiphi\n" +
                 "where TenPhi = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,TenKhoanPhi);
             ResultSet resultSet = preparedStatement.executeQuery();
-            String IDPhi = "";
-            while(resultSet.next()) IDPhi = resultSet.getString("ID");
+            int IDPhi = 0;
+            while(resultSet.next()) IDPhi = resultSet.getInt("ID");
             return IDPhi;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public boolean checkExistLogDongPhi(String HoKhauID,String IDPhi,String NgayDong) {
+    // Kiểm tra đã xuất hiện bản ghi lịch sử đóng phí chưa
+    public boolean checkExistLogDongPhi(String HoKhauID,int IDPhi,String NgayDong) {
         String sql = "select * from dongphi_log\n" +
                 "where HoKhauID = ? and IDPhi = ? and NgayDong = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,HoKhauID);
-            preparedStatement.setString(2,IDPhi);
+            preparedStatement.setInt(2,IDPhi);
             preparedStatement.setString(3,NgayDong);
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
@@ -692,29 +702,69 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
-    public void updateDongPhiLog(String HoKhauID,String IDPhi,String NgayDong,int SoTien) {
+    // Cập nhật bản ghi lịch sử đóng phí
+    public void updateDongPhiLog(String HoKhauID,int IDPhi,String NgayDong,int SoTien) {
         String sql = "update dongphi_log set SoTien = SoTien + ?\n" +
                 "where HoKhauID = ? and IDPhi = ? and NgayDong = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,SoTien);
             preparedStatement.setString(2,HoKhauID);
-            preparedStatement.setString(3,IDPhi);
+            preparedStatement.setInt(3,IDPhi);
             preparedStatement.setString(4,NgayDong);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void insertNewDongPhiLog(String HoKhauID,String IDPhi,String NgayDong,int SoTien) {
+    // Thêm bản ghi đóng phí
+    public void insertNewDongPhiLog(String HoKhauID,int IDPhi,String NgayDong,int SoTien) {
         String sql = "insert into dongphi_log (HoKhauID,IDPhi,NgayDong,SoTien) values (?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,HoKhauID);
-            preparedStatement.setString(2,IDPhi);
+            preparedStatement.setInt(2,IDPhi);
             preparedStatement.setString(3,NgayDong);
             preparedStatement.setInt(4,SoTien);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Kiếm tra tên khoản phí đã có chưa
+    public boolean checkExistTenKhoanPhi (String TenKhoanPhi) {
+        String sql = "select * from loaiphi\n" +
+                "where TenPhi = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,TenKhoanPhi);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Thêm khoản phí mới
+    public void addNewKhoanPhi(String TenKhoanPhi,String Loai,String NgayBatDauThu) {
+        String sql = "insert into loaiphi (TenPhi,Loai,NgayBatDauThu) values (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,TenKhoanPhi);
+            preparedStatement.setString(2,Loai);
+            preparedStatement.setString(3,NgayBatDauThu);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Tổng hợp phí vệ sinh theo năm
+    public void callProcTongHopPhiVeSinh(int IDPhi,String Nam) {
+        try {
+            CallableStatement callableStatement = connection.prepareCall("{ call tonghopphivesinh (?,?) }");
+            callableStatement.setInt(1,IDPhi);
+            callableStatement.setString(2,Nam);
+            callableStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

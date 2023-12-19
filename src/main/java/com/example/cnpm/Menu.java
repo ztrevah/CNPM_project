@@ -1685,11 +1685,12 @@ public class Menu{
     @FXML
     private TextField searchIDNameKhoanPhiField;
 
-    public static String selectedIDKhoanPhi;
+    public static String selectedIDKhoanPhi; // Lưu id khoản phí được chọn
     @FXML
     void selectKhoanPhi(MouseEvent event) {
         selectedIDKhoanPhi = moneyTable.getSelectionModel().getSelectedItem().getID();
     }
+    // Tra cứu khoản phí
     @FXML
     void clickSearchKhoanPhi(MouseEvent event) {
         if(moneyTable != null) moneyTable.getItems().clear();
@@ -1731,6 +1732,7 @@ public class Menu{
         moneyTable.setItems(dataList);
         databaseConnector.disconnect();
     }
+    // Nhấn mớ giao diện đóng phí
     @FXML
     void clickAddMoney(ActionEvent event) {//Nhấn add trong scene quản lý thu chi để mở stage mới là addMoney.fxml
         try {
@@ -1763,6 +1765,7 @@ public class Menu{
             ioe.printStackTrace();
         }
     }
+    // Nhấn mở giao diện thống kê thu phí
     @FXML
     void clickAnalyzeMoney(ActionEvent event) {//Nhấn analyze trong scene quản lý thu chi để mở stage mới là analyzeMoney.fxml
         try {
@@ -1795,18 +1798,21 @@ public class Menu{
             ioe.printStackTrace();
         }
     }
+
     @FXML
     private void openMoneyPane(ActionEvent event) {
         peoplePane.setVisible(false);
         homePane.setVisible(false);
         moneyPane.setVisible(true);
     }
+    // Nhấn chọn thu phí
     public void clickFeeRButton(ActionEvent actionEvent) {
         if(donateRButton.isSelected()) {
             donateRButton.setSelected(false);
             feeRButton.setSelected(true);
         }
     }
+    // Nhấn chọn đóng góp
     public void clickDonateRButton(ActionEvent actionEvent) {
         if(feeRButton.isSelected()) {
             feeRButton.setSelected(false);
@@ -1870,7 +1876,7 @@ public class Menu{
         databaseConnector.disconnect();
         tenKhoanPhiAnalyzeMoney.setItems(tenKhoanPhiList);
     }
-
+    // Nhấn tìm kiếm lịch sử thu phí, đóng góp
     @FXML
     void clickSearchDongPhiLog(MouseEvent event) {
         if(analyzeMoneyTable != null) analyzeMoneyTable.getItems().clear();
@@ -1948,12 +1954,14 @@ public class Menu{
     private TextField tenChuHoDongPhi;
     @FXML
     private ComboBox<String> tenKhoanPhiAddMoney;
+    // Nhấn chọn loại phí trong phần đóng phí
     @FXML
     void actionOnClickLoaiPhiAddMoney(MouseEvent event) {
         loaiPhiAddMoney.setItems(FXCollections.observableArrayList("Phí thu","Đóng góp"));
         tenKhoanPhiAddMoney.getItems().clear();
         tenKhoanPhiAddMoney.setValue("");
     }
+    // Nhấn chọn khoản phí trong phần đóng phí
     @FXML
     void actionOnClickKhoanPhiAddMoney(MouseEvent event) {
         ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
@@ -1973,6 +1981,8 @@ public class Menu{
         tenKhoanPhiAddMoney.setItems(tenKhoanPhiList);
         databaseConnector.disconnect();
     }
+    // Cập nhật số tiền còn thiếu ứng với các thông tin đã nhập
+    // khi chọn khoản phí
     @FXML
     void chooseKhoanPhi(ActionEvent event) {
         String TenKhoanPhi = tenKhoanPhiAddMoney.getValue();
@@ -1983,6 +1993,7 @@ public class Menu{
             databaseConnector.disconnect();
         }
     }
+    // khi thay đổi id của hộ
     @FXML
     void getTypedHoKhauIDAddMoney(KeyEvent event) {
         String HoKhauID = idHoDongPhi.getText();
@@ -2008,13 +2019,14 @@ public class Menu{
         databaseConnector.disconnect();
 
     }
-
+    // Huỷ đóng phí
     @FXML
     void cancelDongPhi(MouseEvent event) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         newStages.remove(stage);
         stage.close();
     }
+    // Hoàn thành đóng phí
     @FXML
     void finishDongPhi(MouseEvent event) {
         if(idHoDongPhi.getText().isEmpty() || tenKhoanPhiAddMoney.getValue() == null || ngayDongPhi.getValue() == null || soTienNop.getText().isEmpty()) {
@@ -2027,7 +2039,7 @@ public class Menu{
         }
         else {
             String HoKhauID = idHoDongPhi.getText();
-            String IDPhi;
+            int IDPhi;
             String NgayDong = ngayDongPhi.getValue().toString();
             int SoTienNop = Integer.parseInt(soTienNop.getText());
             DatabaseConnector databaseConnector = new DatabaseConnector();
@@ -2038,6 +2050,161 @@ public class Menu{
 
             databaseConnector.disconnect();
         }
+    }
+    // Nhấn mở của sổ tạo khoản phí mới
+    @FXML
+    void clickAddFee(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("addFee.fxml"));
+            Parent addFeeRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage addFeeStage = new Stage();
+            addFeeStage.setScene(new Scene(addFeeRoot));
+            newStages.add(addFeeStage);
+
+            Menu addFeeController = loader.getController();
+            ObservableList<String> loaiPhiList = FXCollections.observableArrayList();
+            loaiPhiList.add("Phí thu");loaiPhiList.add("Đóng góp");
+            addFeeController.optionFeeCBox.setItems(loaiPhiList);
+            addFeeController.namKhoanPhiAddFee.setEditable(false);
+            addFeeController.tenKhoanPhiMoiAddFee.setEditable(false);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            addFeeRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - addFeeStage.getX();
+                y = e.getScreenY() - addFeeStage.getY();
+            });
+
+            addFeeRoot.setOnMouseDragged((MouseEvent e) -> {
+                addFeeStage.setX(e.getScreenX() - x);
+                addFeeStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            addFeeStage.initModality(Modality.NONE);
+            addFeeStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            addFeeStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @FXML
+    private TextField namKhoanPhiAddFee;
+    @FXML
+    private DatePicker ngayBatDauThuKhoanPhiMoiAddFee;
+    @FXML
+    private ComboBox<String> optionFeeCBox;
+    @FXML
+    private TextField tenKhoanPhiMoiAddFee;
+    // Thay đổi giá trị các trường khi chọn các option của loại phí trong giao diện Tạo khoản phí mới
+    @FXML
+    void getLoaiPhiAddFee(ActionEvent event) {
+        if(optionFeeCBox.getValue() != null) {
+            if(optionFeeCBox.getValue().equals("Phí thu")) {
+                tenKhoanPhiMoiAddFee.setText("Phí vệ sinh ");
+                tenKhoanPhiMoiAddFee.setEditable(false);
+                namKhoanPhiAddFee.setText("");
+                namKhoanPhiAddFee.setEditable(true);
+            }
+            else {
+                tenKhoanPhiMoiAddFee.setText("");
+                tenKhoanPhiMoiAddFee.setEditable(true);
+                namKhoanPhiAddFee.setText("");
+                namKhoanPhiAddFee.setEditable(false);
+            }
+        }
+        else {
+            tenKhoanPhiMoiAddFee.setText("");
+            tenKhoanPhiMoiAddFee.setEditable(true);
+            namKhoanPhiAddFee.setText("");
+            namKhoanPhiAddFee.setEditable(false);
+        }
+
+    }
+    // Cancel tạo khoản phí mới
+    @FXML
+    void cancelAddFee(MouseEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        newStages.remove(stage);
+        stage.close();
+    }
+    // Nhấn hoàn thành tạo khoản phí mới
+    @FXML
+    void finishAddFee(MouseEvent event) {
+        if(optionFeeCBox.getValue() == null || tenKhoanPhiMoiAddFee.getText().isEmpty() || ngayBatDauThuKhoanPhiMoiAddFee.getValue() == null) {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập thiếu dữ liệu");
+            alert.showAndWait();
+        }
+        else {
+            if(optionFeeCBox.getValue().equals("Phí thu") && namKhoanPhiAddFee.getText().isEmpty()) {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Nhập thiếu dữ liệu");
+                alert.showAndWait();
+            }
+            else {
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connect();
+                String LoaiPhi = optionFeeCBox.getValue();
+                String TenKhoanPhi = tenKhoanPhiMoiAddFee.getText();
+                String NamKhoanPhi = namKhoanPhiAddFee.getText();
+                if(LoaiPhi.equals("Phí thu")) TenKhoanPhi += NamKhoanPhi;
+                if(databaseConnector.checkExistTenKhoanPhi(TenKhoanPhi) ) {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Đã tồn tại khoản phí này");
+                    alert.showAndWait();
+                }
+                else if(!checkFormatYear(NamKhoanPhi)) {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Nhập sai định dạng của năm");
+                    alert.showAndWait();
+                }
+                else {
+                    String NgayBatDauThu = ngayBatDauThuKhoanPhiMoiAddFee.getValue().toString();
+                    databaseConnector.addNewKhoanPhi(TenKhoanPhi,LoaiPhi,NgayBatDauThu);
+                    if(LoaiPhi.equals("Phí thu")) {
+                        int IDPhi = databaseConnector.getIDPhi(TenKhoanPhi);
+                        databaseConnector.callProcTongHopPhiVeSinh(IDPhi,NamKhoanPhi);
+                    }
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tạo thành công khoản phí mới");
+                    alert.showAndWait();
+                    stage.close();
+                }
+                databaseConnector.disconnect();
+            }
+        }
+    }
+    // Hàm kiểm tra format của năm
+    public boolean checkFormatYear (String s) {
+        if(s != null && s.length() == 4) {
+            for(int i=0;i<4;i++) {
+                if(s.charAt(i) <= '9' && s.charAt(i) >= '0') {}
+                else return false;
+            }
+            return true;
+        }
+        else return false;
     }
     /*
         Hết Quản lý thu chi

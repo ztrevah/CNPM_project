@@ -111,7 +111,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
+                        <AnchorPane fx:id="peoplePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -283,7 +283,7 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -330,12 +330,17 @@
                                     <Insets bottom="7.0" />
                                  </padding>
                               </AnchorPane>
-                              <Button layoutX="617.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="77.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê">
+                              <Button layoutX="504.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="191.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê lịch sử đóng phí">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
                               <Button layoutX="721.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAddMoney" prefHeight="38.0" prefWidth="77.0" styleClass="add-btn" text="Đóng phí">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="52.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickAddFee" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: #309a65;" styleClass="add-btn" text="Tạo khoản phí mới">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>

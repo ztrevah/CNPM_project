@@ -4,24 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="Sửa db: Thêm các data vào bảng thu phí, đóng góp, thêm bảng loaiphi quản lý chung cả thu phí và đóng góp, dùng id thay cho tên sự kiện, khoản phí">
-      <change afterPath="$PROJECT_DIR$/Database/cnpm_dongphi_log.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DongPhiLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="Hoàn thành thu phí đóng góp (còn định làm thêm tạo khoản phí mới)">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addFee.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_account.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_account.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_dongphi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_dongphi.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_dongphi_log.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_hokhau.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_hokhau.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_loaiphi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_loaiphi.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_nhankhau.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_nhankhau.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_nhankhau_hokhau.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_nhankhau_hokhau.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_routines.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_routines.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_temp_hokhautable.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_temp_hokhautable.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseImport/cnpm_thaydoi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Database/cnpm_thaydoi.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addMoney.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addMoney.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/analyzeMoney.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/analyzeMoney.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,13 +21,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="thuphidonggop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +74,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "Ngoc",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/New folder/CNPM_project",
+    "last_opened_file_path": "D:/New folder/CNPM_project/src/main/resources/com/example/cnpm",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -99,6 +88,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\New folder\CNPM_project\src\main\resources\com\example\cnpm" />
       <recent name="D:\New folder\CNPM_project" />
       <recent name="D:\New folder\CNPM_project\src\main\java\com\example\cnpm" />
     </key>
@@ -175,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702888672890</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Hoàn thành thu phí đóng góp (còn định làm thêm tạo khoản phí mới)">
+      <option name="closed" value="true" />
+      <created>1702919732993</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1702919732993</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,7 +195,8 @@
     <MESSAGE value="nhánh mới thay nhánh chien vì merge main bị conflict @@" />
     <MESSAGE value="Sửa db: Thêm các data vào bảng thu phí, đóng góp, thêm bảng loaiphi quản lý chung cả thu phí và đóng góp, dùng id thay cho tên sự kiện, khoản phí" />
     <MESSAGE value="Sửa lỗi phần nhân khẩu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sửa lỗi phần nhân khẩu" />
+    <MESSAGE value="Hoàn thành thu phí đóng góp (còn định làm thêm tạo khoản phí mới)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hoàn thành thu phí đóng góp (còn định làm thêm tạo khoản phí mới)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CNPM_project$Main.ic" NAME="Main Coverage Results" MODIFIED="1701963651360" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
