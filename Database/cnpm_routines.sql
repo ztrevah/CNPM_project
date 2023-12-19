@@ -65,6 +65,7 @@ BEGIN
 	declare sum int;
     declare loaiho varchar(45);
     declare sonhankhautrongthang int;
+    declare songuoitamvangtrongthang int;
     declare ngaybatdautrongthang char(10);
 	declare ngaycuoicungtrongthang char(10);
     set sum = 0;
@@ -73,74 +74,122 @@ BEGIN
     set ngaybatdautrongthang = concat(nam,'-01-01');
     set ngaycuoicungtrongthang = concat(nam,'-01-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-02-01');
     set ngaycuoicungtrongthang = concat(nam,'-02-28');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-03-01');
     set ngaycuoicungtrongthang = concat(nam,'-03-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-04-01');
     set ngaycuoicungtrongthang = concat(nam,'-04-30');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-05-01');
     set ngaycuoicungtrongthang = concat(nam,'-05-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-06-01');
     set ngaycuoicungtrongthang = concat(nam,'-06-30');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-07-01');
     set ngaycuoicungtrongthang = concat(nam,'-07-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-08-01');
     set ngaycuoicungtrongthang = concat(nam,'-08-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-09-01');
     set ngaycuoicungtrongthang = concat(nam,'-09-30');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-10-01');
     set ngaycuoicungtrongthang = concat(nam,'-10-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-11-01');
     set ngaycuoicungtrongthang = concat(nam,'-11-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     set ngaybatdautrongthang = concat(nam,'-12-01');
     set ngaycuoicungtrongthang = concat(nam,'-12-31');
     select count(distinct NhanKhauID) into sonhankhautrongthang from nhankhau_hokhau where LoaiLuuTru = loaiho and HoKhauID = IDHo 
-		and (NgayBatDau <=  convert(ngaybatdautrongthang,date) or NgayBatDau <=  convert(ngaybatdautrongthang,date));
-	set sum = sum + sonhankhautrongthang;
+		and ( (NgayBatDau <=  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaybatdautrongthang,date))
+			or (NgayBatDau >=  convert(ngaybatdautrongthang,date) and NgayKetThuc <=  convert(ngaycuoicungtrongthang,date))
+            or (NgayKetThuc >=  convert(ngaycuoicungtrongthang,date) and NgayBatDau <=  convert(ngaycuoicungtrongthang,date)) );
+	select count(distinct NhanKhauID) into songuoitamvangtrongthang from nhankhau_hokhau where LoaiLuuTru = N'Tạm vắng' and HoKhauID = IDHo 
+		and NgayBatDau <  convert(ngaybatdautrongthang,date) and NgayKetThuc >=  convert(ngaycuoicungtrongthang,date);
+	set sum = sum + sonhankhautrongthang - songuoitamvangtrongthang;
     
     return sum * 6000;
 END ;;
@@ -181,4 +230,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-19  0:13:36
+-- Dump completed on 2023-12-19 22:49:03

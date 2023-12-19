@@ -37,7 +37,7 @@ CREATE TABLE `temp_hokhautable` (
 
 LOCK TABLES `temp_hokhautable` WRITE;
 /*!40000 ALTER TABLE `temp_hokhautable` DISABLE KEYS */;
-INSERT INTO `temp_hokhautable` VALUES ('039748152989','Đinh Khôi','Chủ hộ'),('070854654250','Nguyễn Thị Nga Anh','Vợ'),('082096588171','Lê Thiện Bảo','Con'),('001056367209','Lê Bùi Trúc Phương','Con');
+INSERT INTO `temp_hokhautable` VALUES ('004328684372','Dương Trần Sơn Long','Con'),('060054814318','Bùi Hoàng Nam','Chủ hộ'),('080411530996','Phạm Hồng Yến','Con'),('087783369965','Trương Thị Mỹ Liên','Vợ');
 /*!40000 ALTER TABLE `temp_hokhautable` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-19  0:13:36
+-- Dump completed on 2023-12-19 22:49:03

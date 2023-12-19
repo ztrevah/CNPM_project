@@ -2048,6 +2048,15 @@ public class Menu{
             if(databaseConnector.checkExistLogDongPhi(HoKhauID,IDPhi,NgayDong)) databaseConnector.updateDongPhiLog(HoKhauID,IDPhi,NgayDong,SoTienNop);
             else databaseConnector.insertNewDongPhiLog(HoKhauID,IDPhi,NgayDong,SoTienNop);
 
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful");
+            alert.setHeaderText(null);
+            alert.setContentText("Đóng phí thành công");
+            alert.showAndWait();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            newStages.remove(stage);
+            stage.close();
             databaseConnector.disconnect();
         }
     }
@@ -2205,6 +2214,136 @@ public class Menu{
             return true;
         }
         else return false;
+    }
+    @FXML
+    void clickTongHopFee(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("detailFee.fxml"));
+            Parent detailFeeRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage detailFeeStage = new Stage();
+            detailFeeStage.setScene(new Scene(detailFeeRoot));
+            newStages.add(detailFeeStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            detailFeeRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - detailFeeStage.getX();
+                y = e.getScreenY() - detailFeeStage.getY();
+            });
+
+            detailFeeRoot.setOnMouseDragged((MouseEvent e) -> {
+                detailFeeStage.setX(e.getScreenX() - x);
+                detailFeeStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            detailFeeStage.initModality(Modality.NONE);
+            detailFeeStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            detailFeeStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @FXML
+    private TableColumn<DetailDongPhi, String> addressColumnDetailFee;
+    @FXML
+    private TableColumn<DetailDongPhi, Integer> conThieuColumnDetailFee;
+    @FXML
+    private TableColumn<DetailDongPhi, Integer> daDongColumnDetailFee;
+    @FXML
+    private TableView<DetailDongPhi> detailFeeTable;
+    @FXML
+    private TableColumn<DetailDongPhi, String> idHoColumnDetailFee;
+    @FXML
+    private TextField idHoDetailFee;
+    @FXML
+    private ComboBox<String> loaiPhiDetailFee;
+    @FXML
+    private TableColumn<DetailDongPhi, Integer> phaiDongColumnDetailFee;
+    @FXML
+    private TableColumn<DetailDongPhi, String> tenKhoanPhiColumnDetailFee;
+    @FXML
+    private ComboBox<String> tenKhoanPhiDetailFee;
+    @FXML
+    void actionOnClickLoaiPhiDetailFee(MouseEvent event) {
+        loaiPhiDetailFee.setItems(FXCollections.observableArrayList("Tất cả","Phí thu","Đóng góp"));
+        tenKhoanPhiDetailFee.getItems().clear();
+        tenKhoanPhiDetailFee.setValue("");
+    }
+    @FXML
+    void actionOnClickKhoanPhiDetailFee(MouseEvent event) {
+        ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        String type = loaiPhiDetailFee.getValue();
+        // Nếu chọn tất cả các loại phí thì thêm option chọn tất cả các khoản phí
+        if(type == null || type.equals("Tất cả")) {
+            type = "";
+            tenKhoanPhiList.add("Tất cả");
+        }
+        ResultSet resultSet = databaseConnector.getTenKhoanPhiList(type);
+        try {
+            while(resultSet.next()) {
+                tenKhoanPhiList.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        databaseConnector.disconnect();
+        tenKhoanPhiDetailFee.setItems(tenKhoanPhiList);
+    }
+    @FXML
+    void clickSearchDetailFee(MouseEvent event) {
+        if(detailFeeTable != null) detailFeeTable.getItems().clear();
+        ObservableList<DetailDongPhi> dataList = FXCollections.observableArrayList();
+
+        String queriedHoKhauID = idHoDetailFee.getText();
+        String queriedLoaiPhi;
+        if(loaiPhiDetailFee.getValue() == null) queriedLoaiPhi = "";
+        else if(loaiPhiDetailFee.getValue().equals("Tất cả")) queriedLoaiPhi = "";
+        else queriedLoaiPhi = loaiPhiDetailFee.getValue();
+
+        String queriedTenKhoanPhi;
+        if(tenKhoanPhiDetailFee.getValue() == null) queriedTenKhoanPhi = "";
+        else if(tenKhoanPhiDetailFee.getValue().equals("Tất cả")) queriedTenKhoanPhi = "";
+        else queriedTenKhoanPhi = tenKhoanPhiDetailFee.getValue();
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
+        ResultSet dongphiData = databaseConnector.getDataFromDongPhiTable(queriedHoKhauID,queriedLoaiPhi,queriedTenKhoanPhi);
+
+        try {
+            while(dongphiData.next()) {
+                String HoKhauID = dongphiData.getString(1);
+                String DiaChi = dongphiData.getString(2);
+                String TenKhoanPhi = dongphiData.getString(3);
+                Integer DaDong = dongphiData.getInt(4);
+                Integer PhaiDong = dongphiData.getInt(5);
+
+                Integer ConThieu;
+                if(PhaiDong == 0) ConThieu = 0;
+                else ConThieu = PhaiDong - DaDong;
+                DetailDongPhi detailDongPhi = new DetailDongPhi(HoKhauID,DiaChi,TenKhoanPhi,DaDong,PhaiDong,ConThieu);
+                dataList.add(detailDongPhi);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        idHoColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,String>("HoKhauID"));
+        addressColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,String>("DiaChi"));
+        tenKhoanPhiColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,String>("KhoanPhi"));
+        daDongColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,Integer>("DaDong"));
+        phaiDongColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,Integer>("PhaiDong"));
+        conThieuColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,Integer>("ConThieu"));
+
+        detailFeeTable.setItems(dataList);
+        databaseConnector.disconnect();
     }
     /*
         Hết Quản lý thu chi
