@@ -73,27 +73,27 @@
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1">
+                        <TextField fx:id="idHoDongPhi" onKeyTyped="#getTypedHoKhauIDAddMoney" GridPane.columnIndex="1">
                            <font>
                               <Font name="Tahoma" size="14.0" />
                            </font>
                         </TextField>
-                        <Label text="CMND chủ hộ:" GridPane.rowIndex="1">
+                        <Label text="Tên chủ hộ:" GridPane.rowIndex="1">
                            <font>
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <Label text="Tên chủ hộ:" GridPane.rowIndex="2">
+                        <Label text="Địa chỉ:" GridPane.rowIndex="2">
                            <font>
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="148.0" layoutY="23.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="tenChuHoDongPhi" editable="false" layoutX="148.0" layoutY="23.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="Tahoma" size="14.0" />
                            </font>
                         </TextField>
-                        <TextField layoutX="148.0" layoutY="71.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="diaChiHoDongPhi" editable="false" layoutX="148.0" layoutY="71.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="Tahoma" size="14.0" />
                            </font>
@@ -103,7 +103,7 @@
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="ngayDongPhi" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
@@ -146,18 +146,18 @@
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <ComboBox prefHeight="29.0" prefWidth="219.0" promptText="Thu phí" GridPane.columnIndex="1" />
-                        <Label text="100.000đ" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ComboBox fx:id="loaiPhiAddMoney" onMouseClicked="#actionOnClickLoaiPhiAddMoney" prefHeight="29.0" prefWidth="219.0" GridPane.columnIndex="1" />
+                        <Label fx:id="soTienConThieu" prefHeight="18.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="Tahoma Bold" size="16.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="165.0" layoutY="80.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="soTienNop" layoutX="165.0" layoutY="80.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font name="Tahoma" size="14.0" />
                            </font>
                         </TextField>
-                        <ComboBox layoutX="139.0" layoutY="19.0" prefHeight="29.0" prefWidth="219.0" promptText="Loại phí" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="tenKhoanPhiAddMoney" layoutX="139.0" layoutY="19.0" onAction="#chooseKhoanPhi" onMouseClicked="#actionOnClickKhoanPhiAddMoney" prefHeight="29.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -167,8 +167,8 @@
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Button layoutX="654.0" layoutY="252.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="76.0" styleClass="add-btn" text="Add" />
-            <Button layoutX="751.0" layoutY="252.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="76.0" styleClass="delete-btn" text="Close" />
+            <Button layoutX="654.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#finishDongPhi" prefHeight="36.0" prefWidth="76.0" styleClass="add-btn" text="Add" />
+            <Button layoutX="751.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#cancelDongPhi" prefHeight="36.0" prefWidth="76.0" styleClass="delete-btn" text="Close" />
          </children>
       </AnchorPane>
    </center>

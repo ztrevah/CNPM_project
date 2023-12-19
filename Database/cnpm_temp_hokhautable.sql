@@ -18,29 +18,27 @@ USE `cnpm`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `loaiphi`
+-- Table structure for table `temp_hokhautable`
 --
 
-DROP TABLE IF EXISTS `loaiphi`;
+DROP TABLE IF EXISTS `temp_hokhautable`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loaiphi` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `TenPhi` varchar(255) NOT NULL,
-  `Loai` varchar(15) NOT NULL,
-  `NgayBatDauThu` date NOT NULL,
-  PRIMARY KEY (`ID`,`TenPhi`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `temp_hokhautable` (
+  `CCCD` varchar(12) NOT NULL,
+  `HoTen` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `QuanHeChuHo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `loaiphi`
+-- Dumping data for table `temp_hokhautable`
 --
 
-LOCK TABLES `loaiphi` WRITE;
-/*!40000 ALTER TABLE `loaiphi` DISABLE KEYS */;
-INSERT INTO `loaiphi` VALUES (1,'Phí vệ sinh 2022','Phí thu','2023-01-01'),(2,'Chung tay đẩy lùi Covid-19','Đóng góp','2023-01-01'),(3,'Giúp đỡ học sinh nghèo vượt khó','Đóng góp','2023-01-01'),(4,'Giúp đỡ người cao tuổi','Đóng góp','2023-01-01'),(5,'Khen thưởng học sinh giỏi','Đóng góp','2023-01-01'),(6,'Trợ giúp đồng bào bị ảnh hưởng bão lụt','Đóng góp','2023-01-01'),(7,'Ủng hộ ngày tết thiếu nhi','Đóng góp','2023-01-01'),(8,'Ủng hộ ngày thương binh-liệt sỹ 27/07','Đóng góp','2023-01-01'),(9,'Ủng hộ vì người nghèo','Đóng góp','2023-01-01');
-/*!40000 ALTER TABLE `loaiphi` ENABLE KEYS */;
+LOCK TABLES `temp_hokhautable` WRITE;
+/*!40000 ALTER TABLE `temp_hokhautable` DISABLE KEYS */;
+INSERT INTO `temp_hokhautable` VALUES ('039748152989','Đinh Khôi','Chủ hộ'),('070854654250','Nguyễn Thị Nga Anh','Vợ'),('082096588171','Lê Thiện Bảo','Con'),('001056367209','Lê Bùi Trúc Phương','Con');
+/*!40000 ALTER TABLE `temp_hokhautable` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-18 12:12:46
+-- Dump completed on 2023-12-19  0:13:36

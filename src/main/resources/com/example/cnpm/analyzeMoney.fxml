@@ -22,7 +22,7 @@
          <children>
             <AnchorPane prefHeight="35.0" prefWidth="966.0" styleClass="top-form" stylesheets="@menuDesign.css">
                <children>
-                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thống kê thu chi">
+                  <Label layoutX="35.0" layoutY="8.0" prefWidth="209.0" text="Thống kê lịch sử đóng phí">
                      <font>
                         <Font name="Tahoma" size="15.0" />
                      </font>
@@ -47,7 +47,7 @@
    <center>
       <AnchorPane prefHeight="504.0" prefWidth="954.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="14.0" layoutY="3.0" text="Thống kê thu chi:">
+            <Label layoutX="14.0" layoutY="3.0" text="Thống kê lịch sử đóng phí:">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
@@ -76,19 +76,19 @@
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <ComboBox prefHeight="29.0" prefWidth="174.0" promptText="Tất cả" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="loaiPhiAnalyzeMoney" onMouseClicked="#actionOnClickLoaiPhiAnalyzeMoney" prefHeight="29.0" prefWidth="174.0" promptText="Tất cả" GridPane.columnIndex="1" />
                         <Label prefHeight="48.0" prefWidth="112.0" text="Khoản phí thu, đóng góp:" wrapText="true" GridPane.rowIndex="1">
                            <font>
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <ComboBox prefHeight="29.0" prefWidth="173.0" promptText="Tất cả" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="tenKhoanPhiAnalyzeMoney" onMouseClicked="#actionOnClickKhoanPhiAnalyzeMoney" prefHeight="29.0" prefWidth="173.0" promptText="Tất cả" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Hộ:" GridPane.rowIndex="2">
                            <font>
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <TextField promptText="Tất cả." GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="idHoAnalyzeMoney" promptText="Tất cả." GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="Tahoma" size="14.0" />
                            </font>
@@ -98,27 +98,27 @@
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="fromDateDongPhi" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Đến:" GridPane.rowIndex="4">
                            <font>
                               <Font name="Tahoma" size="16.0" />
                            </font>
                         </Label>
-                        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <DatePicker fx:id="toDateDongPhi" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
-                  <Button layoutX="219.0" layoutY="246.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="73.0" styleClass="update-btn" text="Filter" />
+                  <Button layoutX="219.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#clickSearchDongPhiLog" prefHeight="39.0" prefWidth="73.0" styleClass="update-btn" text="Filter" />
                </children>
             </AnchorPane>
-            <TableView layoutX="333.0" layoutY="32.0" prefHeight="459.0" prefWidth="623.0" style="-fx-background-color: #ddd;">
+            <TableView fx:id="analyzeMoneyTable" layoutX="333.0" layoutY="32.0" prefHeight="459.0" prefWidth="623.0" style="-fx-background-color: #ddd;">
               <columns>
-                <TableColumn prefWidth="57.5999755859375" text="Mã hộ" />
-                <TableColumn prefWidth="130.0" text="Địa chỉ" />
-                  <TableColumn prefWidth="130.0" text="Khoản phí" />
-                  <TableColumn prefWidth="75.0" text="Ngày đóng" />
-                  <TableColumn editable="false" prefWidth="75.0" text="Số tiền &#10; đóng" />
-                  <TableColumn editable="false" prefWidth="75.0" text="Tổng tiền &#10;đã đóng" />
-                  <TableColumn prefWidth="75.0" text="Còn thiếu" />
+                <TableColumn fx:id="idHoColumnAnalyzeMoney" prefWidth="57.5999755859375" text="Mã hộ" />
+                <TableColumn fx:id="addressColumnAnalyzeMoney" prefWidth="130.0" text="Địa chỉ" />
+                  <TableColumn fx:id="tenKhoanPhiColumnAnalyzeMoney" prefWidth="130.0" text="Khoản phí" />
+                  <TableColumn fx:id="ngayDongColumnAnalyzeMoney" prefWidth="75.0" text="Ngày đóng" />
+                  <TableColumn fx:id="soTienDongColumnAnalyzeMoney" editable="false" prefWidth="75.0" text="Số tiền &#10; đóng" />
+                  <TableColumn fx:id="daDongColumnAnalyzeMoney" editable="false" prefWidth="75.0" text="Tổng tiền &#10;đã đóng" />
+                  <TableColumn fx:id="conThieuColumnAnalyzeMoney" prefWidth="75.0" text="Còn thiếu" />
               </columns>
             </TableView>
          </children>

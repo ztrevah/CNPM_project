@@ -18,36 +18,27 @@ USE `cnpm`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `thaydoi`
+-- Table structure for table `account`
 --
 
-DROP TABLE IF EXISTS `thaydoi`;
+DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `thaydoi` (
-  `MaThayDoi` int NOT NULL AUTO_INCREMENT,
-  `LoaiThayDoi` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `NhanKhauID` varchar(12) DEFAULT NULL COMMENT 'Thay đổi về hộ khẩu thì để NULL',
-  `HoKhauID` varchar(50) DEFAULT NULL COMMENT 'Thay đổi về nhân khẩu thì để NULL',
-  `NgayThayDoi` date NOT NULL,
-  `NoiDung` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `DiaDiem` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `GhiChu` varchar(300) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  PRIMARY KEY (`MaThayDoi`),
-  KEY `fk_thaydoi_HoKhauID` (`HoKhauID`),
-  KEY `fk_thaydoi_NhanKhauID` (`NhanKhauID`),
-  CONSTRAINT `fk_thaydoi_HoKhauID` FOREIGN KEY (`HoKhauID`) REFERENCES `hokhau` (`SoHK`),
-  CONSTRAINT `fk_thaydoi_NhanKhauID` FOREIGN KEY (`NhanKhauID`) REFERENCES `nhankhau` (`CCCD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lưu các thay đổi về nhân khẩu, hộ khẩu';
+CREATE TABLE `account` (
+  `Name` varchar(50) NOT NULL COMMENT 'Tên đăng nhập',
+  `Password` varchar(50) NOT NULL COMMENT 'Mật khẩu',
+  `VaiTro` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'Chức vụ của chủ tài khoản : Tổ trưởng, tổ phó, kế toán',
+  PRIMARY KEY (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tài khoản đăng nhập vào hệ thống';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `thaydoi`
+-- Dumping data for table `account`
 --
 
-LOCK TABLES `thaydoi` WRITE;
-/*!40000 ALTER TABLE `thaydoi` DISABLE KEYS */;
-/*!40000 ALTER TABLE `thaydoi` ENABLE KEYS */;
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-18 12:12:47
+-- Dump completed on 2023-12-19  0:13:35

@@ -128,9 +128,9 @@
                                         <TableColumn fx:id="idColumn" prefWidth="88.80000305175781" text="CCCD" />
                                         <TableColumn fx:id="nameColumn" prefWidth="154.39996337890625" text="Họ và tên" />
                                           <TableColumn fx:id="dobColumn" prefWidth="89.60003662109375" text="Ngày sinh" />
-                                          <TableColumn fx:id="sexColumn" prefWidth="95.199951171875" text="Giới tính" />
-                                          <TableColumn fx:id="addressColumn" prefWidth="206.39996337890625" text="Nơi thường trú" />
-                                          <TableColumn fx:id="stateColumn" prefWidth="236.800048828125" text="Tình trạng" />
+                                          <TableColumn fx:id="sexColumn" prefWidth="70.39996337890625" text="Giới tính" />
+                                          <TableColumn fx:id="addressColumn" prefWidth="234.39996337890625" text="Nơi thường trú" />
+                                          <TableColumn fx:id="stateColumn" prefWidth="236.0001220703125" text="Tình trạng" />
                                       </columns>
                                     </TableView>
                                     <TextField fx:id="searchIDNameField" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
@@ -335,12 +335,17 @@
                                     <Insets bottom="7.0" />
                                  </padding>
                               </AnchorPane>
-                              <Button layoutX="617.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="77.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê">
+                              <Button layoutX="504.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="191.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê lịch sử đóng phí">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
                               <Button layoutX="721.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAddMoney" prefHeight="38.0" prefWidth="77.0" styleClass="add-btn" text="Đóng phí">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="52.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickAddFee" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: #309a65;" styleClass="add-btn" text="Tạo khoản phí mới">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
