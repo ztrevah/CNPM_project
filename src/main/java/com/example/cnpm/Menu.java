@@ -555,9 +555,6 @@ public class Menu{
     private AnchorPane absentPane;
 
     @FXML
-    private AnchorPane residentPane;
-
-    @FXML
     private AnchorPane stayingPane;
 
     @FXML
@@ -568,9 +565,6 @@ public class Menu{
 
     @FXML
     private Button  openStayingPane;
-
-    @FXML
-    private Button  openResidentPane;
 
     @FXML
     private Button  openAbsentPane;
@@ -613,7 +607,6 @@ public class Menu{
     void openAbsentPane(ActionEvent event){//Nhấn tạm vắng để mở absentPane
         absentPane.setVisible(true);
         stayingPane.setVisible(false);
-        residentPane.setVisible(false);
         registerAbsentPane.setVisible(true);
         registerStayingPane.setVisible(false);
     }
@@ -621,17 +614,9 @@ public class Menu{
     void openStayingPane(ActionEvent event){//Nhấn tạm trú để mở stayingPane
         absentPane.setVisible(false);
         stayingPane.setVisible(true);
-        residentPane.setVisible(false);
         registerAbsentPane.setVisible(false);
         registerStayingPane.setVisible(true);
     }
-    @FXML
-    void openResidentPane(ActionEvent event){//Nhấn thường trú để mở residentPane
-        absentPane.setVisible(false);
-        stayingPane.setVisible(false);
-        residentPane.setVisible(true);
-    }
-
 
     @FXML
     private TextField registerAbsentCMNDField;
