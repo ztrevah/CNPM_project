@@ -1,6 +1,7 @@
 package com.example.cnpm;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DatabaseConnector {
     Connection connection;
@@ -8,8 +9,8 @@ public class DatabaseConnector {
     // Kết nối với server của db
     public void connect() {
         String url = "jdbc:mysql://localhost:3306/cnpm";
-        String username = "chien";
-        String password = "1234";
+        String username = "root";
+        String password = "123456";
         try {
             connection = DriverManager.getConnection(url,username,password);
             System.out.println("Connect to database successfully");
@@ -17,6 +18,36 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Cập nhật thông tin nhân khẩu
+
+    // Cập nhật thông tin tạm vắng cho nhân khẩu được đăng ký
+    public void updateTamVang(String NhanKhauID, String NgayBatDau, String NgayKetThuc) {
+        String sql = "insert into nhankhau_hokhau values NgayBatDau = ?, NgayKetThuc = ?, LoaiLuuTru = N'Tạm Vắng' WHERE NhanKhauID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, NgayBatDau);
+            preparedStatement.setString(2, NgayKetThuc);
+            preparedStatement.setString(3, NhanKhauID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //Cập nhật thông tin tạm trú cho người đăng ký tạm trú
+    public void insertnewTamTru(String NhanKhauID, String Maho, String NgayBatDau, String NgayKetThuc, String DiaChi) {
+        String sql = "insert into nhankhau_hokhau(NhanKhauID,HoKhauID,NgayBatDau,NgayKetThuc,LoaiLuuTru,QHChuHo) values (?,?,?,?,N'Tạm Vắng',N'Chủ Hộ')";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, NhanKhauID);
+            preparedStatement.setString(2, Maho);
+            preparedStatement.setString(3, NgayBatDau);
+            preparedStatement.setString(4, NgayKetThuc);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Thêm nhân khẩu mới vào danh sách nhân khẩu
     public void addPerson (String id,String HoTen,String BiDanh,String NgaySinh,String NoiSinh,String GioiTinh,String NgheNghiep,String QueQuan,String DanToc,String QuocTich,String NoiLamViec) {
         String sql = "insert into NhanKhau values (?,?,?,?,?,?,?,?,?,?,?)";

@@ -32,7 +32,7 @@
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <AnchorPane fx:id="residentPane" layoutX="51.0" layoutY="78.0" prefHeight="343.0" prefWidth="589.0" styleClass="white-bg">
+                <AnchorPane fx:id="residentPane" layoutX="51.0" layoutY="78.0" prefHeight="343.0" prefWidth="589.0" styleClass="white-bg" visible="false">
                     <children>
                         <GridPane layoutX="17.0" layoutY="24.0" prefHeight="289.0" prefWidth="543.0">
                             <columnConstraints>
@@ -74,8 +74,7 @@
                         </GridPane>
                     </children>
                 </AnchorPane>
-                <Button layoutX="499.0" layoutY="425.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" styleClass="detail-btn" stylesheets="@menuDesign.css" text="Đăng ký" />
-                <AnchorPane fx:id="stayingPane" layoutX="51.0" layoutY="78.0" prefHeight="340.0" prefWidth="579.0" visible="false">
+                <AnchorPane fx:id="stayingPane" layoutX="51.0" layoutY="78.0" prefHeight="340.0" prefWidth="579.0">
                     <children>
                         <GridPane layoutX="26.0" layoutY="34.0" prefHeight="275.0" prefWidth="528.0">
                             <columnConstraints>
@@ -83,6 +82,7 @@
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="265.0" />
                             </columnConstraints>
                             <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -90,38 +90,45 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label alignment="CENTER" prefHeight="91.0" prefWidth="265.0" text="Số CMND :">
+                                <Label alignment="CENTER" prefHeight="91.0" prefWidth="265.0" text="Số CMND :" GridPane.rowIndex="1">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label alignment="CENTER" prefHeight="94.0" prefWidth="263.0" text="Địa chỉ :" GridPane.rowIndex="1">
+                                <Label alignment="CENTER" prefHeight="94.0" prefWidth="263.0" text="Địa chỉ :" GridPane.rowIndex="2">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label alignment="CENTER" prefHeight="96.0" prefWidth="263.0" text="Thời gian bắt đầu :" GridPane.rowIndex="3">
+                                <Label alignment="CENTER" prefHeight="96.0" prefWidth="263.0" text="Thời gian bắt đầu :" GridPane.rowIndex="4">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <TextField prefHeight="41.0" prefWidth="265.0" GridPane.columnIndex="1" />
-                                <TextField prefHeight="43.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <TextField prefHeight="43.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label alignment="CENTER" prefHeight="72.0" prefWidth="262.0" text="Nơi thường trú trước khi đến :" GridPane.rowIndex="2">
+                                <TextField fx:id="registerStayingCMNDField" prefHeight="41.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="registerStayingDiaChiField" prefHeight="43.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="registerStayingLastDiachiField" prefHeight="43.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label alignment="CENTER" prefHeight="72.0" prefWidth="262.0" text="Nơi thường trú trước khi đến :" GridPane.rowIndex="3">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <DatePicker prefHeight="36.0" prefWidth="162.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <DatePicker prefHeight="37.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <Label alignment="CENTER" prefHeight="62.0" prefWidth="263.0" text="Thời gian kết thúc :" GridPane.rowIndex="4">
+                                <DatePicker fx:id="registerStayingStartDate" prefHeight="36.0" prefWidth="162.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <DatePicker fx:id="registerStayingEndDate" prefHeight="37.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Label alignment="CENTER" prefHeight="62.0" prefWidth="263.0" text="Thời gian kết thúc :" GridPane.rowIndex="5">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
+                        <Label alignment="CENTER" prefHeight="54.0" prefWidth="263.0" text="Mã hộ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="registerStayingHomeIDField" prefHeight="40.0" prefWidth="265.0" GridPane.columnIndex="1" />
                             </children>
                         </GridPane>
+                  <Button fx:id="registerStayingPane" layoutX="483.0" layoutY="341.0" mnemonicParsing="false" onAction="#registerStaying" prefHeight="37.0" prefWidth="81.0" styleClass="detail-btn" stylesheets="@menuDesign.css" text="Đăng ký" />
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="absentPane" layoutX="48.0" layoutY="79.0" prefHeight="333.0" prefWidth="590.0" visible="false">
@@ -147,16 +154,17 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <TextField prefHeight="56.0" prefWidth="269.0" GridPane.columnIndex="1" />
+                                <TextField fx:id="registerAbsentCMNDField" prefHeight="56.0" prefWidth="269.0" GridPane.columnIndex="1" />
                                 <Label alignment="CENTER" prefHeight="100.0" prefWidth="270.0" text="Thời gian kết thúc :" GridPane.rowIndex="2">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <DatePicker prefHeight="42.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <DatePicker prefHeight="41.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <DatePicker fx:id="registerAbsentStartDate" prefHeight="42.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <DatePicker fx:id="registerAbsentEndDate" prefHeight="41.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
+                      <Button fx:id="registerAbsentPane" layoutX="491.0" layoutY="341.0" mnemonicParsing="false" onAction="#registerAbsent" prefHeight="37.0" prefWidth="81.0" styleClass="detail-btn" stylesheets="@menuDesign.css" text="Đăng ký" />
                     </children>
                 </AnchorPane>
             </children>
