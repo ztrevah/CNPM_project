@@ -643,15 +643,26 @@ public class Menu{
                 alert.showAndWait();
             }
             else {
-                databaseConnector.updateTamVang(SoCCCD,StartTime.toString(),EndTime.toString());
-                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                Alert alert;
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successful");
-                alert.setHeaderText(null);
-                alert.setContentText("Đăng ký tạm vắng thành công cho " + SoCCCD);
-                alert.showAndWait();
-                stage.close();
+                if(databaseConnector.checkExistNhanKhauThuongTru(SoCCCD)){
+                    String Maho = databaseConnector.getCurrentIDHomeThuongTru(SoCCCD);
+                    databaseConnector.updateTamVang(SoCCCD, Maho, StartTime.toString(),EndTime.toString());
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Đăng ký tạm vắng thành công cho " + SoCCCD);
+                    alert.showAndWait();
+                    stage.close();
+                }
+                else{
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Người này đang không thường trú tại tổ dân phố ");
+                    alert.showAndWait();
+                }
             }
             databaseConnector.disconnect();
         }
@@ -739,15 +750,26 @@ public class Menu{
             }
             else {
                 if(!databaseConnector.checkExistNhanKhauThuongTru(SoCCCD) && !databaseConnector.checkExistNhanKhauTamTru(SoCCCD)) {
-                    databaseConnector.insertnewTamTru(SoCCCD, Maho, StartTime.toString(), EndTime.toString(), Diachi);
-                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                    Alert alert;
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Successful");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Đăng ký tạm trú thành công cho " + SoCCCD);
-                    alert.showAndWait();
-                    stage.close();
+                    if(!databaseConnector.checkExistHoKhauInHoKhauList(Maho)) {
+                        databaseConnector.insertNewHoKhau(Maho, SoCCCD, Diachi, "Tạm trú");
+                        databaseConnector.insertnewTamTru(SoCCCD, Maho, StartTime.toString(), EndTime.toString(), Diachi);
+                        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Successful");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Đăng ký tạm trú thành công cho " + SoCCCD);
+                        alert.showAndWait();
+                        stage.close();
+                    }
+                    else{
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Mã hộ đã tồn tại");
+                        alert.showAndWait();
+                    }
                 }
                 else{
                     Alert alert;

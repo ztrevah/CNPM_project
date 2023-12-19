@@ -21,13 +21,14 @@ public class DatabaseConnector {
     // Cập nhật thông tin nhân khẩu
 
     // Cập nhật thông tin tạm vắng cho nhân khẩu được đăng ký
-    public void updateTamVang(String NhanKhauID, String NgayBatDau, String NgayKetThuc) {
-        String sql = "insert into nhankhau_hokhau values NgayBatDau = ?, NgayKetThuc = ?, LoaiLuuTru = N'Tạm Vắng' WHERE NhanKhauID = ?";
+    public void updateTamVang(String NhanKhauID,String HoKhauID, String NgayBatDau, String NgayKetThuc) {
+        String sql = "Insert into nhankhau_hokhau(NhanKhauID,HoKhauID,QHChuHo,NgayBatDau,NgayKetThuc,LoaiLuuTru) values (?,?,'',?,?,N'Tạm Vắng')";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, NgayBatDau);
-            preparedStatement.setString(2, NgayKetThuc);
-            preparedStatement.setString(3, NhanKhauID);
+            preparedStatement.setString(1, NhanKhauID);
+            preparedStatement.setString(2, HoKhauID);
+            preparedStatement.setString(3, NgayBatDau);
+            preparedStatement.setString(4, NgayKetThuc);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,7 +36,7 @@ public class DatabaseConnector {
     }
     //Cập nhật thông tin tạm trú cho người đăng ký tạm trú
     public void insertnewTamTru(String NhanKhauID, String Maho, String NgayBatDau, String NgayKetThuc, String DiaChi) {
-        String sql = "insert into nhankhau_hokhau(NhanKhauID,HoKhauID,NgayBatDau,NgayKetThuc,LoaiLuuTru,QHChuHo) values (?,?,?,?,N'Tạm Vắng',N'Chủ Hộ')";
+        String sql = "insert into nhankhau_hokhau(NhanKhauID,HoKhauID,NgayBatDau,NgayKetThuc,LoaiLuuTru,QHChuHo) values (?,?,?,?,N'Tạm Trú',N'Chủ Hộ')";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, NhanKhauID);
