@@ -330,7 +330,7 @@
                                     <Insets bottom="7.0" />
                                  </padding>
                               </AnchorPane>
-                              <Button layoutX="504.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="191.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê lịch sử đóng phí">
+                              <Button layoutX="517.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="191.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê lịch sử đóng phí">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
@@ -341,6 +341,11 @@
                                  </font>
                               </Button>
                               <Button layoutX="52.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickAddFee" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: #309a65;" styleClass="add-btn" text="Tạo khoản phí mới">
+                                 <font>
+                                    <Font name="Tahoma" size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="419.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickTongHopFee" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" text="Tổng hợp">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
