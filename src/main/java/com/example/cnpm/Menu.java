@@ -551,6 +551,242 @@ public class Menu{
             }
         }
     }
+    @FXML
+    private AnchorPane absentPane;
+
+    @FXML
+    private AnchorPane stayingPane;
+
+    @FXML
+    private Button registerAbsentPane;
+
+    @FXML
+    private Button registerStayingPane;
+
+    @FXML
+    private Button  openStayingPane;
+
+    @FXML
+    private Button  openAbsentPane;
+
+    @FXML
+    void clickRegisterHome(ActionEvent event) {//Nhấn register trong scene quản lý nhân khẩu để mở stage mới là registerHome.fxml
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("registerHome.fxml"));
+            Parent addPeopleRoot = loader.load();
+
+            // Tạo một Stage mới
+            Stage addPeopleStage = new Stage();
+            addPeopleStage.setScene(new Scene(addPeopleRoot));
+            newStages.add(addPeopleStage);
+
+            //Cài đặt để có thể di chuyển stage bằng kéo thả
+            addPeopleRoot.setOnMousePressed((MouseEvent e) -> {
+                x = e.getScreenX() - addPeopleStage.getX();
+                y = e.getScreenY() - addPeopleStage.getY();
+            });
+
+            addPeopleRoot.setOnMouseDragged((MouseEvent e) -> {
+                addPeopleStage.setX(e.getScreenX() - x);
+                addPeopleStage.setY(e.getScreenY() - y);
+            });
+
+            // Đặt kiểu modality của Stage mới là NONE
+            addPeopleStage.initModality(Modality.NONE);
+            addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+            // Hiển thị Stage mới
+            addPeopleStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void openAbsentPane(ActionEvent event){//Nhấn tạm vắng để mở absentPane
+        absentPane.setVisible(true);
+        stayingPane.setVisible(false);
+        registerAbsentPane.setVisible(true);
+        registerStayingPane.setVisible(false);
+    }
+    @FXML
+    void openStayingPane(ActionEvent event){//Nhấn tạm trú để mở stayingPane
+        absentPane.setVisible(false);
+        stayingPane.setVisible(true);
+        registerAbsentPane.setVisible(false);
+        registerStayingPane.setVisible(true);
+    }
+
+    @FXML
+    private TextField registerAbsentCMNDField;
+
+    @FXML
+    private DatePicker registerAbsentEndDate;
+
+    @FXML
+    private DatePicker registerAbsentStartDate;
+
+    @FXML
+    void registerAbsent(ActionEvent event) {
+        // Ấn vào nút đăng ký ở phần đăng ký tạm vắng sẽ cập nhật thông tin trong bang nhankhau_hokhau
+        String SoCCCD = registerAbsentCMNDField.getText();
+        LocalDate StartTime = registerAbsentStartDate.getValue();
+        LocalDate EndTime = registerAbsentEndDate.getValue();
+
+        if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Chưa tồn tại nhân khẩu, Đăng ký tạm vắng thất bại " + SoCCCD);
+                alert.showAndWait();
+            }
+            else {
+                if(databaseConnector.checkExistNhanKhauThuongTru(SoCCCD)){
+                    String Maho = databaseConnector.getCurrentIDHomeThuongTru(SoCCCD);
+                    databaseConnector.updateTamVang(SoCCCD, Maho, StartTime.toString(),EndTime.toString());
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Đăng ký tạm vắng thành công cho " + SoCCCD);
+                    alert.showAndWait();
+                    stage.close();
+                }
+                else{
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Người này đang không thường trú tại tổ dân phố ");
+                    alert.showAndWait();
+                }
+            }
+            databaseConnector.disconnect();
+        }
+        else {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Hãy điền đầy đủ dữ liệu");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private TextField registerStayingCMNDField;
+    @FXML
+    private TextField registerStayingDiaChiField;
+    @FXML
+    private TextField registerStayingHomeIDField;
+    @FXML
+    private DatePicker registerStayingEndDate;
+    @FXML
+    private DatePicker registerStayingStartDate;
+    @FXML
+    void registerStaying(ActionEvent event) {
+        // Ấn vào nút đăng ký ở phần đăng ký tạm trú sẽ cập nhật thông tin trong bang nhankhau_hokhau
+        String Maho = registerStayingHomeIDField.getText();
+        String SoCCCD = registerStayingCMNDField.getText();
+        String Diachi = registerStayingDiaChiField.getText();
+        LocalDate StartTime = registerStayingStartDate.getValue();
+        LocalDate EndTime = registerStayingEndDate.getValue();
+
+        if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null && !checkEmpty(Diachi) && !checkEmpty(Maho)) {
+            DatabaseConnector databaseConnector = new DatabaseConnector();
+            databaseConnector.connect();
+            if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {
+                try {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Người này chưa có trong danh sách nhân khẩu. Yêu cầu thêm mới");
+                    alert.showAndWait();
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("addPeople.fxml"));
+                    Parent addPeopleRoot = loader.load();
+
+                    // Tạo một Stage mới
+                    Stage addPeopleStage = new Stage();
+                    addPeopleStage.setScene(new Scene(addPeopleRoot));
+                    newStages.add(addPeopleStage);
+
+                    Menu addPeopleController = loader.getController();
+                    addPeopleController.addPeopleCMNDField.setText(SoCCCD);
+                    addPeopleController.addPeopleCMNDField.setEditable(false);
+
+                    //Cài đặt để có thể di chuyển stage bằng kéo thả
+                    addPeopleRoot.setOnMousePressed((MouseEvent event1) -> {
+                        x = event1.getScreenX() - addPeopleStage.getX();
+                        y = event1.getScreenY() - addPeopleStage.getY();
+                    });
+
+                    addPeopleRoot.setOnMouseDragged((MouseEvent event1) -> {
+                        addPeopleStage.setX(event1.getScreenX() - x);
+                        addPeopleStage.setY(event1.getScreenY() - y);
+                    });
+
+                    // Đặt kiểu modality của Stage mới là NONE
+                    addPeopleStage.initModality(Modality.NONE);
+                    addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+                    // Hiển thị Stage mới
+                    addPeopleStage.show();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+            else {
+                if(!databaseConnector.checkExistNhanKhauThuongTru(SoCCCD) && !databaseConnector.checkExistNhanKhauTamTru(SoCCCD)) {
+                    if(!databaseConnector.checkExistHoKhauInHoKhauList(Maho)) {
+                        databaseConnector.insertNewHoKhau(Maho, SoCCCD, Diachi, "Tạm trú");
+                        databaseConnector.insertnewTamTru(SoCCCD, Maho, StartTime.toString(), EndTime.toString(), Diachi);
+                        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Successful");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Đăng ký tạm trú thành công cho " + SoCCCD);
+                        alert.showAndWait();
+                        stage.close();
+                    }
+                    else{
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Mã hộ đã tồn tại");
+                        alert.showAndWait();
+                    }
+                }
+                else{
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Không thể đăng ký tạm trú cho người đã thường trú hoặc tạm trú trước đó !");
+                    alert.showAndWait();
+                }
+            }
+            databaseConnector.disconnect();
+        }
+        else {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Hãy điền đầy đủ dữ liệu");
+            alert.showAndWait();
+        }
+    }
+
 
     /*
         Hết quản lý nhân khẩu

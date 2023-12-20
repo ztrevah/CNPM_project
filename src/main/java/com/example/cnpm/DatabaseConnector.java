@@ -1,6 +1,7 @@
 package com.example.cnpm;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DatabaseConnector {
     Connection connection;
@@ -17,6 +18,37 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    // Cập nhật thông tin nhân khẩu
+
+    // Cập nhật thông tin tạm vắng cho nhân khẩu được đăng ký
+    public void updateTamVang(String NhanKhauID,String HoKhauID, String NgayBatDau, String NgayKetThuc) {
+        String sql = "Insert into nhankhau_hokhau(NhanKhauID,HoKhauID,QHChuHo,NgayBatDau,NgayKetThuc,LoaiLuuTru) values (?,?,'',?,?,N'Tạm Vắng')";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, NhanKhauID);
+            preparedStatement.setString(2, HoKhauID);
+            preparedStatement.setString(3, NgayBatDau);
+            preparedStatement.setString(4, NgayKetThuc);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //Cập nhật thông tin tạm trú cho người đăng ký tạm trú
+    public void insertnewTamTru(String NhanKhauID, String Maho, String NgayBatDau, String NgayKetThuc, String DiaChi) {
+        String sql = "insert into nhankhau_hokhau(NhanKhauID,HoKhauID,NgayBatDau,NgayKetThuc,LoaiLuuTru,QHChuHo) values (?,?,?,?,N'Tạm Trú',N'Chủ Hộ')";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, NhanKhauID);
+            preparedStatement.setString(2, Maho);
+            preparedStatement.setString(3, NgayBatDau);
+            preparedStatement.setString(4, NgayKetThuc);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Thêm nhân khẩu mới vào danh sách nhân khẩu
     public void addPerson (String id,String HoTen,String BiDanh,String NgaySinh,String NoiSinh,String GioiTinh,String NgheNghiep,String QueQuan,String DanToc,String QuocTich,String NoiLamViec) {
         String sql = "insert into NhanKhau values (?,?,?,?,?,?,?,?,?,?,?)";
@@ -319,7 +351,7 @@ public class DatabaseConnector {
         }
     }
     public boolean checkExistNhanKhauTamTru(String id) {
-        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru = N'Tạm trú'";
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc > curdate() and LoaiLuuTru = N'Tạm trú'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
@@ -374,7 +406,7 @@ public class DatabaseConnector {
     }
     // Đưa ra danh sách các nhân khẩu hiện tại của một hộ khẩu (NhanKhauID,QHChuHo)
     public ResultSet getCurrentMember(String id) {
-        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru <> 'Tạm vắng'";
+        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc > curdate() and LoaiLuuTru <> 'Tạm vắng'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
