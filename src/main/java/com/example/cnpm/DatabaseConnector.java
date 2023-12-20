@@ -9,8 +9,8 @@ public class DatabaseConnector {
     // Kết nối với server của db
     public void connect() {
         String url = "jdbc:mysql://localhost:3306/cnpm";
-        String username = "root";
-        String password = "123456";
+        String username = "chien";
+        String password = "1234";
         try {
             connection = DriverManager.getConnection(url,username,password);
             System.out.println("Connect to database successfully");
@@ -351,7 +351,7 @@ public class DatabaseConnector {
         }
     }
     public boolean checkExistNhanKhauTamTru(String id) {
-        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru = N'Tạm trú'";
+        String sql = "select * from nhankhau_hokhau where NhanKhauID = ? and NgayKetThuc > curdate() and LoaiLuuTru = N'Tạm trú'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
@@ -406,7 +406,7 @@ public class DatabaseConnector {
     }
     // Đưa ra danh sách các nhân khẩu hiện tại của một hộ khẩu (NhanKhauID,QHChuHo)
     public ResultSet getCurrentMember(String id) {
-        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc = '2100-01-01' and LoaiLuuTru <> 'Tạm vắng'";
+        String sql = "select NhanKhauID,QHChuHo from nhankhau_hokhau where HoKhauID = ? and NgayKetThuc > curdate() and LoaiLuuTru <> 'Tạm vắng'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,id);
@@ -798,6 +798,33 @@ public class DatabaseConnector {
             callableStatement.setString(2,Nam);
             callableStatement.executeUpdate();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet getDataFromDongPhiTable (String HoKhauID,String LoaiPhi,String TenKhoanPhi) {
+        String sql = "select SoHK,DiaChi,TenPhi,DaDong,PhaiDong\n" +
+                "from dongphi,loaiphi,hokhau\n" +
+                "where dongphi.IDPhi = loaiphi.ID and dongphi.HoKhauID = hokhau.SoHK\n" +
+                "and HoKhauID like ? and Loai like ? and TenPhi like ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,'%'+HoKhauID+'%');
+            preparedStatement.setString(2,'%'+LoaiPhi+'%');
+            preparedStatement.setString(3,'%'+TenKhoanPhi+'%');
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet getChangeLog(String HoKhauID) {
+        String sql = "select * from thaydoi where HoKhauID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
