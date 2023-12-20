@@ -1999,7 +1999,7 @@ public class Menu{
     @FXML
     private TableColumn<KhoanPhiInfo, String> dateMoneyCol;
     @FXML
-    private TableColumn<KhoanPhiInfo, String> totalMoneyCol;
+    private TableColumn<KhoanPhiInfo, Integer> totalMoneyCol;
     @FXML
     private TableColumn<KhoanPhiInfo, String> idMoneyCol;
     @FXML
@@ -2035,11 +2035,11 @@ public class Menu{
 
         try {
             while(khoanPhiList.next()) {
-                String ID = khoanPhiList.getString(1);
-                String TenPhi = khoanPhiList.getString(2);
-                String TongTienDaThu = khoanPhiList.getString(5);
-                String NgayBatDauThu = khoanPhiList.getString(3);
-                String LoaiKhoanPhi = khoanPhiList.getString(4);
+                String ID = khoanPhiList.getString("ID");
+                String TenPhi = khoanPhiList.getString("TenPhi");
+                String NgayBatDauThu = khoanPhiList.getString("NgayBatDauThu");
+                String LoaiKhoanPhi = khoanPhiList.getString("Loai");
+                Integer TongTienDaThu = databaseConnector.getTongTienDaDongChoKhoanPhi(ID);
 
                 KhoanPhiInfo khoanPhiInfo = new KhoanPhiInfo(ID,TenPhi,TongTienDaThu,NgayBatDauThu,LoaiKhoanPhi);
                 dataList.add(khoanPhiInfo);
@@ -2050,7 +2050,7 @@ public class Menu{
         }
         idMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("ID"));
         nameMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("TenKhoanPhi"));
-        totalMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("TongTienDaThu"));
+        totalMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,Integer>("TongTienDaThu"));
         dateMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("NgayBatDauThu"));
         typeMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("LoaiKhoanPhi"));
         moneyTable.setItems(dataList);
@@ -2500,7 +2500,7 @@ public class Menu{
                     alert.setContentText("Đã tồn tại khoản phí này");
                     alert.showAndWait();
                 }
-                else if(!checkFormatYear(NamKhoanPhi)) {
+                else if(!checkFormatYear(NamKhoanPhi) && LoaiPhi.equals("Phí thu")) {
                     Alert alert;
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
