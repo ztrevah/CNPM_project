@@ -3,10 +3,10 @@ package com.example.cnpm;
 public class KhoanPhiInfo {
     String ID;
     String TenKhoanPhi;
-    String TongTienDaThu;
+    Integer TongTienDaThu;
     String NgayBatDauThu;
     String LoaiKhoanPhi;
-    KhoanPhiInfo(String id,String name,String totalMoney,String startDate,String type){
+    KhoanPhiInfo(String id,String name,Integer totalMoney,String startDate,String type){
         this.ID = id;
         this.TenKhoanPhi = name;
         this.TongTienDaThu = totalMoney;
@@ -22,7 +22,7 @@ public class KhoanPhiInfo {
         return TenKhoanPhi;
     }
 
-    public String getTongTienDaThu() {
+    public Integer getTongTienDaThu() {
         return TongTienDaThu;
     }
 
