@@ -218,7 +218,7 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="71.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickRegisterHome" prefHeight="38.0" prefWidth="295.0" styleClass="addNew-btn" text="Đăng ký thường trú/ tạm trú/ tạm vắng">
+                              <Button layoutX="71.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickRegisterHome" prefHeight="38.0" prefWidth="208.0" styleClass="addNew-btn" text="Đăng ký tạm trú/tạm vắng">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>

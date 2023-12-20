@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="Sửa db: Thêm các data vào bảng thu phí, đóng góp, thêm bảng loaiphi quản lý chung cả thu phí và đóng góp, dùng id thay cho tên sự kiện, khoản phí">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/LichSuThayDoi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/changeLogHome.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addPeople.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/addPeople.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/registerHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/registerHome.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/updatePeople.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/updatePeople.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +112,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />

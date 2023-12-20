@@ -681,19 +681,12 @@ public class Menu{
 
     @FXML
     private TextField registerStayingCMNDField;
-
     @FXML
     private TextField registerStayingDiaChiField;
-
     @FXML
     private TextField registerStayingHomeIDField;
-
     @FXML
     private DatePicker registerStayingEndDate;
-
-    @FXML
-    private TextField registerStayingLastDiachiField;
-
     @FXML
     private DatePicker registerStayingStartDate;
     @FXML
@@ -701,12 +694,11 @@ public class Menu{
         // Ấn vào nút đăng ký ở phần đăng ký tạm trú sẽ cập nhật thông tin trong bang nhankhau_hokhau
         String Maho = registerStayingHomeIDField.getText();
         String SoCCCD = registerStayingCMNDField.getText();
-        String Diachitruoc = registerStayingLastDiachiField.getText();
         String Diachi = registerStayingDiaChiField.getText();
         LocalDate StartTime = registerStayingStartDate.getValue();
         LocalDate EndTime = registerStayingEndDate.getValue();
 
-        if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null && !checkEmpty(Diachi) && !checkEmpty(Diachitruoc) && !checkEmpty(Maho)) {
+        if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null && !checkEmpty(Diachi) && !checkEmpty(Maho)) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
             databaseConnector.connect();
             if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {

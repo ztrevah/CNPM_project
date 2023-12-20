@@ -40,7 +40,6 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
                                 <Label alignment="CENTER" prefHeight="91.0" prefWidth="265.0" text="Số CMND :" GridPane.rowIndex="1">
@@ -53,22 +52,16 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label alignment="CENTER" prefHeight="96.0" prefWidth="263.0" text="Thời gian bắt đầu :" GridPane.rowIndex="4">
+                                <Label alignment="CENTER" prefHeight="96.0" prefWidth="263.0" text="Thời gian bắt đầu :" GridPane.rowIndex="3">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
                                 <TextField fx:id="registerStayingCMNDField" prefHeight="41.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <TextField fx:id="registerStayingDiaChiField" prefHeight="43.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <TextField fx:id="registerStayingLastDiachiField" prefHeight="43.0" prefWidth="265.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label alignment="CENTER" prefHeight="72.0" prefWidth="262.0" text="Nơi thường trú trước khi đến :" GridPane.rowIndex="3">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <DatePicker fx:id="registerStayingStartDate" prefHeight="36.0" prefWidth="162.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <DatePicker fx:id="registerStayingEndDate" prefHeight="37.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <Label alignment="CENTER" prefHeight="62.0" prefWidth="263.0" text="Thời gian kết thúc :" GridPane.rowIndex="5">
+                                <DatePicker fx:id="registerStayingStartDate" prefHeight="36.0" prefWidth="162.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <DatePicker fx:id="registerStayingEndDate" prefHeight="37.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label alignment="CENTER" prefHeight="62.0" prefWidth="263.0" text="Thời gian kết thúc :" GridPane.rowIndex="4">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
