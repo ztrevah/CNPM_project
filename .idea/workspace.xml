@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="Sửa db: Thêm các data vào bảng thu phí, đóng góp, thêm bảng loaiphi quản lý chung cả thu phí và đóng góp, dùng id thay cho tên sự kiện, khoản phí">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/LichSuThayDoi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/changeLogHome.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/DatabaseConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/registerHome.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/registerHome.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cnpm/Menu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,14 +21,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="FxmlFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="chiennn" />
+        <entry key="$PROJECT_DIR$" value="hung123" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,7 +73,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Ngoc&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/New folder/CNPM_project&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/New folder/CNPM_project/src/main/resources/com/example/cnpm&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,6 +87,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\New folder\CNPM_project\src\main\resources\com\example\cnpm" />
       <recent name="D:\New folder\CNPM_project" />
       <recent name="D:\New folder\CNPM_project\src\main\java\com\example\cnpm" />
     </key>
@@ -153,45 +156,26 @@
       <option name="project" value="LOCAL" />
       <updated>1702818692641</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Sửa lỗi phần nhân khẩu">
+      <option name="closed" value="true" />
+      <created>1702888672890</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702888672890</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="main" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="main" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -201,7 +185,8 @@
     <MESSAGE value="thêm tính năng các nút cơ bản như minimize, close, logout, thêm comment code trong Menu.java. Tất cả hàm điều khiển đều và nên nhét chung trong Menu.java" />
     <MESSAGE value="nhánh mới thay nhánh chien vì merge main bị conflict @@" />
     <MESSAGE value="Sửa db: Thêm các data vào bảng thu phí, đóng góp, thêm bảng loaiphi quản lý chung cả thu phí và đóng góp, dùng id thay cho tên sự kiện, khoản phí" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sửa db: Thêm các data vào bảng thu phí, đóng góp, thêm bảng loaiphi quản lý chung cả thu phí và đóng góp, dùng id thay cho tên sự kiện, khoản phí" />
+    <MESSAGE value="Sửa lỗi phần nhân khẩu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sửa lỗi phần nhân khẩu" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CNPM_project$Main.ic" NAME="Main Coverage Results" MODIFIED="1701963651360" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

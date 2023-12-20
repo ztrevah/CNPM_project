@@ -32,7 +32,7 @@ CREATE TABLE `thaydoi` (
   PRIMARY KEY (`MaThayDoi`),
   KEY `fk_thaydoi_HoKhauID` (`HoKhauID`),
   CONSTRAINT `fk_thaydoi_HoKhauID` FOREIGN KEY (`HoKhauID`) REFERENCES `hokhau` (`SoHK`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lưu các thay đổi về nhân khẩu, hộ khẩu';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lưu các thay đổi về nhân khẩu, hộ khẩu';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-19  0:13:35
+-- Dump completed on 2023-12-20 11:37:31

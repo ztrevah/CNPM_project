@@ -801,6 +801,33 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    public ResultSet getDataFromDongPhiTable (String HoKhauID,String LoaiPhi,String TenKhoanPhi) {
+        String sql = "select SoHK,DiaChi,TenPhi,DaDong,PhaiDong\n" +
+                "from dongphi,loaiphi,hokhau\n" +
+                "where dongphi.IDPhi = loaiphi.ID and dongphi.HoKhauID = hokhau.SoHK\n" +
+                "and HoKhauID like ? and Loai like ? and TenPhi like ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,'%'+HoKhauID+'%');
+            preparedStatement.setString(2,'%'+LoaiPhi+'%');
+            preparedStatement.setString(3,'%'+TenKhoanPhi+'%');
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ResultSet getChangeLog(String HoKhauID) {
+        String sql = "select * from thaydoi where HoKhauID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     // Ngắt kết nối với server của db
     public void disconnect() {
         try {
