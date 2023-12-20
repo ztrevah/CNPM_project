@@ -19,6 +19,8 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
         Scene scene = new Scene(root);
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
 
         root.setOnMousePressed((MouseEvent event) -> {
             x = event.getScreenX() - stage.getX();

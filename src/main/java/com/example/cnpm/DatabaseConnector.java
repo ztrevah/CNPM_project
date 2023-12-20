@@ -4,12 +4,12 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class DatabaseConnector {
-    Connection connection;
+    public static Connection connection;
 
     // Kết nối với server của db
     public void connect() {
         String url = "jdbc:mysql://localhost:3306/cnpm";
-        String username = "chien";
+        String username = "root";
         String password = "1234";
         try {
             connection = DriverManager.getConnection(url,username,password);
