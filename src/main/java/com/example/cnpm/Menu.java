@@ -1658,7 +1658,95 @@ public class Menu{
             }
         }
     }
+    @FXML
+    private TextField addressFieldChangeLogHome;
 
+    @FXML
+    private TableView<LichSuThayDoi> changeLogHomeTable;
+
+    @FXML
+    private TableColumn<LichSuThayDoi, String> contentChangeLogColumn;
+
+    @FXML
+    private TableColumn<LichSuThayDoi, String> dateChangeLogColumn;
+
+    @FXML
+    private TextField idChuHoFieldChangeLogHome;
+
+    @FXML
+    private TextField idHKFieldLogHome;
+
+    @FXML
+    private TextField loaiSoFieldChangeLogHome;
+
+    @FXML
+    void clickChangeLogHome (MouseEvent event) {
+        if(selectedIDHome != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("changeLogHome.fxml"));
+                Parent changeLogHomeRoot = loader.load();
+
+                // Tạo một Stage mới
+                Stage changeLogHomeStage = new Stage();
+                changeLogHomeStage.setScene(new Scene(changeLogHomeRoot));
+                newStages.add(changeLogHomeStage);
+
+                Menu changeLogHomeController = loader.getController();
+                DatabaseConnector databaseConnector = new DatabaseConnector();
+                databaseConnector.connect();
+                ResultSet homeInfo = databaseConnector.getHomeInfo(selectedIDHome);
+                try {
+                    while(homeInfo.next()) {
+                        changeLogHomeController.idHKFieldLogHome.setText(selectedIDHome);
+                        changeLogHomeController.loaiSoFieldChangeLogHome.setText(homeInfo.getString("LoaiSo"));
+                        changeLogHomeController.idChuHoFieldChangeLogHome.setText(homeInfo.getString("ChuHoID"));
+                        changeLogHomeController.addressFieldChangeLogHome.setText(homeInfo.getString("DiaChi"));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                ObservableList<LichSuThayDoi> dataList = FXCollections.observableArrayList();
+                ResultSet changeLogList = databaseConnector.getChangeLog(selectedIDHome);
+                try {
+                    while(changeLogList.next()) {
+                        String NgayThayDoi = changeLogList.getString("NgayThayDoi");
+                        String NoiDung = changeLogList.getString("NoiDung");
+                        LichSuThayDoi lichSuThayDoi = new LichSuThayDoi(NgayThayDoi,NoiDung);
+                        dataList.add(lichSuThayDoi);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                changeLogHomeController.dateChangeLogColumn.setCellValueFactory(new PropertyValueFactory<LichSuThayDoi,String>("NgayThayDoi"));
+                changeLogHomeController.contentChangeLogColumn.setCellValueFactory(new PropertyValueFactory<LichSuThayDoi,String>("NoiDung"));
+
+                changeLogHomeController.changeLogHomeTable.setItems(dataList);
+
+                //Cài đặt để có thể di chuyển stage bằng kéo thả
+                changeLogHomeRoot.setOnMousePressed((MouseEvent e) -> {
+                    x = e.getScreenX() - changeLogHomeStage.getX();
+                    y = e.getScreenY() - changeLogHomeStage.getY();
+                });
+
+                changeLogHomeRoot.setOnMouseDragged((MouseEvent e) -> {
+                    changeLogHomeStage.setX(e.getScreenX() - x);
+                    changeLogHomeStage.setY(e.getScreenY() - y);
+                });
+
+                // Đặt kiểu modality của Stage mới là NONE
+                changeLogHomeStage.initModality(Modality.NONE);
+                changeLogHomeStage.initStyle(StageStyle.TRANSPARENT);
+
+                // Hiển thị Stage mới
+                changeLogHomeStage.show();
+                databaseConnector.disconnect();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
+
+    }
 
 
 

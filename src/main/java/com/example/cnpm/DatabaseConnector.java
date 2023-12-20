@@ -785,6 +785,17 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
+    public ResultSet getChangeLog(String HoKhauID) {
+        String sql = "select * from thaydoi where HoKhauID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,HoKhauID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     // Ngắt kết nối với server của db
     public void disconnect() {
         try {
