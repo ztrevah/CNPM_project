@@ -140,7 +140,7 @@ public class Menu{
 
                 Menu setRole = loader.getController();
                 setRole.roleName.setText(VaiTro);
-                if(VaiTro.equals("Kế Toán")){
+                if(VaiTro.equals("Kế toán")){
                     setRole.peopleButton.setDisable(true);
                     setRole.homeButton.setDisable(true);
 
