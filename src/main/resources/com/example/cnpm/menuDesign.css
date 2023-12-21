@@ -38,7 +38,7 @@
     -fx-font-family: "Arial";
     -fx-font-size: 14px;
     -fx-text-fill: #fff;
-    -fx-alignment: CENTER-LEFT;
+    -fx-alignment: CENTER;
 }
 
 .logout{
@@ -159,4 +159,28 @@
     -fx-text-fill: #fff;
     -fx-font-size: 15px;
     -fx-font-family: Tahoma;
+}
+.navClickPeople-btn{
+    -fx-background-color: linear-gradient(to right, #252d50, #ddd);
+    -fx-cursor: hand;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: #324f6b;
+    -fx-alignment: CENTER-CENTER;
+}
+.navClickHome-btn{
+    -fx-background-color: linear-gradient(to right, #327252, #ddd);
+    -fx-cursor: hand;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: #309a65;
+    -fx-alignment: CENTER-CENTER;
+}
+.navClickMoney-btn{
+    -fx-background-color:  linear-gradient(to right, #E5A429, #ddd  );
+    -fx-cursor: hand;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: yellow;
+    -fx-alignment: CENTER-CENTER;
 }

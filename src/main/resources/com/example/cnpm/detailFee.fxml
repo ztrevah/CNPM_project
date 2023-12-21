@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to top right, #ddd , #E5A429)linear-gradient(to top right, #ddd , #E5A429);" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="895.0" style="-fx-background-color: linear-gradient(to top right, #ddd , #E5A429)linear-gradient(to top right, #ddd , #E5A429);" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="958.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutY="2.0" prefHeight="35.0" prefWidth="875.0" styleClass="top-form" stylesheets="@menuDesign.css">
+            <AnchorPane layoutY="-1.0" prefHeight="35.0" prefWidth="875.0" styleClass="top-form" stylesheets="@menuDesign.css">
                <children>
                   <Label layoutX="35.0" layoutY="8.0" prefHeight="19.0" prefWidth="280.0" text="Tổng hợp các khoản thu phí, đóng góp">
                      <font>
@@ -44,7 +44,7 @@
       </AnchorPane>
    </top>
    <center>
-      <AnchorPane prefHeight="504.0" prefWidth="917.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="498.0" prefWidth="882.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="3.0" text="Tổng hợp thu phí, đóng góp">
                <font>

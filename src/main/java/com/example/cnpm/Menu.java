@@ -1,20 +1,15 @@
 package com.example.cnpm;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -25,15 +20,33 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.cnpm.DatabaseConnector.connection;
+
 public class Menu{
+
+    @FXML
+    private Button close;
+
+    @FXML
+    private Button login_btn;
+
+    @FXML
+    private Button minimize;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private TextField username;
+
+    @FXML
+    private Label roleName;
     @FXML
     private TableColumn<Person, ?> MoneyCol;
 
@@ -45,9 +58,6 @@ public class Menu{
 
     @FXML
     private AnchorPane newMemberPane;
-
-    @FXML
-    private Button minimize;
 
     @FXML
     private VBox container;
@@ -68,20 +78,103 @@ public class Menu{
     private AnchorPane moneyPane;
 
     @FXML
-    private Button  openPeoplePane;
+    private Button  peopleButton;
 
     @FXML
-    private Button  openHomePane;
+    private Button  homeButton;
 
     @FXML
-    private Button  openMoneyPane;
+    private Button  moneyButton;
     private double x = 0;
     private double y = 0;
 
     private List<Stage> newStages = new ArrayList(); //Lưu trữ tham chiếu các stage mới được mở thêm để sau logout đóng hết đi
+    public void loginAdmin() throws SQLException, IOException {
+        String sql = "SELECT * FROM account WHERE Name = ? and Password = ?";
+
+        if(username.getText().isEmpty() || password.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Chưa điền thông tin");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng điền đầy đủ thông tin!");
+            alert.showAndWait();
+        } else{
+            String VaiTro;
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username.getText());
+            preparedStatement.setString(2, password.getText());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                VaiTro = resultSet.getString("VaiTro");
+                System.out.println(VaiTro);
+                alert.setTitle("Login Successfull");
+                alert.setHeaderText(null);
+                alert.setContentText("Đăng nhập thành công. Welcome " + VaiTro);
+                alert.showAndWait();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+                Parent addPeopleRoot = loader.load();
+
+                // Tạo một Stage mới
+                Stage addPeopleStage = new Stage();
+                addPeopleStage.setScene(new Scene(addPeopleRoot));
+
+
+                //Cài đặt để có thể di chuyển stage bằng kéo thả
+                addPeopleRoot.setOnMousePressed((MouseEvent event) -> {
+                    x = event.getScreenX() - addPeopleStage.getX();
+                    y = event.getScreenY() - addPeopleStage.getY();
+                });
+
+                addPeopleRoot.setOnMouseDragged((MouseEvent event) -> {
+                    addPeopleStage.setX(event.getScreenX() - x);
+                    addPeopleStage.setY(event.getScreenY() - y);
+                });
+
+                // Đặt kiểu modality của Stage mới là NONE
+                addPeopleStage.initModality(Modality.NONE);
+                addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+                Menu setRole = loader.getController();
+                setRole.roleName.setText(VaiTro);
+                if(VaiTro.equals("Kế Toán")){
+                    setRole.peopleButton.setDisable(true);
+                    setRole.homeButton.setDisable(true);
+
+                    setRole.peoplePane.setVisible(false);
+                    setRole.homePane.setVisible(false);
+                    setRole.moneyPane.setVisible(true);
+                }else{
+                    setRole.peoplePane.setVisible(true);
+                    setRole.homePane.setVisible(false);
+                    setRole.moneyPane.setVisible(false);
+
+                }
+                Stage currentStage = (Stage) login_btn.getScene().getWindow();
+                currentStage.close();
+                // Hiển thị Stage mới
+                addPeopleStage.show();
+
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Tài khoản hoặc mật khẩu không chính xác. Vui lòng nhập lại");
+                alert.showAndWait();
+            }
+        }
+
+
+    }
     @FXML
     void clickClose(ActionEvent event) {//nút close trên màn hình chính, nhấn để tắt TOÀN BỘ
         System.exit(0);
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.disconnect();
+
     }
 
     @FXML
@@ -119,8 +212,7 @@ public class Menu{
 
         loginStage.setScene(loginScene);
         loginStage.show();
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        databaseConnector.disconnect();
+
     }
 
     /*
@@ -678,6 +770,7 @@ public class Menu{
                 alert.setContentText("Hãy nhập vào ngày bắt đầu trước ngày kết thúc");
                 alert.showAndWait();
             }
+            
         }
         else {
             Alert alert;
@@ -853,7 +946,7 @@ public class Menu{
     private TableColumn<Home,String> loaiSoColumn;
     // Tìm kiếm hộ theo tiêu chí đã chọn
     @FXML
-    void clickSearchHome(MouseEvent event) {
+    void clickSearchHome(ActionEvent event) {
         if(homeTable != null) homeTable.getItems().clear();
         ObservableList<Home> dataList = FXCollections.observableArrayList();
 

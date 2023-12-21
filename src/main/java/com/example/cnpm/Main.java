@@ -17,10 +17,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Scene scene = new Scene(root);
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        databaseConnector.connect();
 
         root.setOnMousePressed((MouseEvent event) -> {
             x = event.getScreenX() - stage.getX();
@@ -36,6 +34,9 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
+
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.connect();
     }
 
     public static void main(String[] args) {
