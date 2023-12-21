@@ -542,7 +542,7 @@ public class Menu{
                         databaseConnector.deletePeople(selectedId);
                         Alert alert1;
                         alert1 = new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Error");
+                        alert1.setTitle("Successful");
                         alert1.setHeaderText(null);
                         alert1.setContentText("Xoá thành công nhân khẩu!");
                         alert1.showAndWait();
