@@ -151,7 +151,7 @@ public class Menu{
                     setRole.peoplePane.setVisible(true);
                     setRole.homePane.setVisible(false);
                     setRole.moneyPane.setVisible(false);
-                    
+
                 }
                 Stage currentStage = (Stage) login_btn.getScene().getWindow();
                 currentStage.close();
@@ -634,7 +634,7 @@ public class Menu{
                         databaseConnector.deletePeople(selectedId);
                         Alert alert1;
                         alert1 = new Alert(Alert.AlertType.INFORMATION);
-                        alert1.setTitle("Error");
+                        alert1.setTitle("Successful");
                         alert1.setHeaderText(null);
                         alert1.setContentText("Xoá thành công nhân khẩu!");
                         alert1.showAndWait();
@@ -729,39 +729,48 @@ public class Menu{
         LocalDate EndTime = registerAbsentEndDate.getValue();
 
         if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null) {
-            DatabaseConnector databaseConnector = new DatabaseConnector();
+            if(StartTime.isBefore(EndTime)) {
+                DatabaseConnector databaseConnector = new DatabaseConnector();
 
-            if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {
-                Alert alert;
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Chưa tồn tại nhân khẩu, Đăng ký tạm vắng thất bại " + SoCCCD);
-                alert.showAndWait();
-            }
-            else {
-                if(databaseConnector.checkExistNhanKhauThuongTru(SoCCCD)){
-                    String Maho = databaseConnector.getCurrentIDHomeThuongTru(SoCCCD);
-                    databaseConnector.updateTamVang(SoCCCD, Maho, StartTime.toString(),EndTime.toString());
-                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                    Alert alert;
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Successful");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Đăng ký tạm vắng thành công cho " + SoCCCD);
-                    alert.showAndWait();
-                    stage.close();
-                }
-                else{
+                if (!databaseConnector.checkExistNhanKhau(SoCCCD)) {
                     Alert alert;
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Người này đang không thường trú tại tổ dân phố ");
+                    alert.setContentText("Chưa tồn tại nhân khẩu, Đăng ký tạm vắng thất bại " + SoCCCD);
                     alert.showAndWait();
+                } else {
+                    if (databaseConnector.checkExistNhanKhauThuongTru(SoCCCD)) {
+                        String Maho = databaseConnector.getCurrentIDHomeThuongTru(SoCCCD);
+                        databaseConnector.updateTamVang(SoCCCD, Maho, StartTime.toString(), EndTime.toString());
+                        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Successful");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Đăng ký tạm vắng thành công cho " + SoCCCD);
+                        alert.showAndWait();
+                        stage.close();
+                    } else {
+                        Alert alert;
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Người này đang không thường trú tại tổ dân phố ");
+                        alert.showAndWait();
+                    }
                 }
-            }
 
+            }
+            else{
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Hãy nhập vào ngày bắt đầu trước ngày kết thúc");
+                alert.showAndWait();
+            }
+            
         }
         else {
             Alert alert;
@@ -793,84 +802,92 @@ public class Menu{
         LocalDate EndTime = registerStayingEndDate.getValue();
 
         if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null && !checkEmpty(Diachi) && !checkEmpty(Maho)) {
-            DatabaseConnector databaseConnector = new DatabaseConnector();
+            if (StartTime.isBefore(EndTime)) {
+                DatabaseConnector databaseConnector = new DatabaseConnector();
 
-            if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {
-                try {
-                    Alert alert;
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Người này chưa có trong danh sách nhân khẩu. Yêu cầu thêm mới");
-                    alert.showAndWait();
-
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("addPeople.fxml"));
-                    Parent addPeopleRoot = loader.load();
-
-                    // Tạo một Stage mới
-                    Stage addPeopleStage = new Stage();
-                    addPeopleStage.setScene(new Scene(addPeopleRoot));
-                    newStages.add(addPeopleStage);
-
-                    Menu addPeopleController = loader.getController();
-                    addPeopleController.addPeopleCMNDField.setText(SoCCCD);
-                    addPeopleController.addPeopleCMNDField.setEditable(false);
-
-                    //Cài đặt để có thể di chuyển stage bằng kéo thả
-                    addPeopleRoot.setOnMousePressed((MouseEvent event1) -> {
-                        x = event1.getScreenX() - addPeopleStage.getX();
-                        y = event1.getScreenY() - addPeopleStage.getY();
-                    });
-
-                    addPeopleRoot.setOnMouseDragged((MouseEvent event1) -> {
-                        addPeopleStage.setX(event1.getScreenX() - x);
-                        addPeopleStage.setY(event1.getScreenY() - y);
-                    });
-
-                    // Đặt kiểu modality của Stage mới là NONE
-                    addPeopleStage.initModality(Modality.NONE);
-                    addPeopleStage.initStyle(StageStyle.TRANSPARENT);
-
-                    // Hiển thị Stage mới
-                    addPeopleStage.show();
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
-            }
-            else {
-                if(!databaseConnector.checkExistNhanKhauThuongTru(SoCCCD) && !databaseConnector.checkExistNhanKhauTamTru(SoCCCD)) {
-                    if(!databaseConnector.checkExistHoKhauInHoKhauList(Maho)) {
-                        databaseConnector.insertNewHoKhau(Maho, SoCCCD, Diachi, "Tạm trú");
-                        databaseConnector.insertnewTamTru(SoCCCD, Maho, StartTime.toString(), EndTime.toString(), Diachi);
-                        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                if (!databaseConnector.checkExistNhanKhau(SoCCCD)) {
+                    try {
                         Alert alert;
                         alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Successful");
+                        alert.setTitle("Warning");
                         alert.setHeaderText(null);
-                        alert.setContentText("Đăng ký tạm trú thành công cho " + SoCCCD);
+                        alert.setContentText("Người này chưa có trong danh sách nhân khẩu. Yêu cầu thêm mới");
                         alert.showAndWait();
-                        stage.close();
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("addPeople.fxml"));
+                        Parent addPeopleRoot = loader.load();
+
+                        // Tạo một Stage mới
+                        Stage addPeopleStage = new Stage();
+                        addPeopleStage.setScene(new Scene(addPeopleRoot));
+                        newStages.add(addPeopleStage);
+
+                        Menu addPeopleController = loader.getController();
+                        addPeopleController.addPeopleCMNDField.setText(SoCCCD);
+                        addPeopleController.addPeopleCMNDField.setEditable(false);
+
+                        //Cài đặt để có thể di chuyển stage bằng kéo thả
+                        addPeopleRoot.setOnMousePressed((MouseEvent event1) -> {
+                            x = event1.getScreenX() - addPeopleStage.getX();
+                            y = event1.getScreenY() - addPeopleStage.getY();
+                        });
+
+                        addPeopleRoot.setOnMouseDragged((MouseEvent event1) -> {
+                            addPeopleStage.setX(event1.getScreenX() - x);
+                            addPeopleStage.setY(event1.getScreenY() - y);
+                        });
+
+                        // Đặt kiểu modality của Stage mới là NONE
+                        addPeopleStage.initModality(Modality.NONE);
+                        addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+                        // Hiển thị Stage mới
+                        addPeopleStage.show();
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
                     }
-                    else{
+                } else {
+                    if (!databaseConnector.checkExistNhanKhauThuongTru(SoCCCD) && !databaseConnector.checkExistNhanKhauTamTru(SoCCCD)) {
+                        if (!databaseConnector.checkExistHoKhauInHoKhauList(Maho)) {
+                            databaseConnector.insertNewHoKhau(Maho, SoCCCD, Diachi, "Tạm trú");
+                            databaseConnector.insertnewTamTru(SoCCCD, Maho, StartTime.toString(), EndTime.toString(), Diachi);
+                            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                            Alert alert;
+                            alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Successful");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Đăng ký tạm trú thành công cho " + SoCCCD);
+                            alert.showAndWait();
+                            stage.close();
+                        } else {
+                            Alert alert;
+                            alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Error");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Mã hộ đã tồn tại");
+                            alert.showAndWait();
+                        }
+                    } else {
                         Alert alert;
                         alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
-                        alert.setContentText("Mã hộ đã tồn tại");
+                        alert.setContentText("Không thể đăng ký tạm trú cho người đã thường trú hoặc tạm trú trước đó !");
                         alert.showAndWait();
                     }
                 }
-                else{
-                    Alert alert;
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Không thể đăng ký tạm trú cho người đã thường trú hoặc tạm trú trước đó !");
-                    alert.showAndWait();
-                }
-            }
 
+            }
+            else{
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Hãy nhập vào ngày bắt đầu trước ngày kết thúc");
+                alert.showAndWait();
+            }
         }
+
         else {
             Alert alert;
             alert = new Alert(Alert.AlertType.INFORMATION);
@@ -2276,7 +2293,7 @@ public class Menu{
     void actionOnClickKhoanPhiAnalyzeMoney(MouseEvent event) {
         ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         String type = loaiPhiAnalyzeMoney.getValue();
         // Nếu chọn tất cả các loại phí thì thêm option chọn tất cả các khoản phí
         if(type == null || type.equals("Tất cả")) {
@@ -2291,7 +2308,7 @@ public class Menu{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         tenKhoanPhiAnalyzeMoney.setItems(tenKhoanPhiList);
     }
     // Nhấn tìm kiếm lịch sử thu phí, đóng góp
@@ -2320,7 +2337,7 @@ public class Menu{
         else queriedToDate = toDateDongPhi.getValue().toString();
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet dongPhiLogList = databaseConnector.getLichSuDongPhi(queriedHoKhauID,queriedLoaiPhi,queriedTenKhoanPhi,queriedFromDate,queriedToDate);
 
         try {
@@ -2353,7 +2370,7 @@ public class Menu{
         conThieuColumnAnalyzeMoney.setCellValueFactory(new PropertyValueFactory<DongPhiLog,Integer>("ConThieu"));
 
         analyzeMoneyTable.setItems(dataList);
-        
+
     }
 
     @FXML
@@ -2384,7 +2401,7 @@ public class Menu{
     void actionOnClickKhoanPhiAddMoney(MouseEvent event) {
         ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         String type = loaiPhiAddMoney.getValue();
         // Nếu chọn tất cả các loại phí thì thêm option chọn tất cả các khoản phí
         if(type == null) type = "";
@@ -2397,7 +2414,7 @@ public class Menu{
             e.printStackTrace();
         }
         tenKhoanPhiAddMoney.setItems(tenKhoanPhiList);
-        
+
     }
     // Cập nhật số tiền còn thiếu ứng với các thông tin đã nhập
     // khi chọn khoản phí
@@ -2406,9 +2423,9 @@ public class Menu{
         String TenKhoanPhi = tenKhoanPhiAddMoney.getValue();
         if(TenKhoanPhi != null) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             soTienConThieu.setText(databaseConnector.getSoTienConThieu(idHoDongPhi.getText(),TenKhoanPhi) + " Đ");
-            
+
         }
     }
     // khi thay đổi id của hộ
@@ -2416,7 +2433,7 @@ public class Menu{
     void getTypedHoKhauIDAddMoney(KeyEvent event) {
         String HoKhauID = idHoDongPhi.getText();
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
 
         ResultSet resultSet = databaseConnector.getHomeInfo(HoKhauID);
         try{
@@ -2434,7 +2451,7 @@ public class Menu{
         if(tenKhoanPhiAddMoney.getValue() != null) {
             soTienConThieu.setText(databaseConnector.getSoTienConThieu(HoKhauID,tenKhoanPhiAddMoney.getValue()) + " Đ");
         }
-        
+
 
     }
     // Huỷ đóng phí
@@ -2461,7 +2478,7 @@ public class Menu{
             String NgayDong = ngayDongPhi.getValue().toString();
             int SoTienNop = Integer.parseInt(soTienNop.getText());
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             IDPhi = databaseConnector.getIDPhi(tenKhoanPhiAddMoney.getValue());
             if(databaseConnector.checkExistLogDongPhi(HoKhauID,IDPhi,NgayDong)) databaseConnector.updateDongPhiLog(HoKhauID,IDPhi,NgayDong,SoTienNop);
             else databaseConnector.insertNewDongPhiLog(HoKhauID,IDPhi,NgayDong,SoTienNop);
@@ -2475,7 +2492,7 @@ public class Menu{
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             newStages.remove(stage);
             stage.close();
-            
+
         }
     }
     // Nhấn mở của sổ tạo khoản phí mới
@@ -2581,7 +2598,7 @@ public class Menu{
             }
             else {
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 String LoaiPhi = optionFeeCBox.getValue();
                 String TenKhoanPhi = tenKhoanPhiMoiAddFee.getText();
                 String NamKhoanPhi = namKhoanPhiAddFee.getText();
@@ -2618,7 +2635,7 @@ public class Menu{
                     alert.showAndWait();
                     stage.close();
                 }
-                
+
             }
         }
     }
@@ -2696,7 +2713,7 @@ public class Menu{
     void actionOnClickKhoanPhiDetailFee(MouseEvent event) {
         ObservableList<String> tenKhoanPhiList = FXCollections.observableArrayList();
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         String type = loaiPhiDetailFee.getValue();
         // Nếu chọn tất cả các loại phí thì thêm option chọn tất cả các khoản phí
         if(type == null || type.equals("Tất cả")) {
@@ -2711,7 +2728,7 @@ public class Menu{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         tenKhoanPhiDetailFee.setItems(tenKhoanPhiList);
     }
     @FXML
@@ -2731,7 +2748,7 @@ public class Menu{
         else queriedTenKhoanPhi = tenKhoanPhiDetailFee.getValue();
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet dongphiData = databaseConnector.getDataFromDongPhiTable(queriedHoKhauID,queriedLoaiPhi,queriedTenKhoanPhi);
 
         try {
@@ -2761,7 +2778,7 @@ public class Menu{
         conThieuColumnDetailFee.setCellValueFactory(new PropertyValueFactory<DetailDongPhi,Integer>("ConThieu"));
 
         detailFeeTable.setItems(dataList);
-        
+
     }
     /*
         Hết Quản lý thu chi
