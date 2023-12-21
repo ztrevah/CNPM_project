@@ -59,13 +59,13 @@
                                     <Font name="Tahoma" size="17.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="4.0" layoutY="119.0" prefHeight="17.0" prefWidth="193.0" text="Admin" textFill="WHITE">
+                              <Label fx:id="roleName" alignment="CENTER" layoutX="4.0" layoutY="119.0" prefHeight="17.0" prefWidth="193.0" text="Admin" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="20.0" />
                                  </font>
                               </Label>
                               <Line endX="67.5" layoutX="116.0" layoutY="148.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutX="16.0" layoutY="192.0" mnemonicParsing="false" onAction="#openPeoplePane" prefHeight="46.0" prefWidth="168.0" styleClass="nav-btn" text="Quản lý nhân khẩu">
+                              <Button fx:id="peopleButton" alignment="CENTER" layoutX="-1.0" layoutY="192.0" mnemonicParsing="false" onAction="#openPeoplePane" prefHeight="46.0" prefWidth="201.0" styleClass="nav-btn" text="Quản lý nhân khẩu" textAlignment="RIGHT">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
@@ -73,7 +73,7 @@
                                     <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.5em" />
                                  </graphic>
                               </Button>
-                              <Button layoutX="16.0" layoutY="238.0" mnemonicParsing="false" onAction="#openHomePane" prefHeight="46.0" prefWidth="168.0" styleClass="nav-btn" text="Quản lý hộ khẩu">
+                              <Button fx:id="homeButton" alignment="CENTER" layoutX="-1.0" layoutY="238.0" mnemonicParsing="false" onAction="#openHomePane" prefHeight="46.0" prefWidth="201.0" styleClass="nav-btn" text="Quản lý hộ khẩu">
                                  <font>
                                     <Font name="Tahoma" size="15.0" />
                                  </font>
@@ -81,7 +81,7 @@
                                     <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="1.8em" />
                                  </graphic>
                               </Button>
-                              <Button layoutX="16.0" layoutY="284.0" mnemonicParsing="false" onAction="#openMoneyPane" prefHeight="46.0" prefWidth="168.0" styleClass="nav-btn" text=" Quản lý thu chi">
+                              <Button fx:id="moneyButton" alignment="CENTER" layoutX="-2.0" layoutY="284.0" mnemonicParsing="false" onAction="#openMoneyPane" prefHeight="46.0" prefWidth="202.0" styleClass="nav-btn" text=" Quản lý thu chi">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
@@ -130,74 +130,74 @@
                                           <TableColumn fx:id="dobColumn" prefWidth="89.60003662109375" text="Ngày sinh" />
                                           <TableColumn fx:id="sexColumn" prefWidth="70.39996337890625" text="Giới tính" />
                                           <TableColumn fx:id="addressColumn" prefWidth="234.39996337890625" text="Nơi thường trú" />
-                                          <TableColumn fx:id="stateColumn" prefWidth="236.0001220703125" text="Tình trạng" />
+                                          <TableColumn fx:id="stateColumn" prefWidth="222.0" text="Tình trạng" />
                                       </columns>
                                     </TableView>
-                                    <TextField fx:id="searchIDNameField" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                    <TextField fx:id="searchIDNameField" layoutX="14.0" layoutY="12.0" onAction="#clickSearchPeople" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="47.0" size="1.5em" />
+                                    <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="32.0" size="1.5em" />
                                     <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" onAction="#clickSearchPeople" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
                                        <font>
                                           <Font name="Tahoma" size="16.0" />
                                        </font>
                                     </Button>
-                                    <AnchorPane fx:id="filterPane" layoutX="347.0" layoutY="8.0" prefHeight="64.0" prefWidth="523.0">
+                                    <AnchorPane fx:id="filterPane" layoutX="347.0" layoutY="4.0" prefHeight="69.0" prefWidth="523.0">
                                        <styleClass>
                                           <String fx:value="white-bg" />
                                           <String fx:value="shadow" />
                                        </styleClass>
                                        <children>
-                                          <Label alignment="CENTER_RIGHT" layoutX="12.0" layoutY="9.0" prefHeight="16.0" prefWidth="68.0" text="Giới tính:">
+                                          <Label alignment="CENTER_RIGHT" layoutX="255.0" layoutY="9.0" prefHeight="16.0" prefWidth="68.0" text="Độ tuổi:">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label alignment="CENTER_RIGHT" layoutX="11.0" layoutY="38.0" prefHeight="16.0" prefWidth="68.0" text="Độ tuổi:">
+                                          <Label layoutX="340.0" layoutY="9.0" text="Từ:">
+                                             <font>
+                                                <Font name="Arial" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="ageFrom" layoutX="368.0" layoutY="5.0" prefHeight="25.0" prefWidth="47.0" />
+                                          <Label layoutX="428.0" layoutY="9.0" text="Đến:">
+                                             <font>
+                                                <Font name="Arial" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="ageTo" layoutX="463.0" layoutY="5.0" prefHeight="25.0" prefWidth="48.0" />
+                                          <Label alignment="CENTER_RIGHT" layoutX="18.0" layoutY="9.0" prefHeight="17.0" prefWidth="85.0" text="Tình trạng:">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="92.0" layoutY="39.0" text="Từ:">
-                                             <font>
-                                                <Font name="Arial" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="ageFrom" layoutX="117.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
-                                          <Label layoutX="166.0" layoutY="39.0" text="Đến:">
-                                             <font>
-                                                <Font name="Arial" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="ageTo" layoutX="199.0" layoutY="35.0" prefHeight="25.0" prefWidth="40.0" />
-                                          <ComboBox fx:id="seachGioiTinh" layoutX="101.0" layoutY="5.0" onMouseClicked="#actionOnClickSearchSex" prefHeight="25.0" prefWidth="101.0" promptText="Tất cả" visibleRowCount="3" />
-                                          <Label alignment="CENTER_RIGHT" layoutX="268.0" layoutY="9.0" prefHeight="17.0" prefWidth="85.0" text="Tình trạng:">
+                                          <ComboBox fx:id="loaiLuuTru" layoutX="117.0" layoutY="3.0" onMouseClicked="#actionOnClickTinhTrang" prefHeight="25.0" prefWidth="112.0" promptText="Tất cả" visibleRowCount="3" />
+                                          <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="42.0" prefHeight="17.0" prefWidth="114.0" text="Trong khoảng:">
                                              <font>
                                                 <Font name="Arial Bold" size="15.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="loaiLuuTru" layoutX="376.0" layoutY="5.0" onMouseClicked="#actionOnClickTinhTrang" prefHeight="25.0" prefWidth="112.0" promptText="Tất cả" visibleRowCount="3" />
-                                          <Label alignment="CENTER_RIGHT" layoutX="239.0" layoutY="38.0" prefHeight="17.0" prefWidth="114.0" text="Trong khoảng:">
-                                             <font>
-                                                <Font name="Arial Bold" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <Label layoutX="361.0" layoutY="39.0" text="Từ:">
+                                          <Label layoutX="138.0" layoutY="43.0" text="Từ:">
                                              <font>
                                                 <Font name="Arial" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="435.0" layoutY="39.0" text="Đến:">
+                                          <Label layoutX="335.0" layoutY="43.0" text="Đến:">
                                              <font>
                                                 <Font name="Arial" size="14.0" />
                                              </font>
                                           </Label>
-                                          <DatePicker fx:id="startDate" layoutX="383.0" layoutY="35.0" prefHeight="21.0" prefWidth="20.0" />
-                                          <DatePicker fx:id="endDate" layoutX="465.0" layoutY="35.0" prefHeight="21.0" prefWidth="20.0" />
+                                          <DatePicker fx:id="startDate" layoutX="164.0" layoutY="38.0" prefHeight="25.0" prefWidth="132.0" />
+                                          <DatePicker fx:id="endDate" layoutX="368.0" layoutY="38.0" prefHeight="25.0" prefWidth="142.0" />
                                        </children>
                                     </AnchorPane>
+                                    <Label alignment="CENTER_RIGHT" layoutX="19.0" layoutY="49.0" prefHeight="16.0" prefWidth="68.0" text="Giới tính:">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="seachGioiTinh" layoutX="98.0" layoutY="44.0" onMouseClicked="#actionOnClickSearchSex" prefHeight="29.0" prefWidth="147.0" promptText="Tất cả" visibleRowCount="3" />
                                  </children>
                                  <padding>
                                     <Insets bottom="7.0" />
@@ -208,7 +208,7 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="661.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAddPeople" prefHeight="38.0" prefWidth="70.0" styleClass="add-btn" text="Thêm">
+                              <Button layoutX="659.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAddPeople" prefHeight="38.0" prefWidth="70.0" styleClass="add-btn" text="Thêm">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
@@ -218,11 +218,21 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="71.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickRegisterHome" prefHeight="38.0" prefWidth="208.0" styleClass="addNew-btn" text="Đăng ký tạm trú/tạm vắng">
+                              <Button layoutX="287.0" layoutY="499.0" mnemonicParsing="false" onAction="#clickRegisterHome" styleClass="addNew-btn" text="Đăng ký">
                                  <font>
-                                    <Font name="Tahoma" size="16.0" />
+                                    <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Button>
+                              <Label layoutX="18.0" layoutY="503.0" text="Muốn trốn nợ, cần tạm trú, tạm vắng?">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="359.0" layoutY="503.0" text="ngay!!!">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="homePane" layoutX="5.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
@@ -245,13 +255,13 @@
                                           <TableColumn fx:id="diaChiHoKhauColumn" minWidth="0.0" prefWidth="358.39996337890625" text="Nơi thường trú" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="searchIDNameHome" layoutX="14.0" layoutY="28.0" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
+                                    <TextField fx:id="searchIDNameHome" layoutX="14.0" layoutY="28.0" onAction="#clickSearchHome" prefHeight="27.0" prefWidth="230.0" promptText="Search by name/id" styleClass="search">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="22.0" layoutY="47.0" size="1.5em" />
-                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#clickSearchHome" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
+                                    <Button layoutX="255.0" layoutY="22.0" mnemonicParsing="false" onAction="#clickSearchHome" prefHeight="38.0" prefWidth="80.0" styleClass="add-btn" text="Search">
                                        <font>
                                           <Font name="Tahoma" size="16.0" />
                                        </font>
@@ -276,7 +286,7 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="54.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickChangeLogHome" prefHeight="38.0" prefWidth="97.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="L/S thay đổi">
+                              <Button layoutX="206.0" layoutY="498.0" mnemonicParsing="false" onMouseClicked="#clickChangeLogHome" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Lịch sử">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
@@ -286,9 +296,19 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
+                              <Label layoutX="14.0" layoutY="502.0" text="Cần tìm người trốn nợ? Tra">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="273.0" layoutY="502.0" text="ngay!!!">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;" visible="false">
+                        <AnchorPane fx:id="moneyPane" layoutX="6.0" layoutY="6.0" prefHeight="537.0" prefWidth="879.0" style="-fx-border-radius: 8px;">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
@@ -335,7 +355,7 @@
                                     <Insets bottom="7.0" />
                                  </padding>
                               </AnchorPane>
-                              <Button layoutX="517.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="191.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê lịch sử đóng phí">
+                              <Button layoutX="623.0" layoutY="492.0" mnemonicParsing="false" onAction="#clickAnalyzeMoney" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #E5A429;" styleClass="detail-btn" text="Thống kê">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
@@ -345,16 +365,26 @@
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="52.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickAddFee" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: #309a65;" styleClass="add-btn" text="Tạo khoản phí mới">
+                              <Button layoutX="175.0" layoutY="498.0" mnemonicParsing="false" onMouseClicked="#clickAddFee" style="-fx-background-color: #309a65;" styleClass="add-btn" text="Tạo">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="419.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickTongHopFee" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" text="Tổng hợp">
+                              <Button layoutX="530.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#clickTongHopFee" prefHeight="38.0" prefWidth="82.0" styleClass="delete-btn" text="Tổng hợp">
                                  <font>
                                     <Font name="Tahoma" size="16.0" />
                                  </font>
                               </Button>
+                              <Label layoutX="21.0" layoutY="503.0" text="Nhà nước thiếu thuế?">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="220.0" layoutY="503.0" text="thêm phí ngay!!!">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>

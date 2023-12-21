@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="444.0" style="-fx-background-color: linear-gradient(to top, #ddd , #E5A429);" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="444.0" style="-fx-background-color: linear-gradient(to top, #ddd , #E5A429);" stylesheets="@menuDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cnpm.Menu">
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -25,13 +25,13 @@
                         <Font name="Tahoma" size="15.0" />
                      </font>
                   </Label>
-                  <Button layoutX="387.0" layoutY="5.0" mnemonicParsing="false" onAction="#closePeople" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
+                  <Button layoutX="391.0" layoutY="5.0" mnemonicParsing="false" onAction="#closePeople" prefHeight="24.0" prefWidth="42.0" styleClass="close" stylesheets="@menuDesign.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
                      </graphic>
                   </Button>
                   <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
-                  <Button layoutX="344.0" layoutY="5.0" mnemonicParsing="false" onAction="#minimizePeople" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
+                  <Button layoutX="348.0" layoutY="5.0" mnemonicParsing="false" onAction="#minimizePeople" prefHeight="24.0" prefWidth="42.0" styleClass="minimize" stylesheets="@menuDesign.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
                      </graphic>
@@ -43,11 +43,11 @@
       </AnchorPane>
    </top>
    <bottom>
-      <AnchorPane prefHeight="271.0" prefWidth="438.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="271.0" prefWidth="444.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="251.0" layoutY="226.0" mnemonicParsing="false" onMouseClicked="#finishAddFee" prefHeight="36.0" prefWidth="76.0" styleClass="add-btn" text="Add" />
-            <Button layoutX="336.0" layoutY="226.0" mnemonicParsing="false" onMouseClicked="#cancelAddFee" prefHeight="36.0" prefWidth="76.0" styleClass="delete-btn" text="Cancel" />
-            <AnchorPane layoutX="17.0" prefHeight="198.0" prefWidth="413.0">
+            <Button layoutX="248.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#finishAddFee" prefHeight="36.0" prefWidth="76.0" styleClass="add-btn" text="Add" />
+            <Button layoutX="333.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#cancelAddFee" prefHeight="36.0" prefWidth="76.0" styleClass="delete-btn" text="Cancel" />
+            <AnchorPane layoutX="10.0" layoutY="4.0" prefHeight="198.0" prefWidth="413.0">
                <styleClass>
                   <String fx:value="white-bg" />
                   <String fx:value="shadow" />

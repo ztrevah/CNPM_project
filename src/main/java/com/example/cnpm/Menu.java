@@ -1,20 +1,15 @@
 package com.example.cnpm;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -25,15 +20,33 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.cnpm.DatabaseConnector.connection;
+
 public class Menu{
+
+    @FXML
+    private Button close;
+
+    @FXML
+    private Button login_btn;
+
+    @FXML
+    private Button minimize;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private TextField username;
+
+    @FXML
+    private Label roleName;
     @FXML
     private TableColumn<Person, ?> MoneyCol;
 
@@ -45,9 +58,6 @@ public class Menu{
 
     @FXML
     private AnchorPane newMemberPane;
-
-    @FXML
-    private Button minimize;
 
     @FXML
     private VBox container;
@@ -68,20 +78,103 @@ public class Menu{
     private AnchorPane moneyPane;
 
     @FXML
-    private Button  openPeoplePane;
+    private Button  peopleButton;
 
     @FXML
-    private Button  openHomePane;
+    private Button  homeButton;
 
     @FXML
-    private Button  openMoneyPane;
+    private Button  moneyButton;
     private double x = 0;
     private double y = 0;
 
     private List<Stage> newStages = new ArrayList(); //Lưu trữ tham chiếu các stage mới được mở thêm để sau logout đóng hết đi
+    public void loginAdmin() throws SQLException, IOException {
+        String sql = "SELECT * FROM account WHERE Name = ? and Password = ?";
+
+        if(username.getText().isEmpty() || password.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Chưa điền thông tin");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng điền đầy đủ thông tin!");
+            alert.showAndWait();
+        } else{
+            String VaiTro;
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username.getText());
+            preparedStatement.setString(2, password.getText());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                VaiTro = resultSet.getString("VaiTro");
+                System.out.println(VaiTro);
+                alert.setTitle("Login Successfull");
+                alert.setHeaderText(null);
+                alert.setContentText("Đăng nhập thành công. Welcome " + VaiTro);
+                alert.showAndWait();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+                Parent addPeopleRoot = loader.load();
+
+                // Tạo một Stage mới
+                Stage addPeopleStage = new Stage();
+                addPeopleStage.setScene(new Scene(addPeopleRoot));
+
+
+                //Cài đặt để có thể di chuyển stage bằng kéo thả
+                addPeopleRoot.setOnMousePressed((MouseEvent event) -> {
+                    x = event.getScreenX() - addPeopleStage.getX();
+                    y = event.getScreenY() - addPeopleStage.getY();
+                });
+
+                addPeopleRoot.setOnMouseDragged((MouseEvent event) -> {
+                    addPeopleStage.setX(event.getScreenX() - x);
+                    addPeopleStage.setY(event.getScreenY() - y);
+                });
+
+                // Đặt kiểu modality của Stage mới là NONE
+                addPeopleStage.initModality(Modality.NONE);
+                addPeopleStage.initStyle(StageStyle.TRANSPARENT);
+
+                Menu setRole = loader.getController();
+                setRole.roleName.setText(VaiTro);
+                if(VaiTro.equals("Kế Toán")){
+                    setRole.peopleButton.setDisable(true);
+                    setRole.homeButton.setDisable(true);
+
+                    setRole.peoplePane.setVisible(false);
+                    setRole.homePane.setVisible(false);
+                    setRole.moneyPane.setVisible(true);
+                }else{
+                    setRole.peoplePane.setVisible(true);
+                    setRole.homePane.setVisible(false);
+                    setRole.moneyPane.setVisible(false);
+                    
+                }
+                Stage currentStage = (Stage) login_btn.getScene().getWindow();
+                currentStage.close();
+                // Hiển thị Stage mới
+                addPeopleStage.show();
+
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Tài khoản hoặc mật khẩu không chính xác. Vui lòng nhập lại");
+                alert.showAndWait();
+            }
+        }
+
+
+    }
     @FXML
     void clickClose(ActionEvent event) {//nút close trên màn hình chính, nhấn để tắt TOÀN BỘ
         System.exit(0);
+        DatabaseConnector databaseConnector = new DatabaseConnector();
+        databaseConnector.disconnect();
+
     }
 
     @FXML
@@ -119,8 +212,7 @@ public class Menu{
 
         loginStage.setScene(loginScene);
         loginStage.show();
-        DatabaseConnector databaseConnector = new DatabaseConnector();
-        databaseConnector.disconnect();
+
     }
 
     /*
@@ -189,7 +281,7 @@ public class Menu{
                 updatePeopleController.updatePeopleCCCDField.setEditable(false);
 
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 ResultSet personalData = databaseConnector.getPeopleInfo(selectedId);
                 while (personalData.next()) {
                     updatePeopleController.updatePeopleHoTenField.setText(personalData.getString("HoTen"));
@@ -204,7 +296,7 @@ public class Menu{
                     updatePeopleController.updatePeopleNoiLamViecField.setText(personalData.getString("NoiLamViec"));
 
                 }
-                
+
 
                 //Cài đặt để có thể di chuyển stage bằng kéo thả
                 updatePeopleRoot.setOnMousePressed((MouseEvent event) -> {
@@ -295,7 +387,7 @@ public class Menu{
         else queriedToDate = tmp_queriedToDate.toString();
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet resultSetPersonalInfo = databaseConnector.getPeopleInfoList(queriedId,queriedName,queriedSex,queriedAgeFrom,queriedAgeTo);
 
         try {
@@ -334,7 +426,7 @@ public class Menu{
         stateColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("TinhTrangLuuTru"));
 
         peopleTable.setItems(dataList);
-        
+
     }
 
     @FXML
@@ -404,7 +496,7 @@ public class Menu{
         if(!checkEmpty(SoCCCD) && !checkEmpty(HoTen) && NgaySinh != null && !checkEmpty(GioiTinh) && !checkEmpty(NoiSinh)
                 && !checkEmpty(QuocTich) && !checkEmpty(QueQuan) && !checkEmpty(GioiTinh)) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             if(databaseConnector.checkExistNhanKhau(SoCCCD)) {
                 Alert alert;
                 alert = new Alert(Alert.AlertType.INFORMATION);
@@ -424,7 +516,7 @@ public class Menu{
                 alert.showAndWait();
                 stage.close();
             }
-            
+
         }
         else {
             Alert alert;
@@ -488,9 +580,9 @@ public class Menu{
         if(!checkEmpty(HoTen) && NgaySinh != null && !checkEmpty(GioiTinh) && !checkEmpty(NoiSinh)
                 && !checkEmpty(QuocTich) && !checkEmpty(QueQuan) && !checkEmpty(GioiTinh)) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             databaseConnector.updatePerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
-            
+
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             Alert alert;
             alert = new Alert(Alert.AlertType.INFORMATION);
@@ -529,7 +621,7 @@ public class Menu{
                 if(result.get() == ButtonType.OK)
                 {
                     DatabaseConnector databaseConnector = new DatabaseConnector();
-                    
+
                     if(databaseConnector.checkExistChuHoInHoKhauList(selectedId)) {
                         Alert alert1;
                         alert1 = new Alert(Alert.AlertType.INFORMATION);
@@ -547,7 +639,7 @@ public class Menu{
                         alert1.setContentText("Xoá thành công nhân khẩu!");
                         alert1.showAndWait();
                     }
-                    
+
                 }
                 else {}
             }
@@ -638,7 +730,7 @@ public class Menu{
 
         if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {
                 Alert alert;
                 alert = new Alert(Alert.AlertType.INFORMATION);
@@ -669,7 +761,7 @@ public class Menu{
                     alert.showAndWait();
                 }
             }
-            
+
         }
         else {
             Alert alert;
@@ -702,7 +794,7 @@ public class Menu{
 
         if(!checkEmpty(SoCCCD) && StartTime != null && EndTime != null && !checkEmpty(Diachi) && !checkEmpty(Maho)) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             if(!databaseConnector.checkExistNhanKhau(SoCCCD)) {
                 try {
                     Alert alert;
@@ -777,7 +869,7 @@ public class Menu{
                     alert.showAndWait();
                 }
             }
-            
+
         }
         else {
             Alert alert;
@@ -837,14 +929,14 @@ public class Menu{
     private TableColumn<Home,String> loaiSoColumn;
     // Tìm kiếm hộ theo tiêu chí đã chọn
     @FXML
-    void clickSearchHome(MouseEvent event) {
+    void clickSearchHome(ActionEvent event) {
         if(homeTable != null) homeTable.getItems().clear();
         ObservableList<Home> dataList = FXCollections.observableArrayList();
 
         String queriedIDNameHome = searchIDNameHome.getText();
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet homeList = databaseConnector.getHomeList(queriedIDNameHome);
 
         try {
@@ -866,7 +958,7 @@ public class Menu{
         diaChiHoKhauColumn.setCellValueFactory(new PropertyValueFactory<Home,String>("DiaChi"));
         loaiSoColumn.setCellValueFactory(new PropertyValueFactory<Home,String>("LoaiSo"));
         homeTable.setItems(dataList);
-        
+
     }
     public static String selectedIDHome; // hộ được chọn
     public static String selectedLoaiSo; // Loại sổ của hộ được chọn
@@ -892,7 +984,7 @@ public class Menu{
     // Làm mới bảng hiển thị danh sách tạm nhân khẩu của một hộ
     void refreshTempHoKhauTable(){
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet resultSet = databaseConnector.getTempHoKhauTable();
         if(tempHoKhauTableAddHome != null) tempHoKhauTableAddHome.getItems().clear();
         ObservableList<PeopleInfoOfHome> dataList = FXCollections.observableArrayList();
@@ -911,7 +1003,7 @@ public class Menu{
         nameAddHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
         relationAddHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
         tempHoKhauTableAddHome.setItems(dataList);
-        
+
     }
     // Hàm xử lý khi ấn Add new và xử lý khi ấn add và delete
     @FXML
@@ -934,7 +1026,7 @@ public class Menu{
                 String id = cmndText.getText();
                 String QuanHeChuHo = qhText.getText();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 // Nếu người định thêm chưa có trong danh sách nhân khẩu thì mở giao diện addPeople để tạo mới
                 if(!databaseConnector.checkExistNhanKhauInNhanKhauList(id)){
                     try {
@@ -996,7 +1088,7 @@ public class Menu{
                         alert.showAndWait();
                     }
                 }
-                
+
                 refreshTempHoKhauTable();
             }
             else {
@@ -1012,9 +1104,9 @@ public class Menu{
             if(!cmndText.getText().isEmpty()) {
                 String id = cmndText.getText();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 databaseConnector.deleteMemberFromTempHoKhauTable(id);
-                
+
                 refreshTempHoKhauTable();
             }
             else {
@@ -1041,7 +1133,7 @@ public class Menu{
         // Các trường mã hộ, số cccd của chủ hộ, địa chỉ không được để trống
         if(!HoKhauID.isEmpty() && !ChuHoID.isEmpty() && !DiaChi.isEmpty() && LoaiSo != null) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             // Nếu chủ hộ đã có trong danh sách nhân khẩu của hộ và không là chủ hộ của hộ khác và mã hộ chưa tồn tại
             // thì tạo hộ mới với những người trong danh sách tạm
             if(!databaseConnector.checkExistChuHoInHoKhauList(ChuHoID) && !databaseConnector.checkExistHoKhauInHoKhauList(HoKhauID)
@@ -1146,7 +1238,7 @@ public class Menu{
                 }
 
             }
-            
+
 
         }
         else {
@@ -1184,7 +1276,7 @@ public class Menu{
                 updateHomeController.idHKFieldUpdateHome.setEditable(false);
 
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 databaseConnector.deleteTempHoKhauTable();
 
                 ResultSet homeInfo = databaseConnector.getHomeInfo(selectedIDHome);
@@ -1221,7 +1313,7 @@ public class Menu{
                 updateHomeController.nameUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
                 updateHomeController.relationUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
                 updateHomeController.tempHoKhauTableUpdateHome.setItems(dataList);
-                
+
 
                 //Cài đặt để có thể di chuyển stage bằng kéo thả
                 updateHomeRoot.setOnMousePressed((MouseEvent e) -> {
@@ -1264,7 +1356,7 @@ public class Menu{
     private TableView<PeopleInfoOfHome> tempHoKhauTableUpdateHome;
     void refreshTempHoKhauUpdateHomeTable(){
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet resultSet = databaseConnector.getTempHoKhauTable();
         if(tempHoKhauTableUpdateHome != null) tempHoKhauTableUpdateHome.getItems().clear();
         ObservableList<PeopleInfoOfHome> dataList = FXCollections.observableArrayList();
@@ -1283,7 +1375,7 @@ public class Menu{
         nameUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
         relationUpdateHomeColumn.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
         tempHoKhauTableUpdateHome.setItems(dataList);
-        
+
     }
     @FXML
     void addNewMemberUpdateHome(MouseEvent event) {
@@ -1305,7 +1397,7 @@ public class Menu{
                 String id = cmndText.getText();
                 String QuanHeChuHo = qhText.getText();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 // Nếu người được thêm chưa có trong danh sách nhân khẩu thì phải thêm vào trước
                 if(!databaseConnector.checkExistNhanKhauInNhanKhauList(id)){
                     try {
@@ -1367,7 +1459,7 @@ public class Menu{
                         alert.showAndWait();
                     }
                 }
-                
+
                 refreshTempHoKhauUpdateHomeTable();
             }
             else {
@@ -1384,9 +1476,9 @@ public class Menu{
             if(!cmndText.getText().isEmpty()) {
                 String id = cmndText.getText();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 databaseConnector.deleteMemberFromTempHoKhauTable(id);
-                
+
                 refreshTempHoKhauUpdateHomeTable();
             }
             else {
@@ -1412,7 +1504,7 @@ public class Menu{
         String LoaiSo = loaiSoFieldUpdateHome.getText();
         if(!ChuHoID.isEmpty() && !DiaChi.isEmpty()) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             // Nếu chủ hộ không nằm trong danh sách nhân khẩu mới
             if(!databaseConnector.checkExistChuHoInTempHoKhauTable(ChuHoID)) {
                 Alert alert;
@@ -1530,7 +1622,7 @@ public class Menu{
 
             }
 
-            
+
 
         }
         else {
@@ -1585,9 +1677,9 @@ public class Menu{
             // Hiển thị Stage mới
             addHomeStage.show();
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             databaseConnector.deleteTempHoKhauTable();
-            
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -1627,7 +1719,7 @@ public class Menu{
 
     void refreshTempSplitHomeTable(Menu controller){
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet resultSet = databaseConnector.getTempHoKhauTable();
         if(controller.tempSplitHomeTable != null) controller.tempSplitHomeTable.getItems().clear();
         ObservableList<PeopleInfoOfHome> dataList = FXCollections.observableArrayList();
@@ -1646,7 +1738,7 @@ public class Menu{
         controller.nameSplitMember.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("HoTen"));
         controller.relationSplitMember.setCellValueFactory(new PropertyValueFactory<PeopleInfoOfHome,String>("QuanHeChuHo"));
         controller.tempSplitHomeTable.setItems(dataList);
-        
+
     }
 
     @FXML
@@ -1665,7 +1757,7 @@ public class Menu{
                 newStages.add(splitHomeStage);
 
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 databaseConnector.deleteTempHoKhauTable();
 
                 Menu splitHomeController = loader.getController();
@@ -1689,10 +1781,10 @@ public class Menu{
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                
+
 
                 DatabaseConnector databaseConnector1 = new DatabaseConnector();
-                
+
                 ResultSet currentMemberList = databaseConnector1.getCurrentMember(selectedIDHome);
 
                 try {
@@ -1721,7 +1813,7 @@ public class Menu{
                                 String id = cmndText.getText();
                                 String relation = qhText.getText();
                                 DatabaseConnector databaseConnector2 = new DatabaseConnector();
-                                
+
                                 if(databaseConnector2.checkChuHoHoKhau(idMember,selectedIDHome)) {
                                     Alert alert;
                                     alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1737,7 +1829,7 @@ public class Menu{
                                         String name = databaseConnector2.getHoTen(id);
                                         databaseConnector2.insertNewMemberTempHoKhauTable(id,name,relation);
                                     }
-                                    
+
                                     refreshTempSplitHomeTable(splitHomeController);
                                 }
                             }
@@ -1753,9 +1845,9 @@ public class Menu{
                         delButton.setOnMouseClicked((MouseEvent e) -> {
                             String id = cmndText.getText();
                             DatabaseConnector databaseConnector2 = new DatabaseConnector();
-                            
+
                             databaseConnector2.deleteMemberFromTempHoKhauTable(id);
-                            
+
                             refreshTempSplitHomeTable(splitHomeController);
                         });
 
@@ -1766,7 +1858,7 @@ public class Menu{
                 } catch(SQLException e) {
                     e.printStackTrace();
                 }
-                
+
                 //Cài đặt để có thể di chuyển stage bằng kéo thả
                 splitHomeRoot.setOnMousePressed((MouseEvent e) -> {
                     x = e.getScreenX() - splitHomeStage.getX();
@@ -1805,7 +1897,7 @@ public class Menu{
         // Nếu đã nhập đủ dữ liệu của hộ đc tách ra
         if(!HoKhauID.isEmpty() && !ChuHoID.isEmpty()) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-            
+
             // Mã của hộ mới không được đã tồn tại và chủ hộ của hộ mới phải được có trong danh sách tạm
             if(!databaseConnector.checkExistHoKhauInHoKhauList(HoKhauID) && databaseConnector.checkExistChuHoInTempHoKhauTable(ChuHoID))
             {
@@ -1855,7 +1947,7 @@ public class Menu{
                 }
 
             }
-            
+
 
         }
         else {
@@ -1882,9 +1974,9 @@ public class Menu{
                 if(result.get() == ButtonType.OK)
                 {
                     DatabaseConnector databaseConnector = new DatabaseConnector();
-                    
+
                     databaseConnector.deleteHome(selectedIDHome);
-                    
+
                     Alert alert1;
                     alert1 = new Alert(Alert.AlertType.INFORMATION);
                     alert1.setTitle("Successful");
@@ -1931,7 +2023,7 @@ public class Menu{
 
                 Menu changeLogHomeController = loader.getController();
                 DatabaseConnector databaseConnector = new DatabaseConnector();
-                
+
                 ResultSet homeInfo = databaseConnector.getHomeInfo(selectedIDHome);
                 try {
                     while(homeInfo.next()) {
@@ -1978,7 +2070,7 @@ public class Menu{
 
                 // Hiển thị Stage mới
                 changeLogHomeStage.show();
-                
+
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
@@ -2032,7 +2124,7 @@ public class Menu{
         }
 
         DatabaseConnector databaseConnector = new DatabaseConnector();
-        
+
         ResultSet khoanPhiList = databaseConnector.getKhoanPhiList(queriedIDNameKhoanPhi,queriedTypeKhoanPhi);
 
         try {
@@ -2056,7 +2148,7 @@ public class Menu{
         dateMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("NgayBatDauThu"));
         typeMoneyCol.setCellValueFactory(new PropertyValueFactory<KhoanPhiInfo,String>("LoaiKhoanPhi"));
         moneyTable.setItems(dataList);
-        
+
     }
     // Nhấn mớ giao diện đóng phí
     @FXML
