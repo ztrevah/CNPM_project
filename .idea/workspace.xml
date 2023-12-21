@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="thêm dependencies để ko phải import jar" />
+    <list default="true" id="6b891efb-d114-44fe-ad92-62ee3fe05f12" name="Changes" comment="thêm dependencies để ko phải import jar">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cnpm/Menu.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Ngoc" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
