@@ -4,12 +4,12 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class DatabaseConnector {
-    Connection connection;
+    public static Connection connection;
 
     // Kết nối với server của db
     public void connect() {
         String url = "jdbc:mysql://localhost:3306/cnpm";
-        String username = "chien";
+        String username = "root";
         String password = "1234";
         try {
             connection = DriverManager.getConnection(url,username,password);
@@ -597,12 +597,10 @@ public class DatabaseConnector {
             throw new RuntimeException(e);
         }
     }
-    // Lấy danh sách thông tin các khoản thu phí đóng góp
+    // Lấy danh sách thông tin các khoản thu phí đóng góp (ID,Ten,NgayBatDauThu,Loai
     public ResultSet getKhoanPhiList (String idOrName,String type) {
-        String sql = "select ID,TenPhi,NgayBatDauThu,Loai,sum(DaDong)\n" +
-                "from loaiphi,dongphi\n" +
-                "where loaiphi.ID = dongphi.IDPhi and (ID like ? or TenPhi like ?) and Loai like ?\n" +
-                "group by loaiphi.ID,loaiphi.TenPhi,loaiphi.NgayBatDauThu";
+        String sql = "select * from loaiphi\n" +
+                "where (ID like ? or TenPhi like ?) and Loai like ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,'%'+idOrName+'%');
@@ -610,6 +608,24 @@ public class DatabaseConnector {
             preparedStatement.setString(3,'%'+type+'%');
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public int getTongTienDaDongChoKhoanPhi (String id) {
+        String sql = "select ID,sum(DaDong)\n" +
+                "from loaiphi,dongphi\n" +
+                "where loaiphi.ID = dongphi.IDPhi and ID = ?" +
+                "group by loaiphi.ID";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int DaDong = 0;
+            while(resultSet.next()) {
+                DaDong = resultSet.getInt(2);
+            }
+            return DaDong;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
