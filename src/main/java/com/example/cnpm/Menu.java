@@ -357,12 +357,18 @@ public class Menu{
     private TableColumn<Person,String> sexColumn;
     @FXML
     private TableColumn<Person,String> stateColumn;
+    public boolean checkNumberFormat (String s) {
+        if(s == null) return false;
+        for(int i=0;i<s.length();i++) {
+            if(s.charAt(i) >= '0' && s.charAt(i) <= '9'){}
+            else return false;
+        }
+        return true;
+    }
     // Tìm kiếm nhân khẩu theo các tiêu chí đã chọn
     @FXML
     private void clickSearchPeople(ActionEvent event){ //nút search trên peoplePane
         //Cần kiểm tra mỗi trường được nhập rồi select trong csdl, sau đó hiển thị vào table bên dưới
-        peopleTable.getItems().clear();
-        ObservableList<Person> dataList = FXCollections.observableArrayList();
 
         String queriedId = searchIDNameField.getText();
         String queriedName = searchIDNameField.getText();
@@ -374,59 +380,79 @@ public class Menu{
         LocalDate tmp_queriedToDate = endDate.getValue();
         String queriedFromDate,queriedToDate;
 
-        if(queriedSex == null || queriedSex.equals("Tất cả")) queriedSex = "";
-        int queriedAgeFrom,queriedAgeTo;
-        if(tmp_queriedAgeFrom.length() == 0) queriedAgeFrom = 0;
-        else queriedAgeFrom = Integer.parseInt(tmp_queriedAgeFrom);
-        if(tmp_queriedAgeTo.length() == 0) queriedAgeTo = 200;
-        else queriedAgeTo = Integer.parseInt(tmp_queriedAgeTo);
-        if(queriedState == null || queriedState.equals("Tất cả")) queriedState = "";
-        if(tmp_queriedFromDate == null) queriedFromDate = "1900/1/1";
-        else queriedFromDate = tmp_queriedFromDate.toString();
-        if(tmp_queriedToDate == null) queriedToDate = "2100/1/1";
-        else queriedToDate = tmp_queriedToDate.toString();
+        if(tmp_queriedFromDate != null && tmp_queriedToDate != null && tmp_queriedToDate.isBefore(tmp_queriedFromDate)){
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Ngày bắt đầu không được sau ngày kết thúc");
+            alert.showAndWait();
+        }
+        else if(!checkNumberFormat(tmp_queriedAgeFrom) || !checkNumberFormat(tmp_queriedAgeTo)) {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Độ tuổi phải là số nguyên >= 0");
+            alert.showAndWait();
+        }
+        else {
+            peopleTable.getItems().clear();
+            ObservableList<Person> dataList = FXCollections.observableArrayList();
 
-        DatabaseConnector databaseConnector = new DatabaseConnector();
+            if(queriedSex == null || queriedSex.equals("Tất cả")) queriedSex = "";
+            int queriedAgeFrom,queriedAgeTo;
+            if(tmp_queriedAgeFrom.length() == 0) queriedAgeFrom = 0;
+            else queriedAgeFrom = Integer.parseInt(tmp_queriedAgeFrom);
+            if(tmp_queriedAgeTo.length() == 0) queriedAgeTo = 200;
+            else queriedAgeTo = Integer.parseInt(tmp_queriedAgeTo);
+            if(queriedState == null || queriedState.equals("Tất cả")) queriedState = "";
+            if(tmp_queriedFromDate == null) queriedFromDate = "1900/1/1";
+            else queriedFromDate = tmp_queriedFromDate.toString();
+            if(tmp_queriedToDate == null) queriedToDate = "2100/1/1";
+            else queriedToDate = tmp_queriedToDate.toString();
 
-        ResultSet resultSetPersonalInfo = databaseConnector.getPeopleInfoList(queriedId,queriedName,queriedSex,queriedAgeFrom,queriedAgeTo);
+            DatabaseConnector databaseConnector = new DatabaseConnector();
 
-        try {
-            while(resultSetPersonalInfo.next()) {
-                String SoCCCD = resultSetPersonalInfo.getString(1);
-                String HoTen = resultSetPersonalInfo.getString(2);
-                Date NgaySinh = resultSetPersonalInfo.getDate(3);
-                String GioiTinh = resultSetPersonalInfo.getString(4);
+            ResultSet resultSetPersonalInfo = databaseConnector.getPeopleInfoList(queriedId,queriedName,queriedSex,queriedAgeFrom,queriedAgeTo);
 
-                ResultSet homeInfo = databaseConnector.getPersonAddress(SoCCCD,queriedState,queriedFromDate,queriedToDate);
-                String NoiLuuTru = "",TinhTrangLuuTru = "";
-                while(homeInfo.next()) {
-                    String tmp_NoiLuuTru = homeInfo.getString(1);
-                    NoiLuuTru = NoiLuuTru.concat(tmp_NoiLuuTru +'\n');
-                    String tmp_LoaiLuuTru = homeInfo.getString(2);
-                    String tmp_NgayBatDau = homeInfo.getDate(3).toString();
-                    String tmp_NgayKetThuc = homeInfo.getDate(4).toString();
-                    if(tmp_NgayKetThuc.equals("2100-01-01")) tmp_NgayKetThuc = "nay";
-                    TinhTrangLuuTru = TinhTrangLuuTru.concat(tmp_LoaiLuuTru + " từ " + tmp_NgayBatDau + " đến " + tmp_NgayKetThuc + '\n');
-                }
+            try {
+                while(resultSetPersonalInfo.next()) {
+                    String SoCCCD = resultSetPersonalInfo.getString(1);
+                    String HoTen = resultSetPersonalInfo.getString(2);
+                    Date NgaySinh = resultSetPersonalInfo.getDate(3);
+                    String GioiTinh = resultSetPersonalInfo.getString(4);
 
-                if(!NoiLuuTru.isEmpty() || (NoiLuuTru.isEmpty() && queriedFromDate.equals("1900/1/1") && queriedToDate.equals("2100/1/1") && queriedState.isEmpty())) {
-                    Person person = new Person(SoCCCD, HoTen, NgaySinh.toString(), GioiTinh, NoiLuuTru, TinhTrangLuuTru);
-                    dataList.add(person);
+                    ResultSet homeInfo = databaseConnector.getPersonAddress(SoCCCD,queriedState,queriedFromDate,queriedToDate);
+                    String NoiLuuTru = "",TinhTrangLuuTru = "";
+                    while(homeInfo.next()) {
+                        String tmp_NoiLuuTru = homeInfo.getString(1);
+                        NoiLuuTru = NoiLuuTru.concat(tmp_NoiLuuTru +'\n');
+                        String tmp_LoaiLuuTru = homeInfo.getString(2);
+                        String tmp_NgayBatDau = homeInfo.getDate(3).toString();
+                        String tmp_NgayKetThuc = homeInfo.getDate(4).toString();
+                        if(tmp_NgayKetThuc.equals("2100-01-01")) tmp_NgayKetThuc = "nay";
+                        TinhTrangLuuTru = TinhTrangLuuTru.concat(tmp_LoaiLuuTru + " từ " + tmp_NgayBatDau + " đến " + tmp_NgayKetThuc + '\n');
+                    }
+
+                    if(!NoiLuuTru.isEmpty() || (NoiLuuTru.isEmpty() && queriedFromDate.equals("1900/1/1") && queriedToDate.equals("2100/1/1") && queriedState.isEmpty())) {
+                        Person person = new Person(SoCCCD, HoTen, NgaySinh.toString(), GioiTinh, NoiLuuTru, TinhTrangLuuTru);
+                        dataList.add(person);
+                    }
                 }
             }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        idColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("SoCCCD"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("HoTen"));
-        dobColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("NgaySinh"));
-        sexColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("GioiTinh"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("NoiThuongTru"));
-        stateColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("TinhTrangLuuTru"));
+            catch(SQLException e){
+                e.printStackTrace();
+            }
+            idColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("SoCCCD"));
+            nameColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("HoTen"));
+            dobColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("NgaySinh"));
+            sexColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("GioiTinh"));
+            addressColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("NoiThuongTru"));
+            stateColumn.setCellValueFactory(new PropertyValueFactory<Person,String>("TinhTrangLuuTru"));
 
-        peopleTable.setItems(dataList);
-
+            peopleTable.setItems(dataList);
+        }
     }
 
     @FXML
