@@ -522,27 +522,35 @@ public class Menu{
         if(!checkEmpty(SoCCCD) && !checkEmpty(HoTen) && NgaySinh != null && !checkEmpty(GioiTinh) && !checkEmpty(NoiSinh)
                 && !checkEmpty(QuocTich) && !checkEmpty(QueQuan) && !checkEmpty(GioiTinh)) {
             DatabaseConnector databaseConnector = new DatabaseConnector();
-
-            if(databaseConnector.checkExistNhanKhau(SoCCCD)) {
+            if(NgaySinh.isAfter(LocalDate.now())) {
                 Alert alert;
                 alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Đã tồn tại nhân khẩu " + SoCCCD);
+                alert.setContentText("Ngày sinh không được phép trong tương lai");
                 alert.showAndWait();
             }
             else {
-                databaseConnector.addPerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
-                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                Alert alert;
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successful");
-                alert.setHeaderText(null);
-                alert.setContentText("Thêm thành công nhân khẩu " + SoCCCD);
-                alert.showAndWait();
-                stage.close();
+                if(databaseConnector.checkExistNhanKhau(SoCCCD)) {
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Đã tồn tại nhân khẩu " + SoCCCD);
+                    alert.showAndWait();
+                }
+                else {
+                    databaseConnector.addPerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
+                    Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                    Alert alert;
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Thêm thành công nhân khẩu " + SoCCCD);
+                    alert.showAndWait();
+                    stage.close();
+                }
             }
-
         }
         else {
             Alert alert;
@@ -605,18 +613,29 @@ public class Menu{
 
         if(!checkEmpty(HoTen) && NgaySinh != null && !checkEmpty(GioiTinh) && !checkEmpty(NoiSinh)
                 && !checkEmpty(QuocTich) && !checkEmpty(QueQuan) && !checkEmpty(GioiTinh)) {
-            DatabaseConnector databaseConnector = new DatabaseConnector();
+            if(NgaySinh.isAfter(LocalDate.now())) {
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Ngày sinh không được phép trong tương lai");
+                alert.showAndWait();
+            }
+            else {
+                DatabaseConnector databaseConnector = new DatabaseConnector();
 
-            databaseConnector.updatePerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
+                databaseConnector.updatePerson(SoCCCD,HoTen,BiDanh,NgaySinh.toString(),NoiSinh,GioiTinh,NgheNghiep,QueQuan,DanToc,QuocTich,NoiLamViec);
 
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Alert alert;
-            alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Successful");
-            alert.setHeaderText(null);
-            alert.setContentText("Cập nhật thành công thông tin nhân khẩu " + SoCCCD);
-            alert.showAndWait();
-            stage.close();
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                Alert alert;
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Cập nhật thành công thông tin nhân khẩu " + SoCCCD);
+                alert.showAndWait();
+                stage.close();
+            }
+
         }
         else {
             Alert alert;
